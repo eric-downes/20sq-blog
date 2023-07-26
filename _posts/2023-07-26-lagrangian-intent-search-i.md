@@ -212,7 +212,7 @@ With these ideas in mind, we can define a useful Lagrangian:
 >The *free solver Lagrangian* $\mathcal{L}^\mathfrak{s}_{f}$ is given by:
 >
 >$$
->\mathcal{L}^\mathfrak{s}_{f}(\mathbf{q},\mathbf{\dot{q}}) = \mathcal{U}^\mathfrak{s}(\mathbb{\dot{q}'}).
+>\mathcal{L}^\mathfrak{s}_{f}(\mathbf{q},\mathbf{\dot{q}}) = \mathcal{U}^\mathfrak{s}(\mathbb{\dot{q}}).
 >$$
 
 This Lagrangian is the equivalent of the Lagrangian for the free particle in physics, which describes a system with no potential energy. This Lagrangian depends only on transitions (exactly as the free particle Lagrangian in physics depends only on velocities). It does not care of the utilities associated to the state, and as such, it represents the *selfless solver*: We will see shortly that the only thing the solver cares about here is to save on gas, but has no particular interest in preferring any given starting (ending) state for the path with respect to another.
@@ -265,7 +265,7 @@ $$
 
 The *principle of least action for intents* then reads as follows: 
 
->The *best* solutions for the intent $\mathfrak{i}$ that $\mathfrak{s}$ can provide are the paths that *minimize* the action $\mathcal{A}^\mathfrak{s}$, that is, the couples $(\mathbf{q}_{\text{best}},\mathbf{\dot{q}}_{\text{best}})$ such that:
+>The *best* solutions for the intent $\mathfrak{i}$ that $\mathfrak{s}$ can provide are the paths that *minimize* the action $\mathcal{A}^\mathfrak{s}$, that is, the couples $(\mathbf{q}_\text{best},\mathbf{\dot{q}}_\text{best})$ such that:
 >
 >$$
 >\mathcal{A}^\mathfrak{s}(\mathbf{q}_{\text{best}},\mathbf{\dot{q}}_{\text{best}}) = \min_{(\mathbf{q},\mathbf{\dot{q}}) \in \text{allowed paths}} \mathcal{A}^\mathfrak{s}(\mathbf{q},\mathbf{\dot{q}}).
@@ -275,10 +275,12 @@ The *principle of least action for intents* then reads as follows:
 
 Let us see what this means in practice for the free searcher Lagrangian. Given a path $(\mathbf{q},\mathbf{\dot{q}})$ and the free searcher Lagrangian $\mathcal{L}^\mathfrak{s}_{f}$,
 
-\begin{align\*}
-    \mathcal{A}^\mathfrak{s}(\mathbf{q},\mathbf{\dot{q}}) &:= \sum_{i=0}^{n} \mathcal{L}^\mathfrak{s}_{f}(\mathbf{q}(i),\mathbf{\dot{q}}(i))\\\\
+$$
+\begin{align*}
+    \mathcal{A}^\mathfrak{s}(\mathbf{q},\mathbf{\dot{q}}) &:= \sum_{i=0}^{n} \mathcal{L}^\mathfrak{s}_{f}(\mathbf{q}(i),\mathbf{\dot{q}}(i))\\
     &= \sum_{i=0}^{n} \Big(\mathcal{U}^\mathfrak{s}(\mathbb{\dot{q}}(i)) \Big).
-\end{align\*}
+\end{align*}
+$$
 
 So, for instance, in a gasless axiomatization of the state space, and using $\mathcal{U}^\mathfrak{s}(\mathbb{\dot{q}}(i))$ to account for gas fees, a best solution for the intent $\mathfrak{i}$ under the free searcher Lagrangian $\mathcal{L}^\mathfrak{s}_{f}$ is any path that *minimizes the gas cost of the solution*, precisely as we would expect.
 
@@ -302,7 +304,7 @@ This is because our definition of velocity is very different from the one of phy
 
 Where $\mathbf{q'}$ is again $\mathbf{\dot{q}}$ applied to $\mathbf{q}$.
 
-$\mathcal{L}^\mathfrak{s}_{g}(\mathbf{q},\mathbf{\dot{q}})$ measures the loss of utility in going from $\mathbf{q}$ to $\mathbf{q'}$. In contrast with $\mathcal{L}^\mathfrak{s}_{f}$, which is the intent analogous of only having kinetic energy around, $\mathcal{L}^\mathfrak{s}_{g}$ has the aspect of a pure potential: In depends on $\mathbf{\dot{q}}$ only insomuch to calculate the adjacent state $\mathbf{q'}$, but disregards the intrinsic externalities given by $\mathbf{\dot{q}}$ - the 'kinetic energy' - completely.
+$\mathcal{L}^\mathfrak{s}_g(\mathbf{q},\mathbf{\dot{q}})$ measures the loss of utility in going from $\mathbf{q}$ to $\mathbf{q'}$. In contrast with $\mathcal{L}^\mathfrak{s}_f$, which is the intent analogous of only having kinetic energy around, $\mathcal{L}^\mathfrak{s}_g$ has the aspect of a pure potential: In depends on $\mathbf{\dot{q}}$ only insomuch to calculate the adjacent state $\mathbf{q'}$, but disregards the intrinsic externalities given by $\mathbf{\dot{q}}$ - the 'kinetic energy' - completely.
 
 ![Greedy solver Lagrangian.](tex/done/greedyLagrangian.png)
 
@@ -332,7 +334,7 @@ We conclude by putting things together:
 >\mathcal{L}^\mathfrak{s}_{w}(\mathbf{q},\mathbf{\dot{q}}) = \mathcal{U}^\mathfrak{s}(\mathbb{\dot{q}}) + \big(\mathcal{U}^\mathfrak{s}(\mathbb{q}) - \mathcal{U}^\mathfrak{s}(\mathbb{q'})\big)
 >$$
 
-Where $\mathbf{q'}$ is again $\mathbf{\dot{q}}$ applied to $\mathbf{q}$. Trivially, $\mathcal{L}^\mathfrak{s}_{w} = \mathcal{L}^\mathfrak{s}_{f} + \mathcal{L}^\mathfrak{s}_{g}$. This is the intent counterpart of the usual $\text{kinetic energy} - \text{potential energy}$ Lagrangian in classical mechanics. It measures both the intrinsic loss in going from $\mathbf{q}$ to $\mathbf{q'}$ - the 'potential energy' - *and* the extrinsic cost of of the transition $\mathbf{\dot{q}}$ - the 'kinetic energy'. Computing the action, we have:
+Where $\mathbf{q'}$ is again $\mathbf{\dot{q}}$ applied to $\mathbf{q}$. Trivially, $\mathcal{L}^\mathfrak{s}_w = \mathcal{L}^\mathfrak{s}_f + \mathcal{L}^\mathfrak{s}_g$. This is the intent counterpart of the usual $\text{kinetic energy} - \text{potential energy}$ Lagrangian in classical mechanics. It measures both the intrinsic loss in going from $\mathbf{q}$ to $\mathbf{q'}$ - the 'potential energy' - *and* the extrinsic cost of of the transition $\mathbf{\dot{q}}$ - the 'kinetic energy'. Computing the action, we have:
 
 $$
 \begin{align*}

@@ -1,0 +1,85 @@
+\documentclass{standalone}
+\usepackage{tikz}
+\usepackage{amsfonts}
+\usetikzlibrary{calc}
+\usetikzlibrary{3d}
+\usetikzlibrary{automata, positioning, arrows}
+\tikzstyle{inarrow}=[->, >=stealth, shorten >=.03cm,line width=0.5]
+\tikzstyle{outarrow}=[<-, >=stealth, shorten <=.03cm,line width=1.5]
+\begin{document}
+\rotatebox{0}{
+\scalebox{1}{
+
+    \begin{tikzpicture}[x={({cos(-10)*1cm},{sin(-10)*1cm})},y={({cos(45)*1cm},{sin(45)*1cm})},z={(0,1cm)}]
+        % \coordinate (O) at (0, 0, 0);
+        %     \draw[-latex] (O) -- +(1, 0,  0) node [right] {$x$};
+        %     \draw[-latex] (O) -- +(0,  1, 0) node [left] {$y$};
+        %     \draw[-latex] (O) -- +(0,  0, 1) node [above] {$z$};
+        \begin{scope}[canvas is xy plane at z=0]
+            \draw[fill=gray!20, opacity=0.5] (-1,-1) rectangle (6.2,6);        
+
+            \draw[fill=green!30] (0,0) circle (0.3cm);
+        \node (0) at (0,0) {$s_0$};
+            
+            \draw[fill=red!30, opacity=0.4] (0,2) circle (0.3cm);
+        \node (1) at (0,2) {$s_1$};
+        
+            \draw (2,2) circle (0.3cm);
+        \node (2) at (2,2) {$s_2$};
+        
+            \draw[fill=red!30, opacity=0.4] (5,1) circle (0.3cm);
+        \node (3) at (5,1) {$s_3$};
+        
+            \draw[fill=green!30] (2,0) circle (0.3cm);
+        \node (4) at (2,0) {$s_4$};
+        
+            \draw[fill=blue!30] (3,4) circle (0.3cm);
+        \node (5) at (3,4) {$s_5$};
+        
+            \draw (4,3) circle (0.3cm);
+        \node (6) at (4,3) {$s_6$};
+        
+            \draw[fill=blue!30] (5,5) circle (0.3cm);
+        \node (7) at (5,5) {$s_7$};
+            \draw (-1,-1) rectangle (6.2,6);
+        \end{scope}
+        \begin{scope}[canvas is xy plane at z=0.5]
+            \draw[fill=gray!20, opacity=0.2] (-1,-1) rectangle (6.2,6);
+        \node (0) at (0,0) {};
+        \node (1) at (0,2) {};
+        \node (2) at (2,2) {};
+        \node (3) at (5,1) {};
+        \node (4) at (2,0) {};
+        \node (5) at (3,4) {};
+        \node (6) at (4,3) {};
+        \node (7) at (5,5) {};
+        \draw[inarrow] 
+            (0) edge[below] node{$b$} (2) 
+            (2) edge[above] node{$b$} (6)
+            (4) edge[below] node{$b$} (0)
+            (5) edge[loop right] node{$a$} (3)
+            (5) edge[above] node{$b$} (2)
+            (6) edge[below right] node{$a$} (5)
+            (7) edge[loop right] node{$a$} (3);
+
+        \draw[inarrow, red!30, opacity=0.4]
+            (0) edge[left] node{$a$} (1)
+            (2) edge[above] node{$a$} (3)
+            (1) edge[loop right] node{$a, b$} (1)
+            (3) edge[loop right] node{$a, b$} (3)
+            (4) edge[below] node{$a$} (3)
+            (6) edge[bend left, right] node{$b$} (3)
+            (7) edge[bend left, right] node{$b$} (3);
+        \end{scope}
+        \node (l) at (-2.25,-1.35,0.25) {$(T^\mathfrak{i,s} S, S^\mathfrak{i,s}_i, S^\mathfrak{i,s}_f) \Bigl\{$};
+
+        \draw[dashed] (0,0,0) -- (0,0,0.5);
+        \draw[dashed, opacity=0.2] (0,2,0) -- (0,2,0.5);
+        \draw[dashed] (2,2,0) -- (2,2,0.5);
+        \draw[dashed, opacity=0.2] (5,1,0) -- (5,1,0.5);
+        \draw[dashed] (2,0,0) -- (2,0,0.5);
+        \draw[dashed] (3,4,0) -- (3,4,0.5);
+        \draw[dashed] (4,3,0) -- (4,3,0.5);
+        \draw[dashed] (5,5,0) -- (5,5,0.5);
+\end{tikzpicture}}}
+\end{document}

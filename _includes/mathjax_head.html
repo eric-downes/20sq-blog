@@ -13,7 +13,13 @@
 			  displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
 			  processEscapes: true
 			},
-			"HTML-CSS": { availableFonts: ["TeX"] }
+			"HTML-CSS": { 
+				availableFonts: ["TeX"],
+				linebreaks: { automatic: true } 
+			},
+			SVG: { 
+				linebreaks: { automatic: true } 
+			}
 		});
 	</script>
 	<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>

@@ -265,7 +265,13 @@ $$
 
 The *principle of least action for intents* then reads as follows: 
 
->The *best* solutions for the intent $\mathfrak{i}$ that $\mathfrak{s}$ can provide are the paths that *minimize* the action $\mathcal{A}^\mathfrak{s}$, that is, the couples $(\mathbf{q}_\text{best},\mathbf{\dot{q}}_\text{best})$ such that:
+>The *best* solutions for the intent $\mathfrak{i}$ that $\mathfrak{s}$ can provide are the paths that *minimize* the action $\mathcal{A}^\mathfrak{s}$, that is, the couples 
+>
+>$$
+>(\mathbf{q}_{\text{best}},\mathbf{\dot{q}}_{\text{best}})
+>$$
+>
+>such that:
 >
 >$$
 >\mathcal{A}^\mathfrak{s}(\mathbf{q}_{\text{best}},\mathbf{\dot{q}}_{\text{best}}) = \min_{(\mathbf{q},\mathbf{\dot{q}}) \in \text{allowed paths}} \mathcal{A}^\mathfrak{s}(\mathbf{q},\mathbf{\dot{q}}).

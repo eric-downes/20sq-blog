@@ -48,7 +48,7 @@ A simple, idealized representation of the state space is the one below, where th
 
 In practice, since we're mainly working with discrete mechanisms such as the EVM, the state space will never be so regular, and the following representation would be more appropriate: Given a mechanism $G$, we can build its [state diagram](https://en.wikipedia.org/wiki/State_diagram) when we see $G$ as some sort of automaton:
 
-![An example of state diagram.](tex/done/stateDiagram.png)
+![An example of state diagram.](../assetsPosts/2023-07-26-lagrangian-intent-search-i/stateDiagram.png)
 
 As you can see, the state diagram is actually a graph, where nodes are states, and edges, in the literature called *transitions*, are inputs that we feed to the automaton (in our case in the form of calldata) to get to another state. Modulo some differences in the transition decorations, this assumption is without loss of generality as every Turing machine admits a representation in terms of state diagrams, so any 'computationally feasible' mechanism $G$ will admit such a representation.
 
@@ -60,7 +60,7 @@ In any case, we can work with what we got:
 
 Compared to the physical example above, we see that the state space $S$ for a mechanism $G$ has no real notion of continuity, differentiability or cohesion of any sort. It's just a set.
 
-![A state space from a state diagram.](tex/done/stateSpaceS.png)
+![A state space from a state diagram.](../assetsPosts/2023-07-26-lagrangian-intent-search-i/stateSpaceS.png)
 
 ### Discretising tangent bundles
 
@@ -74,7 +74,7 @@ Positions are easy to understand: You have some notion of space $M$ (which in cl
 
 Velocities, on the other hand, are a bit harder. Given a representation of the physical space $M$, the velocity of a particle *at* a point represents a direction where the particle 'wants' to go while it stays in that point. Given $M$, at each point $\mathbf{q}$ we can build the *tangent space to $M$ at $\mathbf{q}$*, denoted with $T_\mathbf{q} M$. Velocities at point $\mathbf{q}$ are points in this space, and we denote them as $\mathbf{\dot{q}}$:
 
-![Example of tangent space in differential geometry.](tex/done/tangentSpace.png)
+![Example of tangent space in differential geometry.](../assetsPosts/2023-07-26-lagrangian-intent-search-i/tangentSpace.png)
 
 One can prove that when $M$ is a smooth manifold of dimension $n$, $T_\mathbf{q} M$ has the same dimension $n$ for each $\mathbf{q}$. I won't dwelve into the mathematical details of what this means. The take home message is that:
 
@@ -93,7 +93,7 @@ To apply Lagrangian techniques to our setting, we need to define an equivalent o
 
 As we said in the beginning, our state space $S$ is built out of a graph, the state diagram of our mechanism $G$. In particular, we used the nodes of this graph to build $S$. If intuitively velocities at a point represent 'where a particle wants to go', we can transfer this intuition right away to our case: Given a point $\mathbf{q}$ in our state space $S$, transitions starting at $\mathbf{q}$ represents 'where the state wants to go' when you apply them.
 
-![Example of tangent space at q.](tex/done/TqS.png)
+![Example of tangent space at q.](../assetsPosts/2023-07-26-lagrangian-intent-search-i/TqS.png)
 
 From this, we can define:
 
@@ -111,7 +111,7 @@ From this, we can define:
 >TS := \bigsqcup_{\mathbf{q} \in S} T_\mathbf{q} S = \{ (\mathbf{q},\mathbf{\dot{q}} ) \mid \mathbf{q} \in S, \mathbf{\dot{q}} \in T_\mathbf{q} S\}.
 >$$
 
-![Example of tangent bundle of the state space.](tex/done/TS.png)
+![Example of tangent bundle of the state space.](../assetsPosts/2023-07-26-lagrangian-intent-search-i/TS.png)
 
 The *tangent bundle of the state space* is much coarser and uglier than the one used in physics. As stressed before, $TM$ has a lot of nice properties, can be described nicely using coordinates, etc; whereas $TS$ is just a set of couples $(\mathbf{q},\mathbf{\dot{q}})$ where the second component depends somehow on the first.
 
@@ -120,14 +120,14 @@ The *tangent bundle of the state space* is much coarser and uglier than the one 
 
 Ok, now that we have a decent notion of space, suppose that an agent $\mathfrak{p}$ (intent proposer) creates an intent. The intent is composed, at the very least, of two *regions* of $S$, that is, of two sets of states: The first is the region identifying the *premises* of the intent (in green in the picture below), whereas the second is the region identifying the *conclusions* of the intent (in blue):
 
-![Example of intent region.](tex/done/intentRegion.png)
+![Example of intent region.](../assetsPosts/2023-07-26-lagrangian-intent-search-i/intentRegion.png)
 
 Why do we need regions and not just points, you may ask? The reason is that a point in the state space is a very granular description of what's going on: Say that the intent provided by $\mathfrak{p}$ is 'I want to swap $100$ tokens A for no less than $50$ tokens B.' A given point in the state space will also contain a lot of information regarding things that $\mathfrak{p}$ does not care about, such as the the balance of other users $\mathfrak{p}' \neq \mathfrak{p}$ for which $\mathfrak{p}$ has no particular interest. As such, it is enough for us to consider *any* possible state where $\mathfrak{p}$ has $100$ tokens A as a viable starting point for a path 'solving' the intent. Indeed, in the example below the premises region is constituted by states where the balance of token A for the intent provider is always $100$. States in this region differ with respect to the balance (say, in Eth) of some other user $\mathfrak{p}'$. A similar reasoning holds for the conclusions region.
 
 Now, depending on how expressive the language we use to define intents is, the intent provider $\mathfrak{p}$ may also express statements such as 'I don't want this particular smart contract to be used', or 'I want the token swap to be performed in this particular way'. This is where (algebraic) topology comes in: This is nothing more than identifying other regions of the state space in which either provider $\mathfrak{p}$ does not want the path to go, or in which it requires the path to pass. 
 We won't focus on the latter type of constraints in this post, as it will be expressed naturally as we define how intents compose, which will be the content of a future post. As for the former type of constraints, the 'I don't want the path to go here' ones , they can be taken care of by 'punching holes' in the state space, which in formal terms means *by changing the simply connectedness of the state space* (if only we were working with a real topological space). In the picture below, we colored the 'holes' in red for clarity. In practice, it is sufficient to strip these elements from the state space $S$.
 
-![Example of intent region with constraints.](tex/done/intentRegionConstraints.png)
+![Example of intent region with constraints.](../assetsPosts/2023-07-26-lagrangian-intent-search-i/intentRegionConstraints.png)
 
 Further constraints clearly must be reflected on the structure of $TS$: If we 'disallow' some points in the state space $S$, then we also have to 'disallow' velocities that lead to one of those points. Elaborating on this further, we are quickly made aware of the fact that intents may also contain constraints that intervene purely on the $\mathbf{\dot{q}}$, that is, constraints that disallow using a given transition when in a given state. In general, we have to work with a restriction of the tangent bundle of the state space $TS$.
 
@@ -140,7 +140,7 @@ In words: If $(\mathbf{q},\mathbf{\dot{q}})$ is in the intent space and $\mathbf
 
 Here, $S^\mathfrak{i}_i, S^\mathfrak{i}_f$ represent the premises and conclusions regions of $\mathfrak{i}$, respectively.
 
-![Example of intent space.](tex/done/intentSpace.png)
+![Example of intent space.](../assetsPosts/2023-07-26-lagrangian-intent-search-i/intentSpace.png)
 
 ## The solver's perspective
 
@@ -156,7 +156,7 @@ So, we need to further refine $(T^\mathfrak{i} S, S^\mathfrak{i}_i, S^\mathfrak{
 
 In practice, $T^\mathfrak{i,s} S$ is just $T^\mathfrak{i} S$ where we punched even more holes, corresponding to states that cannot be reached by the solver $\mathfrak{s}$ and to the transitions that $\mathfrak{s}$ cannot use.
 
-![Example of intent space from the solver's perspective.](tex/done/solverPerspective.png)
+![Example of intent space from the solver's perspective.](../assetsPosts/2023-07-26-lagrangian-intent-search-i/solverPerspective.png)
 
 ### Allowed paths
 
@@ -182,17 +182,17 @@ $$
 such that $s_i \xrightarrow{t_i} s_{i+1}$ for all $i$. 
 Notice how we do not need to explicitly mention the state $n+1$, as this information is implicitly contained in the couple $(s_n,t_n)$. 
 
-![A path.](tex/done/path.png)
+![A path.](../assetsPosts/2023-07-26-lagrangian-intent-search-i/path.png)
 
 In stark contrast with physics, $\mathbf{\dot{q}}$ *cannot* be just determined from $\mathbf{q}$ since we do not have a notion of differentiation: There may very well be two different transitions $\mathbf{\dot{q}}, \mathbf{\dot{q}'}$ such that $\mathbf{q} \xrightarrow{\mathbf{\dot{q}}, \mathbf{\dot{q}'}} \mathbf{q'}$.
 
-![Example of non-differentiability of paths.](tex/done/nonDifferentiability.png)
+![Example of non-differentiability of paths.](../assetsPosts/2023-07-26-lagrangian-intent-search-i/nonDifferentiability.png)
 
 > A path $(\mathbf{q}(i), \mathbf{\dot{q}}(i))_{0 \leq i \leq n}$ in $T^\mathfrak{i,p} S$ is *allowed* if $\mathbf{q}(0) \in S^\mathfrak{i,p}_i$ and $\mathbf{q}(n+1) \in S^\mathfrak{i,p}_f$.
 
 Indeed, allowed paths represent *solutions* for the intent $\mathfrak{i}$ that are *feasible* for the solver $\mathfrak{s}$.
 
-![Example of allowed path.](tex/done/allowedPath.png)
+![Example of allowed path.](../assetsPosts/2023-07-26-lagrangian-intent-search-i/allowedPath.png)
 
 ### Utilities as Lagrangians
 
@@ -217,7 +217,7 @@ With these ideas in mind, we can define a useful Lagrangian:
 
 This Lagrangian is the equivalent of the Lagrangian for the free particle in physics, which describes a system with no potential energy. This Lagrangian depends only on transitions (exactly as the free particle Lagrangian in physics depends only on velocities). It does not care of the utilities associated to the state, and as such, it represents the *selfless solver*: We will see shortly that the only thing the solver cares about here is to save on gas, but has no particular interest in preferring any given starting (ending) state for the path with respect to another.
 
-![Example of free solver Lagrangian.](tex/done/freeLagrangian.png)
+![Example of free solver Lagrangian.](../assetsPosts/2023-07-26-lagrangian-intent-search-i/freeLagrangian.png)
 
 As a word of caution, finding the right Lagrangian that describes a physical system is an art, and I'm sure the same is true for intent solving. So, for sure, finding insightful Lagrangians is a topic in itself that is out of the scope of this post, but that we will very much investigate in the future.
 
@@ -245,7 +245,7 @@ $$
 
 In particular, in mechanical systems the equations of motion of the system are often given by the paths that *minimize* $\mathcal{A}$, so for the paths $\mathbf{q}(t)$ for shich $\mathcal{A}(\mathbf{q}, t_0, t_1)$ is a (local) minimum. The meaning of this the following: At each point of $TM$, $\mathcal{L}$ gives us information about the energetic balance of the system at that point. Now imagine you have a path defined on the interval $[t_0, t_1]$. This path may be *non-physical*, e.g. a path where the trajectory changes direction even if it is not subjected to any force whatsoever. The 'forces' here are succintly embedded into the Lagrangian, since the presence of a force at a point will be accounted for in the overall energy balance given by $\mathcal{L}$ evaluated at that point. In this case, the paths that are *physical* are the ones that upset the energy balance defined by $\mathcal{L}$, along the path, as little as possible.
 
-![Example of the principle of least action.](tex/done/leastAction.png)
+![Example of the principle of least action.](../assetsPosts/2023-07-26-lagrangian-intent-search-i/leastAction.png)
 
 In layman terms: Physics is tacky, and the trajectories of objects in a physical systems are the ones that minimize $\mathcal{A}$: Every small variation $\delta \mathbf{q}$ of the path $\mathbf{q}$ minimizing $\mathcal{A}$ would be non-physical, since it would make $\mathcal{A}$ bigger.
 
@@ -290,11 +290,11 @@ $$
 
 So, for instance, in a gasless axiomatization of the state space, and using $\mathcal{U}^\mathfrak{s}(\mathbb{\dot{q}}(i))$ to account for gas fees, a best solution for the intent $\mathfrak{i}$ under the free searcher Lagrangian $\mathcal{L}^\mathfrak{s}_{f}$ is any path that *minimizes the gas cost of the solution*, precisely as we would expect.
 
-![Example of action of the free Lagrangian on a path.](tex/done/freeAction.png)
+![Example of action of the free Lagrangian on a path.](../assetsPosts/2023-07-26-lagrangian-intent-search-i/freeAction.png)
 
 The fact that the searcher $\mathfrak{s}$ is considered *selflessness* comes from the fact that $\mathfrak{s}$ is only trying to reduce gas costs, and is not interested in picking any particular starting state (ending state, respectively) in $S^\mathfrak{i,p}_i$ ($S^\mathfrak{i,p}_f$, respectively), as long as they give the least gas cost.
 
-![Example of alternative best path.](tex/done/freeAction2.png)
+![Example of alternative best path.](../assetsPosts/2023-07-26-lagrangian-intent-search-i/freeAction2.png)
 
 ### Cheating physics
 
@@ -312,7 +312,7 @@ Where $\mathbf{q'}$ is again $\mathbf{\dot{q}}$ applied to $\mathbf{q}$.
 
 $\mathcal{L}^\mathfrak{s}_g(\mathbf{q},\mathbf{\dot{q}})$ measures the loss of utility in going from $\mathbf{q}$ to $\mathbf{q'}$. In contrast with $\mathcal{L}^\mathfrak{s}_f$, which is the intent analogous of only having kinetic energy around, $\mathcal{L}^\mathfrak{s}_g$ has the aspect of a pure potential: In depends on $\mathbf{\dot{q}}$ only insomuch to calculate the adjacent state $\mathbf{q'}$, but disregards the intrinsic externalities given by $\mathbf{\dot{q}}$ - the 'kinetic energy' - completely.
 
-![Example of greedy solver Lagrangian.](tex/done/greedyLagrangian.png)
+![Example of greedy solver Lagrangian.](../assetsPosts/2023-07-26-lagrangian-intent-search-i/greedyLagrangian.png)
 
 Above, we depicted a greedy solver Lagrangian. We annotated the states with their utilities (which are as in the example of the free Lagrangian), and annotated transitions with the corresponding loss of utility.
 
@@ -328,7 +328,7 @@ $$
 
 So the action measures the net utility loss in walking a given path. The principle of least action applied to $\mathcal{L}^\mathfrak{s}_{g}$ says that the 'best' allowed paths are the ones minimizing the solver's utility loss. So, the greedy Lagrangian represents a solver that is maximally greedy: Given an intent, $\mathfrak{s}$ will pick the solution that is most convenient for its own pocket.
 
-![Action for the greedy solver Lagrangian.](tex/done/greedyAction.png)
+![Action for the greedy solver Lagrangian.](../assetsPosts/2023-07-26-lagrangian-intent-search-i/greedyAction.png)
 
 In particular, if it is $\min_{(\mathbf{q},\mathbf{\dot{q}}) \in \text{allowed paths}} \mathcal{A}^\mathfrak{s}(\mathbf{q},\mathbf{\dot{q}}) < 0$, then the best paths have negative loss (and so positive profit, as depicted in the figure above), and indentify intent solutions that $\mathfrak{s}$ has an *incentive* to produce.
 

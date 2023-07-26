@@ -242,9 +242,12 @@ In particular, in mechanical systems the equations of motion of the system are o
 In layman terms: Physics is tacky, and the trajectories of objects in a physical systems are the ones that minimize $\mathcal{A}$: Every small variation $\delta \mathbf{q}$ of the path $\mathbf{q}$ minimizing $\mathcal{A}$ would be non-physical, since it would make $\mathcal{A}$ bigger.
 
 In intentland, the lagrangian $\mathcal{L}^\mathfrak{s}$ defines the *utility balance* of $\mathfrak{s}$ at each point of $T^\mathfrak{i,p} S$, and our paths are discrete. If we have a path $(\mathbf{q}, \mathbf{\dot{q}}): [0,\dots,n] \to T^\mathfrak{i,p} S$, we define: 
-$$\begin{equation}
-\text{The \textit{action} for $\mathfrak{s}$ is: } \mathcal{A}^\mathfrak{s}(\mathbf{q},\mathbf{\dot{q}}) := \sum_{i=0}^{n} \mathcal{L}^\mathfrak{s}(\mathbf{q}(i),\mathbf{\dot{q}}(i)).
-\end{equation}$$
+
+>The *action* for $\mathfrak{s}$ is:
+>
+>$$
+>\mathcal{A}^\mathfrak{s}(\mathbf{q},\mathbf{\dot{q}}) := \sum_{i=0}^{n} \mathcal{L}^\mathfrak{s}(\mathbf{q}(i),\mathbf{\dot{q}}(i)).
+>$$
 
 Notice that in our case $\mathcal{A}^\mathfrak{s}$ depends on both $\mathbf{q},\mathbf{\dot{q}}$ since the two come as a unique package in intentland: As we remarked above, in intentland we cannot obtain $\mathbf{\dot{q}}$ from $\mathbf{q}$ as we do not have a notion of derivation. So, whereas a path in physicland is just defined ad $\mathbf{q}$ (and we can compute its velocity $\mathbf{\dot{q}}$ by differentiating), we *defined* a path in intentland to be *the* couple $(\mathbf{q}, \mathbf{\dot{q}})$, and hence $\mathcal{A}^\mathfrak{s}$ depends on paths in perfect analogy with its physical counterpart, and has signature: $$\mathcal{A}^\mathfrak{s} : \text{Allowed paths} \to \mathbb{R}.$$
 
@@ -253,7 +256,7 @@ The *principle of least action for intents* then reads as follows:
 >The *best* solutions for the intent $\mathfrak{i}$ that $\mathfrak{s}$ can provide are the paths that *minimize* the action $\mathcal{A}^\mathfrak{s}$, that is, the couples $(\mathbf{q}_{\text{best}},\mathbf{\dot{q}}_{\text{best}})$ such that:
 >
 >$$
->\mathcal{A}^\mathfrak{s}(\mathbf{q}_{\text{best}},\mathbf{\dot{q}}_{\text{best}}) = \min_{(\mathbf{q},\mathbf{\dot{q}}) \in \text{allowed paths}} \mathcal{A}^\mathfrak{s}(\mathbf{q},\mathbf{\dot{q}}) \right.
+>\mathcal{A}^\mathfrak{s}(\mathbf{q}_{\text{best}},\mathbf{\dot{q}}_{\text{best}}) = \min_{(\mathbf{q},\mathbf{\dot{q}}) \in \text{allowed paths}} \mathcal{A}^\mathfrak{s}(\mathbf{q},\mathbf{\dot{q}}).
 >$$
 
 ### Simple example: Action of the free searcher Lagrangian

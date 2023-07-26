@@ -150,7 +150,7 @@ An example of this is if $\mathfrak{s}$ tries to call a given smart contract fun
 So, we need to further refine $(T^\mathfrak{i} S, S^\mathfrak{i}_i, S^\mathfrak{i}_f)$ when taking the solver perspective: 
 
 > An *intent $\mathfrak{i}$ from the perspective of solver $\mathfrak{s}$* is a triple $(T^\mathfrak{i,s} S, S^\mathfrak{i,s}_i, S^\mathfrak{i,s}_f)$ where:
-> - $T^\mathfrak{i,s} S := T^\mathfrak{i} S \cap \lbrace\text{regions of } T^\mathfrak{i} S \text{ where } \mathfrak{s} \text{ is allowed to go}\rbrace$;
+> - $T^\mathfrak{i,s} S := T^\mathfrak{i} S \cap \lbrace$ regions of $T^\mathfrak{i} S$ where $\mathfrak{s}$ is allowed to go $\rbrace$;
 > - $S^\mathfrak{i,s}_i := S^\mathfrak{i}_i \cap \pi_1(T^\mathfrak{i,s} S)$;
 > - $S^\mathfrak{i,s}_f := S^\mathfrak{i}_f \cap \pi_1(T^\mathfrak{i,s} S)$.
 
@@ -171,6 +171,7 @@ s_0 \xrightarrow{t_0} s_1 \xrightarrow{t_1} \dots \xrightarrow{t_{n}} s_{n+1}.
 $$
 
 Equivalently, this can be spelled out as a couple of functions:
+
 $$
 \begin{gather*}
 (\mathbf{q}(t), \mathbf{\dot{q}}(t)): \{0, \dots, n\} \to T^\mathfrak{i,p} S\\
@@ -192,3 +193,30 @@ In stark contrast with physics, $\mathbf{\dot{q}}$ *cannot* be just determined f
 Indeed, allowed paths represent *solutions* for the intent $\mathfrak{i}$ that are *feasible* for the solver $\mathfrak{s}$.
 
 ![An allowed path.](tex/done/allowedPath.png)
+
+### Utilities as Lagrangians
+
+So here we have it: $\mathfrak{p}$ provides an intent, and $\mathfrak{s}$ solves it by finding an allowed path. But clearly there may be many different allowed paths, that is, many different solutions of the intent that are feasible for $\mathfrak{s}$. So which one would $\mathfrak{s}$ pick? The 'best allowed path' selection is what brings *Lagrangian mechanics* into the picture, and the real reason why we did all the work so far.
+
+In its general form, a *Lagrangian* on a configuration space $M$ is a real function 
+
+$$
+\mathcal{L}: TM \times \mathbb{R} \to \mathbb{R}
+$$
+
+such that $\mathcal{L}(\mathbf{q},\mathbf{\dot{q}},t)$ succintly summarizes the overall dynamics of the system. In many interesting cases, the Lagrangian does not directly depend on time, and one just writes $\mathcal{L}(\mathbf{q},\mathbf{\dot{q}})$. The idea is that you feed it with a position $\mathbf{q}$, and with a velocity $\mathbf{\dot{q}}$ at $\mathbf{q}$, and it spits out a number that gives you information about the dynamical status of the system at that point. In many problems in classical mechanics, the Lagrangian is just taken to be: $\text{kinetic energy} - \text{potential energy}$, where the first quantity depends only on velocity and the second may depend on both velocity and position. In this case, the Lagrangian is telling us the 'level of energy balance' at the given point: It will be positive if at that point there is more kinetic energy than potential energy, and negative if the opposite happens. As motion in classical mechanics is often caused by the potential energy being converted to kinetic energy, we can see why such a quantity may be of importance.
+
+In intentland we do not have energy, **but we have MEV**. The comparison is apt: In physics, work and energy are the same thing, so the amount of work performed on a physical system has the units of energy. Similarly, in financial systems the work performed can be quantified by the amount of *extractable value* one can take from the system. We can define utility functions for $\mathfrak{s}$ on both states and transitions of a system: $\mathcal{U}^\mathfrak{s}: S \to \mathbb{R}$ quantifies the net utility that the solver $\mathfrak{s}$ has when the system is in a given state $\mathbf{q}$. This may correspond, for instance, to the aggregated token balance of $\mathfrak{s}$ at state $\mathbf{q}$. Similarly, and overloading notation, $\mathcal{U}^\mathfrak{s}: T_\mathbf{q} S \to \mathbb{R}$, for each $\mathbf{q}$, quantifies the net utility that $\mathfrak{s}$ obtains in performing the transition $\mathbf{\dot{q}}$. This utility can, for instance, be negative, and quantifies externalities that come in performing the transition $\mathbf{\dot{q}}$ which aren't already accounted in the state.
+With these ideas in mind, we can define a useful Lagrangian: 
+
+>The *free solver Lagrangian* $\mathcal{L}^\mathfrak{s}_{f}$ is given by:
+>
+>$$
+>\mathcal{L}^\mathfrak{s}_{f}(\mathbf{q},\mathbf{\dot{q}}) = \mathcal{U}^\mathfrak{s}(\mathbb{\dot{q}'}).
+>$$
+
+This Lagrangian is the equivalent of the Lagrangian for the free particle in physics, which describes a system with no potential energy. This Lagrangian depends only on transitions (exactly as the free particle Lagrangian in physics depends only on velocities). It does not care of the utilities associated to the state, and as such, it represents the *selfless solver*: We will see shortly that the only thing the solver cares about here is to save on gas, but has no particular interest in preferring any given starting (ending) state for the path with respect to another.
+
+![Free solver Lagrangian.](tex/done/freeLagrangian.png)
+
+As a word of caution, finding the right Lagrangian that describes a physical system is an art, and I'm sure the same is true for intent solving. So, for sure, finding insightful Lagrangians is a topic in itself that is out of the scope of this post, but that we will very much investigate in the future.

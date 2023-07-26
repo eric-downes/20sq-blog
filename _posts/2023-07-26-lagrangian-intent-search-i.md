@@ -298,11 +298,13 @@ Above, we depicted a greedy solver Lagrangian. We annotated the states with thei
 
 The action of this Lagrangian on an allowed path is:
 
-\begin{align\*}
-    \mathcal{A}^\mathfrak{s}(\mathbf{q},\mathbf{\dot{q}}) &:= \sum_{i=0}^{n} \mathcal{L}^\mathfrak{s}_{g}(\mathbf{q}(i),\mathbf{\dot{q}}(i))\\\\
-    & = \sum_{i=0}^{n} \Big( \mathcal{U}^\mathfrak{s}(\mathbf{q}(i)) - \mathcal{U}^\mathfrak{s}(\mathbf{q}(i+1))\Big)\\\\
+$$
+\begin{align*}
+    \mathcal{A}^\mathfrak{s}(\mathbf{q},\mathbf{\dot{q}}) &:= \sum_{i=0}^{n} \mathcal{L}^\mathfrak{s}_{g}(\mathbf{q}(i),\mathbf{\dot{q}}(i))\\
+    & = \sum_{i=0}^{n} \Big( \mathcal{U}^\mathfrak{s}(\mathbf{q}(i)) - \mathcal{U}^\mathfrak{s}(\mathbf{q}(i+1))\Big)\\
     &= \mathcal{U}^\mathfrak{s}(\mathbf{q}(0)) - \mathcal{U}^\mathfrak{s}(\mathbf{q}(n+1))
-\end{align\*}
+\end{align*}
+$$
 
 So the action measures the net utility loss in walking a given path. The principle of least action applied to $\mathcal{L}^\mathfrak{s}_{g}$ says that the 'best' allowed paths are the ones minimizing the solver's utility loss. So, the greedy Lagrangian represents a solver that is maximally greedy: Given an intent, $\mathfrak{s}$ will pick the solution that is most convenient for its own pocket.
 
@@ -320,11 +322,13 @@ We conclude by putting things together:
 
 Where $\mathbf{q'}$ is again $\mathbf{\dot{q}}$ applied to $\mathbf{q}$. Trivially, $\mathcal{L}^\mathfrak{s}_{w} = \mathcal{L}^\mathfrak{s}_{f} + \mathcal{L}^\mathfrak{s}_{g}$. This is the intent counterpart of the usual $\text{kinetic energy} - \text{potential energy}$ Lagrangian in classical mechanics. It measures both the intrinsic loss in going from $\mathbf{q}$ to $\mathbf{q'}$ - the 'potential energy' - *and* the extrinsic cost of of the transition $\mathbf{\dot{q}}$ - the 'kinetic energy'. Computing the action, we have:
 
-\begin{align\*}
-    \mathcal{A}^\mathfrak{s}(\mathbf{q},\mathbf{\dot{q}}) &:= \sum_{i=0}^{n} \mathcal{L}^\mathfrak{s}_{w}(\mathbf{q}(i),\mathbf{\dot{q}}(i))\\\\
-    &= \sum_{i=0}^{n} \Big( \mathcal{U}^\mathfrak{s}(\mathbb{\dot{q}}(i)) + \big(\mathcal{U}^\mathfrak{s}(\mathbb{q}(i)) - \mathcal{U}^\mathfrak{s}(\mathbb{q}(i+1))\big)\Big)\\\\
+$$
+\begin{align*}
+    \mathcal{A}^\mathfrak{s}(\mathbf{q},\mathbf{\dot{q}}) &:= \sum_{i=0}^{n} \mathcal{L}^\mathfrak{s}_{w}(\mathbf{q}(i),\mathbf{\dot{q}}(i))\\
+    &= \sum_{i=0}^{n} \Big( \mathcal{U}^\mathfrak{s}(\mathbb{\dot{q}}(i)) + \big(\mathcal{U}^\mathfrak{s}(\mathbb{q}(i)) - \mathcal{U}^\mathfrak{s}(\mathbb{q}(i+1))\big)\Big)\\
     &= \sum_{i=0}^{n} \Big(\mathcal{U}^\mathfrak{s}(\mathbb{\dot{q}}(i))\Big) + \mathcal{U}^\mathfrak{s}(\mathbf{q}(0)) - \mathcal{U}^\mathfrak{s}(\mathbf{q}(n+1)).
-\end{align\*}
+\end{align*}
+$$
 
 The principle of least action applied to $\mathcal{L}^\mathfrak{s}_{w}$ says that the 'best' solutions for the intent $\mathfrak{i}$ are the paths that minimize the loss *where the externalities of transitions are accounted for*.
 

@@ -93,7 +93,7 @@ To apply Lagrangian techniques to our setting, we need to define an equivalent o
 
 As we said in the beginning, our state space $S$ is built out of a graph, the state diagram of our mechanism $G$. In particular, we used the nodes of this graph to build $S$. If intuitively velocities at a point represent 'where a particle wants to go', we can transfer this intuition right away to our case: Given a point $\mathbf{q}$ in our state space $S$, transitions starting at $\mathbf{q}$ represents 'where the state wants to go' when you apply them.
 
-![Alt text](tex/done/TqS.png)
+![Example of tangent space at q.](tex/done/TqS.png)
 
 From this, we can define:
 
@@ -111,7 +111,7 @@ From this, we can define:
 >TS := \bigsqcup_{\mathbf{q} \in S} T_\mathbf{q} S = \{ (\mathbf{q},\mathbf{\dot{q}} ) \mid \mathbf{q} \in S, \mathbf{\dot{q}} \in T_\mathbf{q} S\}.
 >$$
 
-![TS](tex/done/TS.png)
+![Example of tangent bundle of the state space.](tex/done/TS.png)
 
 The *tangent bundle of the state space* is much coarser and uglier than the one used in physics. As stressed before, $TM$ has a lot of nice properties, can be described nicely using coordinates, etc; whereas $TS$ is just a set of couples $(\mathbf{q},\mathbf{\dot{q}})$ where the second component depends somehow on the first.
 

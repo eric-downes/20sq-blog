@@ -6,7 +6,7 @@ permalink: /about/
 
 This is the blog of [20\[\]](https://20squares.xyz), a for-profit company focused on employing compositional techniques to game theoretic modelling and mechanism design, with particular attention to crypto.
 
-As research moves fast in crypto, this blog will serve as a repository for research that we are happy to share, but that is not yet sedimented or mature enough to be turned into a full-flagged academic paper.
+As research moves fast in crypto, this blog will serve as a repository for ideas that we are happy to share, but that are not yet sedimented or mature enough to be turned into full-flagged academic papers.
 
 ## Collaborations
 

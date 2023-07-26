@@ -250,8 +250,88 @@ Notice that in our case $\mathcal{A}^\mathfrak{s}$ depends on both $\mathbf{q},\
 
 The *principle of least action for intents* then reads as follows: 
 
->The *best* solutions for the intent $\mathfrak{i}$ that $\mathfrak{s}$ can provide are the paths that *minimize* the action $\mathcal{A}^\mathfrak{s}$**:
+>The *best* solutions for the intent $\mathfrak{i}$ that $\mathfrak{s}$ can provide are the paths that *minimize* the action $\mathcal{A}^\mathfrak{s}$, that is, the couples $(\mathbf{q}_{\text{best}},\mathbf{\dot{q}}_{\text{best}})$ such that:
 >
 >$$
->\text{solutions} := \left\{ (\mathbf{q}_{\text{best}},\mathbf{\dot{q}}_{\text{best}}) \mid \mathcal{A}^\mathfrak{s}(\mathbf{q}_{\text{best}},\mathbf{\dot{q}}_{\text{best}}) = \min_{(\mathbf{q},\mathbf{\dot{q}}) \in \text{allowed paths}} \mathcal{A}^\mathfrak{s}(\mathbf{q},\mathbf{\dot{q}}) \right\}.
+>\mathcal{A}^\mathfrak{s}(\mathbf{q}_{\text{best}},\mathbf{\dot{q}}_{\text{best}}) = \min_{(\mathbf{q},\mathbf{\dot{q}}) \in \text{allowed paths}} \mathcal{A}^\mathfrak{s}(\mathbf{q},\mathbf{\dot{q}}) \right.
 >$$
+
+### Simple example: Action of the free searcher Lagrangian
+
+Let us see what this means in practice for the free searcher Lagrangian. Given a path $(\mathbf{q},\mathbf{\dot{q}})$ and the free searcher Lagrangian $\mathcal{L}^\mathfrak{s}_{f}$,
+
+\begin{align\*}
+    \mathcal{A}^\mathfrak{s}(\mathbf{q},\mathbf{\dot{q}}) &:= \sum_{i=0}^{n} \mathcal{L}^\mathfrak{s}_{f}(\mathbf{q}(i),\mathbf{\dot{q}}(i))\\\\
+    &= \sum_{i=0}^{n} \Big(\mathcal{U}^\mathfrak{s}(\mathbb{\dot{q}}(i)) \Big).
+\end{align\*}
+
+So, for instance, in a gasless axiomatization of the state space, and using $\mathcal{U}^\mathfrak{s}(\mathbb{\dot{q}}(i))$ to account for gas fees, a best solution for the intent $\mathfrak{i}$ under the free searcher Lagrangian $\mathcal{L}^\mathfrak{s}_{f}$ is any path that *minimizes the gas cost of the solution*, precisely as we would expect.
+
+![Action of the free Lagrangian on a path.](tex/done/freeAction.png)
+
+The fact that the searcher $\mathfrak{s}$ is considered *selflessness* comes from the fact that $\mathfrak{s}$ is only trying to reduce gas costs, and is not interested in picking any particular starting state (ending state, respectively) in $S^\mathfrak{i,p}_i$ ($S^\mathfrak{i,p}_f$, respectively), as long as they give the least gas cost.
+
+![Alternative best path.](tex/done/freeAction2.png)
+
+### Cheating physics
+
+In physics, a Lagrangian $\mathcal{L}(\mathbb{q},\mathbb{\dot{q}})$ is *local*: What it means is that, when evaluated on a point in $TM$, it only tells us information about what happens in that point. This is obvious, as the point is everything the Lagrangian depends on. But in intentland things are different, and we can cheat!
+
+This is because our definition of velocity is very different from the one of physics.In physics, a velocity $\mathbf{\dot{q}}$ at a point $\mathbf{q}$ represents 'and infinitesimal change in a given direction starting from $\mathbf{q}$. Since this change is infinitesimal in nature, it cannot bring us to any other point $\mathbf{\dot{q'}}$. This is radically different from what happens in our discrete setting: For us, velocities at $\mathbf{q}$ are atomic transitions $\mathbf{\dot{q}}$ that start at $\mathbf{q}$. By definition, we can just *apply* $\mathbf{\dot{q}}$ to $\mathbf{q}$ to end up in some other state $\mathbf{q'}$. As such, our notion of Lagrangian is intrinsically *non-local*: In practice, the dependence on $\mathbb{q},\mathbb{\dot{q}}$ is enough to operate also on the resulting state $\mathbb{q'}$. With this intuition in mind, we can define new Lagrangians:
+
+> The *greedy solver Lagrangian* $\mathcal{L}^\mathfrak{s}_{g}$ is given by:
+>
+>$$
+>\mathcal{L}^\mathfrak{s}_{g}(\mathbf{q},\mathbf{\dot{q}}) = \mathcal{U}^\mathfrak{s}(\mathbb{q}) - \mathcal{U}^\mathfrak{s}(\mathbb{q'})
+>$$
+
+Where $\mathbf{q'}$ is again $\mathbf{\dot{q}}$ applied to $\mathbf{q}$.
+
+$\mathcal{L}^\mathfrak{s}_{g}(\mathbf{q},\mathbf{\dot{q}})$ measures the loss of utility in going from $\mathbf{q}$ to $\mathbf{q'}$. In contrast with $\mathcal{L}^\mathfrak{s}_{f}$, which is the intent analogous of only having kinetic energy around, $\mathcal{L}^\mathfrak{s}_{g}$ has the aspect of a pure potential: In depends on $\mathbf{\dot{q}}$ only insomuch to calculate the adjacent state $\mathbf{q'}$, but disregards the intrinsic externalities given by $\mathbf{\dot{q}}$ - the 'kinetic energy' - completely.
+
+![Greedy solver Lagrangian.](tex/done/greedyLagrangian.png)
+
+Above, we depicted a greedy solver Lagrangian. We annotated the states with their utilities (which are as in the example of the free Lagrangian), and annotated transitions with the corresponding loss of utility.
+
+The action of this Lagrangian on an allowed path is:
+
+\begin{align\*}
+    \mathcal{A}^\mathfrak{s}(\mathbf{q},\mathbf{\dot{q}}) &:= \sum_{i=0}^{n} \mathcal{L}^\mathfrak{s}_{g}(\mathbf{q}(i),\mathbf{\dot{q}}(i))\\\\
+    & = \sum_{i=0}^{n} \Big( \mathcal{U}^\mathfrak{s}(\mathbf{q}(i)) - \mathcal{U}^\mathfrak{s}(\mathbf{q}(i+1))\Big)\\\\
+    &= \mathcal{U}^\mathfrak{s}(\mathbf{q}(0)) - \mathcal{U}^\mathfrak{s}(\mathbf{q}(n+1))
+\end{align\*}
+
+So the action measures the net utility loss in walking a given path. The principle of least action applied to $\mathcal{L}^\mathfrak{s}_{g}$ says that the 'best' allowed paths are the ones minimizing the solver's utility loss. So, the greedy Lagrangian represents a solver that is maximally greedy: Given an intent, $\mathfrak{s}$ will pick the solution that is most convenient for its own pocket.
+
+![Action for the greedy solver Lagrangian.](tex/done/greedyAction.png)
+
+In particular, if it is $\min_{(\mathbf{q},\mathbf{\dot{q}}) \in \text{allowed paths}} \mathcal{A}^\mathfrak{s}(\mathbf{q},\mathbf{\dot{q}}) < 0$, then the best paths have negative loss (and so positive profit, as depicted in the figure above), and indentify intent solutions that $\mathfrak{s}$ has an *incentive* to produce.
+
+We conclude by putting things together:
+
+>The *weighted greedy Lagrangian* $\mathcal{L}^\mathfrak{s}_{w}$ is given by:
+>
+>$$
+>\mathcal{L}^\mathfrak{s}_{w}(\mathbf{q},\mathbf{\dot{q}}) = \mathcal{U}^\mathfrak{s}(\mathbb{\dot{q}}) + \big(\mathcal{U}^\mathfrak{s}(\mathbb{q}) - \mathcal{U}^\mathfrak{s}(\mathbb{q'})\big)
+>$$
+
+Where $\mathbf{q'}$ is again $\mathbf{\dot{q}}$ applied to $\mathbf{q}$. Trivially, $\mathcal{L}^\mathfrak{s}_{w} = \mathcal{L}^\mathfrak{s}_{f} + \mathcal{L}^\mathfrak{s}_{g}$. This is the intent counterpart of the usual $\text{kinetic energy} - \text{potential energy}$ Lagrangian in classical mechanics. It measures both the intrinsic loss in going from $\mathbf{q}$ to $\mathbf{q'}$ - the 'potential energy' - *and* the extrinsic cost of of the transition $\mathbf{\dot{q}}$ - the 'kinetic energy'. Computing the action, we have:
+
+\begin{align\*}
+    \mathcal{A}^\mathfrak{s}(\mathbf{q},\mathbf{\dot{q}}) &:= \sum_{i=0}^{n} \mathcal{L}^\mathfrak{s}_{w}(\mathbf{q}(i),\mathbf{\dot{q}}(i))\\\\
+    &= \sum_{i=0}^{n} \Big( \mathcal{U}^\mathfrak{s}(\mathbb{\dot{q}}(i)) + \big(\mathcal{U}^\mathfrak{s}(\mathbb{q}(i)) - \mathcal{U}^\mathfrak{s}(\mathbb{q}(i+1))\big)\Big)\\\\
+    &= \sum_{i=0}^{n} \Big(\mathcal{U}^\mathfrak{s}(\mathbb{\dot{q}}(i))\Big) + \mathcal{U}^\mathfrak{s}(\mathbf{q}(0)) - \mathcal{U}^\mathfrak{s}(\mathbf{q}(n+1)).
+\end{align\*}
+
+The principle of least action applied to $\mathcal{L}^\mathfrak{s}_{w}$ says that the 'best' solutions for the intent $\mathfrak{i}$ are the paths that minimize the loss *where the externalities of transitions are accounted for*.
+
+In general, the intuition about Lagrangian mechanics applied to intents is that the behavior of the searcher (greedy, welfare maximizing, etc.) can be simply encoded in the Lagrangian.
+
+## Conclusion
+
+This post is a first attempt at formalizing intent production and search, heavily borrowing from second year undergrad physics. There are still many open questions about this approach:
+- Working out intent composition. This should be relatively easy and you can expect another post coming out 'soon-ish'.
+- Working out the equivalent of the Euler-Lagrange equations in our setting. Not sure this is even doable, but if it is, it's a big deal because it opens up a really good avenue towards intent solving.
+- Working out more precisely how intent formulation changes the shape of the intent space. Unlikely to happen before people settle on what kind of languages they want to use for intents.
+
+If you liked this post (or not) and you want to give me some feedback, shoot me an email or engage in public conversation on [Twitter](https://twitter.com/fabgenovese) or preferrably on [Mastodon](https://cryptodon.lol/@fab).

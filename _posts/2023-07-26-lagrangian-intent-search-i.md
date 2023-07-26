@@ -137,3 +137,58 @@ Here, $\pi_1: TS \to S$ is the projection on the first coordinate.
 In words: If $(\mathbf{q},\mathbf{\dot{q}})$ is in the intent space and $\mathbf{\dot{q}}$ leads to $\mathbf{q'}$, then $\mathbf{q'}$ must be included in the intent space as well somehow. Finally, 
 
 > An *intent* $\mathfrak{i}$ is a triple $(T^\mathfrak{i} S, S^\mathfrak{i}_i, S^\mathfrak{i}_f)$ with $S^\mathfrak{i}_i, S^\mathfrak{i}_f \subseteq S$.
+
+Here, $S^\mathfrak{i}_i, S^\mathfrak{i}_f$ represent the premises and conclusions regions of $\mathfrak{i}$, respectively.
+
+![Intent space](tex/done/intentSpace.png)
+
+## The solver's perspective
+
+Now, we finally embrace the perspective of the intent solver, call it $\mathfrak{s}$: The solver must provide a path (we will formalize this concept shortly) that starts in the premises region $S_i$ and ends in the conclusions region $S_f$. But is every path on $T^\mathfrak{i} S$ satisfing this property enough to solve the intent? No! In fact, there may be paths that are crossing states where $\mathfrak{s}$ is not allowed to go for reasons that have nothing to do with the intent given by $\mathfrak{p}$, or that use transitions that may revert when sent by $\mathfrak{s}$.
+An example of this is if $\mathfrak{s}$ tries to call a given smart contract function without having the necessary permmissions - e.g. because of an `onlyowner` modifier when $\mathfrak{s}$ is not the owner of the contract. 
+
+So, we need to further refine $(T^\mathfrak{i} S, S^\mathfrak{i}_i, S^\mathfrak{i}_f)$ when taking the solver perspective: 
+
+> An *intent $\mathfrak{i}$ from the perspective of solver $\mathfrak{s}$* is a triple $(T^\mathfrak{i,s} S, S^\mathfrak{i,s}_i, S^\mathfrak{i,s}_f)$ where:
+> - $T^\mathfrak{i,s} S := T^\mathfrak{i} S \cap \lbrace\text{regions of } T^\mathfrak{i} S \text{ where } \mathfrak{s} \text{ is allowed to go}\rbrace$;
+> - $S^\mathfrak{i,s}_i := S^\mathfrak{i}_i \cap \pi_1(T^\mathfrak{i,s} S)$;
+> - $S^\mathfrak{i,s}_f := S^\mathfrak{i}_f \cap \pi_1(T^\mathfrak{i,s} S)$.
+
+In practice, $T^\mathfrak{i,s} S$ is just $T^\mathfrak{i} S$ where we punched even more holes, corresponding to states that cannot be reached by the solver $\mathfrak{s}$ and to the transitions that $\mathfrak{s}$ cannot use.
+
+![Solver's perspective](tex/done/solverPerspective.png)
+
+### Allowed paths
+
+Ok, so now we have a solver $\mathfrak{s}$ and the intent space, suitably shaped by the provided intent. To solve the intent, $\mathfrak{s}$ wants to find a *path* in $T^\mathfrak{i,s} S$ that starts in $S^\mathfrak{i,p}_i$ and lands in $S^\mathfrak{i,p}_f$.
+
+But what is a path really? Again, let's look at physics. In the nice, reassuring world of the well-behaved physical space $M$, it would be nothing more than a function $\mathbf{q} : \mathbb{R} \to M$, which expresses how the position $\mathbf{q}(t)$ in the space $M$ varies along with time $t$. Moreover, as this function is supposed to be infinitely derivable, we can *differentiate* it along $t$ and obtain its *velocity* $\mathbf{\dot{q}} := \frac{d\mathbf{q}}{dt}: \mathbb{R} \to T_{\mathbf{q}(t)} M$.
+
+Unfortunately, in our case both the state space $S$ and 'time' are discrete quantities. A path is then defined as a sequence of states and transitions:
+
+$$
+s_0 \xrightarrow{t_0} s_1 \xrightarrow{t_1} \dots \xrightarrow{t_{n}} s_{n+1}.
+$$
+
+Equivalently, this can be spelled out as a couple of functions:
+$$
+\begin{gather*}
+(\mathbf{q}(t), \mathbf{\dot{q}}(t)): \{0, \dots, n\} \to T^\mathfrak{i,p} S\\
+i \mapsto (s_i,t_i)
+\end{gather*}
+$$
+
+such that $s_i \xrightarrow{t_i} s_{i+1}$ for all $i$. 
+Notice how we do not need to explicitly mention the state $n+1$, as this information is implicitly contained in the couple $(s_n,t_n)$. 
+
+![A path.](tex/done/path.png)
+
+In stark contrast with physics, $\mathbf{\dot{q}}$ *cannot* be just determined from $\mathbf{q}$ since we do not have a notion of differentiation: There may very well be two different transitions $\mathbf{\dot{q}}, \mathbf{\dot{q}'}$ such that $\mathbf{q} \xrightarrow{\mathbf{\dot{q}}, \mathbf{\dot{q}'}} \mathbf{q'}$.
+
+![Example of non-differentiability of paths](tex/done/nonDifferentiability.png)
+
+> A path $(\mathbf{q}(i), \mathbf{\dot{q}}(i))_{0 \leq i \leq n}$ in $T^\mathfrak{i,p} S$ is *allowed* if $\mathbf{q}(0) \in S^\mathfrak{i,p}_i$ and $\mathbf{q}(n+1) \in S^\mathfrak{i,p}_f$.
+
+Indeed, allowed paths represent *solutions* for the intent $\mathfrak{i}$ that are *feasible* for the solver $\mathfrak{s}$.
+
+![An allowed path.](tex/done/allowedPath.png)

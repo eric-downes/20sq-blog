@@ -224,7 +224,11 @@ As a word of caution, finding the right Lagrangian that describes a physical sys
 ### Principle of least action defines intent search
 
 Now we're finally at the core of our model. Suppose you have a path in the physical space $\mathbf{q}(t): \mathbb{R} \to M$. For a Lagrangian $\mathcal{L}$, you can compute $\mathcal{L}(\mathbf{q}(t),\mathbf{\dot{q}}(t))$ for each time $t$ in a given interval $[t_0,t_1]$, and take the sum:
-$$ \int_{t_0}^{t_1} \mathcal{L}(\mathbf{q}(t),\mathbf{\dot{q}}(t)) \delta t.$$
+
+$$ 
+\int_{t_0}^{t_1} \mathcal{L}(\mathbf{q}(t),\mathbf{\dot{q}}(t)) \delta t.
+$$
+
 This quantity is called *action*, and is a functional $A : (\mathbb{R} \to M) \times \mathbb{R} \times \mathbb{R} \to \mathbb{R}$ (the notation in physics for the action is $S$, but we're using $A$ here since we are already using $S$ for the state space). Given a path $\mathbf{q}: \mathbb{R} \to M$, $A(\mathbf{q}, t_0, t_1)$ returns a scalar defined as above.
 
 Notice that $A$ does not depend explicitly on $\mathbf{\dot{q}}$ since, for any path $\mathbf{q}$, the velocity $\mathbf{\dot{q}}$ is obtained by differentiating with respect to time: $\mathbf{\dot{q}} = \frac{d\mathbf{q}}{dt}$. This is often a hard point to understand: 
@@ -233,7 +237,11 @@ Notice that $A$ does not depend explicitly on $\mathbf{\dot{q}}$ since, for any 
 - By putting these points together, you can plug the couple $(\mathbf{q}, \frac{d\mathbf{q}}{dt})$ into $\mathcal{L}$, and obtain a functional that only depends on $\mathbf{q}$;
 - So, whereas $\mathcal{L}$ depends on the whole space $TM$, $\mathcal{A}$ only depends on *paths* defined on $M$.
 
-Physics says that, given $\mathcal{L}$ and times $t_0, t_1$, *the paths $[t_0, t_1] \to M$ describing the motion of our physical system are the stationary points of the action*, that is, the paths $\mathbf{q}$ such that $$\frac{d\mathcal{A}(\mathbf{q}, t_0, t_1)}{d\mathbf{q}} = 0.$$
+Physics says that, given $\mathcal{L}$ and times $t_0, t_1$, *the paths $[t_0, t_1] \to M$ describing the motion of our physical system are the stationary points of the action*, that is, the paths $\mathbf{q}$ such that 
+
+$$
+\frac{d\mathcal{A}(\mathbf{q}, t_0, t_1)}{d\mathbf{q}} = 0.
+$$
 
 In particular, in mechanical systems the equations of motion of the system are often given by the paths that *minimize* $\mathcal{A}$, so for the paths $\mathbf{q}(t)$ for shich $\mathcal{A}(\mathbf{q}, t_0, t_1)$ is a (local) minimum. The meaning of this the following: At each point of $TM$, $\mathcal{L}$ gives us information about the energetic balance of the system at that point. Now imagine you have a path defined on the interval $[t_0, t_1]$. This path may be *non-physical*, e.g. a path where the trajectory changes direction even if it is not subjected to any force whatsoever. The 'forces' here are succintly embedded into the Lagrangian, since the presence of a force at a point will be accounted for in the overall energy balance given by $\mathcal{L}$ evaluated at that point. In this case, the paths that are *physical* are the ones that upset the energy balance defined by $\mathcal{L}$, along the path, as little as possible.
 
@@ -249,7 +257,11 @@ In intentland, the lagrangian $\mathcal{L}^\mathfrak{s}$ defines the *utility ba
 >\mathcal{A}^\mathfrak{s}(\mathbf{q},\mathbf{\dot{q}}) := \sum_{i=0}^{n} \mathcal{L}^\mathfrak{s}(\mathbf{q}(i),\mathbf{\dot{q}}(i)).
 >$$
 
-Notice that in our case $\mathcal{A}^\mathfrak{s}$ depends on both $\mathbf{q},\mathbf{\dot{q}}$ since the two come as a unique package in intentland: As we remarked above, in intentland we cannot obtain $\mathbf{\dot{q}}$ from $\mathbf{q}$ as we do not have a notion of derivation. So, whereas a path in physicland is just defined ad $\mathbf{q}$ (and we can compute its velocity $\mathbf{\dot{q}}$ by differentiating), we *defined* a path in intentland to be *the* couple $(\mathbf{q}, \mathbf{\dot{q}})$, and hence $\mathcal{A}^\mathfrak{s}$ depends on paths in perfect analogy with its physical counterpart, and has signature: $$\mathcal{A}^\mathfrak{s} : \text{Allowed paths} \to \mathbb{R}.$$
+Notice that in our case $\mathcal{A}^\mathfrak{s}$ depends on both $\mathbf{q},\mathbf{\dot{q}}$ since the two come as a unique package in intentland: As we remarked above, in intentland we cannot obtain $\mathbf{\dot{q}}$ from $\mathbf{q}$ as we do not have a notion of derivation. So, whereas a path in physicland is just defined ad $\mathbf{q}$ (and we can compute its velocity $\mathbf{\dot{q}}$ by differentiating), we *defined* a path in intentland to be *the* couple $(\mathbf{q}, \mathbf{\dot{q}})$, and hence $\mathcal{A}^\mathfrak{s}$ depends on paths in perfect analogy with its physical counterpart, and has signature: 
+
+$$
+\mathcal{A}^\mathfrak{s} : \text{Allowed paths} \to \mathbb{R}.
+$$
 
 The *principle of least action for intents* then reads as follows: 
 

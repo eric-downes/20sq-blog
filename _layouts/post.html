@@ -23,7 +23,13 @@ layout: default
     </div>
   </div>
     
+
   <div class="entry">
+    {% if page.thanks %}
+    <div class="thanks">
+      {{ content }}
+    </div>
+    {% endif %}
     {{ content }}
   </div>
 

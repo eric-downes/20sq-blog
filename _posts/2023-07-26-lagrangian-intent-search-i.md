@@ -98,16 +98,12 @@ As we said in the beginning, our state space $S$ is built out of a graph, the st
 From this, we can define:
 
 >*Velocities* at $\mathbf{q}$, denoted $\mathbf{\dot{q}}$, are atomic transitions that start in $\mathbf{q}$.
-
-
->\begin{align\*}
-> T_\mathbf{q} S := \{\mathbf{\dot{q}} \mid \mathbf{q} \xrightarrow{\mathbf{\dot{q}}} \_\}\\\\
-> TS := \bigsqcup_{\mathbf{q} \in S} T_\mathbf{q} S = \{ (\mathbf{q},\mathbf{\dot{q}} ) \mid \mathbf{q} \in S, \mathbf{\dot{q}} \in T_\mathbf{q} S\}.
->\end{align\*}
+> The *tangent space* at $\mathbf{q}$, is defined as $T_\mathbf{q} S := \{\mathbf{\dot{q}} \mid \mathbf{q} \xrightarrow{\mathbf{\dot{q}}} - \}
+> The *tangent bundle of the state space* is defined as $TS := \bigsqcup_{\mathbf{q} \in S} T_\mathbf{q} S = \{ (\mathbf{q},\mathbf{\dot{q}} ) \mid \mathbf{q} \in S, \mathbf{\dot{q}} \in T_\mathbf{q} S\}.
 
 ![TS](tex/done/TS.png)
 
-This notion of tangent bundle, which we call *tangent bundle of the state space*, is much coarser and ugly than the one used in physics. As stressed before, $TM$ has a lot of nice properties, can be described nicely using coordinates, etc; whereas $TS$ is just a set of couples $(\mathbf{q},\mathbf{\dot{q}})$ where the second component depends somehow on the first.
+The *tangent bundle of the state space* is much coarser and uglier than the one used in physics. As stressed before, $TM$ has a lot of nice properties, can be described nicely using coordinates, etc; whereas $TS$ is just a set of couples $(\mathbf{q},\mathbf{\dot{q}})$ where the second component depends somehow on the first.
 
 
 ### Constraints (re)-define state space topology
@@ -125,13 +121,9 @@ We won't focus on the latter type of constraints in this post, as it will be exp
 
 Further constraints clearly must be reflected on the structure of $TS$: If we 'disallow' some points in the state space $S$, then we also have to 'disallow' velocities that lead to one of those points. Elaborating on this further, we are quickly made aware of the fact that intents may also contain constraints that intervene purely on the $\mathbf{\dot{q}}$, that is, constraints that disallow using a given transition when in a given state. In general, we have to work with a restriction of the tangent bundle of the state space $TS$.
 
-> \begin{equation}
-> \text{An \textit{intent space} is a subset $T^i S \subseteq TS$ such that $(\mathbf{q},\mathbf{\dot{q}}) \in T^\mathfrak{i} S \wedge \mathbf{q} \xrightarrow{\mathbf{\dot{q}}} \mathbf{q'} \implies \mathbf{q'} \in \pi_1 (T^i S)$.}
-> \end{equation}
+> An *intent space* is a subset $T^i S \subseteq TS$ such that $(\mathbf{q},\mathbf{\dot{q}}) \in T^\mathfrak{i} S \wedge \mathbf{q} \xrightarrow{\mathbf{\dot{q}}} \mathbf{q'} \implies \mathbf{q'} \in \pi_1 (T^i S)$.
 
 Here, $\pi_1: TS \to S$ is the projection on the first coordinate.
 In words: If $(\mathbf{q},\mathbf{\dot{q}})$ is in the intent space and $\mathbf{\dot{q}}$ leads to $\mathbf{q'}$, then $\mathbf{q'}$ must be included in the intent space as well somehow. Finally, 
 
-> \begin{equation}
-> \text{An \textit{intent} $\mathfrak{i}$ is a triple $(T^\mathfrak{i} S, S^\mathfrak{i}_i, S^\mathfrak{i}_f)$ with $S^\mathfrak{i}_i, S^\mathfrak{i}_f \subseteq S$.}
-> \end{equation}
+> An *intent* $\mathfrak{i}$ is a triple $(T^\mathfrak{i} S, S^\mathfrak{i}_i, S^\mathfrak{i}_f)$ with $S^\mathfrak{i}_i, S^\mathfrak{i}_f \subseteq S$.

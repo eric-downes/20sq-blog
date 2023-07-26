@@ -415,6 +415,26 @@ nav {
     background-color: #e0f2f0;
   }
 
+  .definition {
+    margin: 1.8em .8em;
+    /*border-left: 2px solid $gray;*/
+    padding: 0.1em 1em;
+    color: $gray;
+    font-size: 22px;
+    font-style: regular;
+    background-color: #e0f2f0;
+  }
+
+  .theorem {
+    margin: 1.8em .8em;
+    /*border-left: 2px solid $gray;*/
+    padding: 0.1em 1em;
+    color: $gray;
+    font-size: 22px;
+    font-style: italic;
+    background-color: #e0f2f0;
+  }
+
   .thanks {
     margin: 1.8em .8em;
     /*border-left: 2px solid $gray;*/

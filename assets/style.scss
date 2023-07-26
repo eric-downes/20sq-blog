@@ -308,8 +308,8 @@ p > img {
 
 .site-avatar {
   float: left;
-  width: 150px;
-  height: 70px;
+  width: 130px;
+  height: 60px;
   margin-right: 15px;
 
   @include mobile {
@@ -320,8 +320,8 @@ p > img {
 
   img {
     border-radius: 5px;
-    width: 150px;
-    height: 70px;
+    width: 130px;
+    height: 60px;
     object-fit: scale-down;
   }
 }
@@ -366,7 +366,6 @@ p > img {
 nav {
   float: right;
   margin-top: 23px; // @TODO: Vertically middle align
-  //font-family: $helveticaNeue;
   font-family: plexMono;
   font-size: 18px;
 

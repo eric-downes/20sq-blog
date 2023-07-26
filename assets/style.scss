@@ -9,6 +9,33 @@
 @import "variables";
 // Syntax highlighting @import is at the bottom of this file
 
+@font-face{
+  font-family: plexMono;
+  src: url(./fonts/IBMPlexMono-Regular.otf);
+  font-weight: normal;
+  font-display: swap;
+}
+@font-face{
+  font-family: plexMono;
+  src: url(./fonts/IBMPlexMono-SemiBold.otf);
+  font-weight: bold;
+  font-display: swap;
+}
+@font-face{
+  font-family: plexMono;
+  src: url(./fonts/IBMPlexMono-Italic.otf);
+  font-weight: normal;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face{
+  font-family: plexMono;
+  src: url(./fonts/IBMPlexMono-SemiBoldItalic.otf);
+  font-weight: bold;
+  font-style: italic;
+  font-display: swap;
+}
+
 /**************/
 /* BASE RULES */
 /**************/
@@ -22,7 +49,8 @@ html {
 
 body {
   background: #fff;
-  font-family: -system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  //font-family: -system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-family: plexMono;
   color: #404040;
   line-height: 1.7;
   font-weight: 400;
@@ -38,7 +66,8 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: -system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  //font-family: -system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-family: plexMono;
   color: $darkerGray;
   font-weight: bold;
 
@@ -311,7 +340,8 @@ p > img {
   margin: 0;
   color: $darkGray;
   cursor: pointer;
-  font-family: $helveticaNeue;
+  //font-family: $helveticaNeue;
+  font-family: plexMono;
   font-weight: 300;
   font-size: 28px;
   letter-spacing: 1px;
@@ -336,7 +366,8 @@ p > img {
 nav {
   float: right;
   margin-top: 23px; // @TODO: Vertically middle align
-  font-family: $helveticaNeue;
+  //font-family: $helveticaNeue;
+  font-family: plexMono;
   font-size: 18px;
 
   @include mobile {
@@ -450,7 +481,8 @@ body:after {
 }
 
 .post h1{
-  font-family: -system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  //font-family: -system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-family: plexMono;
   text-align: center;
   font-weight: bold;
   font-kerning: auto;
@@ -459,7 +491,8 @@ body:after {
 }
 
 .page h1{
-  font-family: -system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  //font-family: -system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-family: plexMono;
   text-align: center;
   font-weight: bold;
   font-kerning: auto;
@@ -481,7 +514,8 @@ body:after {
 .cd-container a {
   color: #30434e;
   text-decoration: none;
-  font-family: "Open Sans", sans-serif;
+  //font-family: "Open Sans", sans-serif;
+  font-family: plexMono;
 }
 
 .cd-container img {
@@ -489,7 +523,8 @@ body:after {
 }
 
 .cd-container h1, .cd-container h2 {
-  font-family: "Open Sans", sans-serif;
+  //font-family: "Open Sans", sans-serif;
+  font-family: plexMono;
   font-weight: bold;
 }
 
@@ -631,7 +666,8 @@ Modules - reusable parts of our design
 }
 
 #carbonads {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  //font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: plexMono;
   display: inline-block;
   overflow: hidden;
   max-width: 270px;

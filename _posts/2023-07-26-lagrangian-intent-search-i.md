@@ -44,11 +44,11 @@ First of all, we must formalize the concept of state space. Given some mechanism
 
 A simple, idealized representation of the state space is the one below, where the little squares are states, and two states are adjacent if you can go from one to the other via some atomic action. In Ethereum land, points would be the states of the EVM, and two points would be adjacent if there is some EVM trace bringing you from one state to the other:
 
-![A simplification of the state space](tex/done/stateSpace.png)
+![A simplistic depiction of the state space.](../assetsPosts/2023-07-26-lagrangian-intent-search-i/stateSpace.png)
 
 In practice, since we're mainly working with discrete mechanisms such as the EVM, the state space will never be so regular, and the following representation would be more appropriate: Given a mechanism $G$, we can build its [state diagram](https://en.wikipedia.org/wiki/State_diagram) when we see $G$ as some sort of automaton:
 
-![A state diagram](tex/done/stateDiagram.png)
+![An example of state diagram.](tex/done/stateDiagram.png)
 
 As you can see, the state diagram is actually a graph, where nodes are states, and edges, in the literature called *transitions*, are inputs that we feed to the automaton (in our case in the form of calldata) to get to another state. Modulo some differences in the transition decorations, this assumption is without loss of generality as every Turing machine admits a representation in terms of state diagrams, so any 'computationally feasible' mechanism $G$ will admit such a representation.
 
@@ -60,7 +60,7 @@ In any case, we can work with what we got:
 
 Compared to the physical example above, we see that the state space $S$ for a mechanism $G$ has no real notion of continuity, differentiability or cohesion of any sort. It's just a set.
 
-![A state space from a state diagram](tex/done/stateSpaceS.png)
+![A state space from a state diagram.](tex/done/stateSpaceS.png)
 
 ### Discretising tangent bundles
 
@@ -74,7 +74,7 @@ Positions are easy to understand: You have some notion of space $M$ (which in cl
 
 Velocities, on the other hand, are a bit harder. Given a representation of the physical space $M$, the velocity of a particle *at* a point represents a direction where the particle 'wants' to go while it stays in that point. Given $M$, at each point $\mathbf{q}$ we can build the *tangent space to $M$ at $\mathbf{q}$*, denoted with $T_\mathbf{q} M$. Velocities at point $\mathbf{q}$ are points in this space, and we denote them as $\mathbf{\dot{q}}$:
 
-![Tangent space in the differential geometry sense](tex/done/tangentSpace.png)
+![Example of tangent space in differential geometry.](tex/done/tangentSpace.png)
 
 One can prove that when $M$ is a smooth manifold of dimension $n$, $T_\mathbf{q} M$ has the same dimension $n$ for each $\mathbf{q}$. I won't dwelve into the mathematical details of what this means. The take home message is that:
 

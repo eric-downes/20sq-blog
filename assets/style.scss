@@ -415,6 +415,8 @@ nav {
     background-color: #e0f2f0;
   }
 
+  counter-reset: definition lemma proposition theorem corollary;
+
   .definition {
     margin: 1.8em .8em;
     /*border-left: 2px solid $gray;*/
@@ -425,7 +427,8 @@ nav {
     background-color: #e0f2f0;
   }
   .definition:before {
-    content: "Definition.";
+    counter-increment: definition;
+    content: "Definition " counter(definition) ".";
     font-weight: bold;
   }
 
@@ -439,7 +442,8 @@ nav {
     background-color: #e0f2f0;
   }
   .lemma:before {
-    content: "Lemma.";
+    counter-increment: lemma;
+    content: "Lemma " counter(definition) ".";
     font-weight: bold;
   }
 
@@ -453,7 +457,8 @@ nav {
     background-color: #e0f2f0;
   }
   .proposition:before {
-    content: "Proposition.";
+    counter-increment: proposition;
+    content: "Proposition " counter(proposition) ".";
     font-weight: bold;
   }
 
@@ -467,7 +472,8 @@ nav {
     background-color: #e0f2f0;
   }
   .corollary:before {
-    content: "Corollary.";
+    counter-increment: corollary;
+    content: "Corollary " counter(corollary) ".";
     font-weight: bold;
   }
   
@@ -481,7 +487,8 @@ nav {
     background-color: #e0f2f0;
   }
   .theorem:before {
-    content: "Theorem.";
+    counter-increment: theorem;
+    content: "Theorem " counter(theorem) ".";
     font-weight: bold;
   }
 

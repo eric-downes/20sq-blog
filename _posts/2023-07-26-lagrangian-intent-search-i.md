@@ -10,7 +10,7 @@ thanks: I want to thank my fellow team members at 20[ ] and the guys at Anoma, B
 
 If you have been around MEV-related circles at EthCC this summer, you may have heard many people coming to the conclusion that 'defining intents is easier, solving them is harder'. This is clearly wrong, as the two things are not independent: Defining what intents are determines how difficult solving them is. Indeed, it gives a very well known fact since at least the dawn of computer science that the more expressive a formal language is, the more difficult it is to decide statements - that is, to establish if a statement can or cannot be proved - in the corresponding mechanism recognizing the language; this concept is known as [Chomsky hierarchy](https://en.wikipedia.org/wiki/Chomsky_hierarchy). Indeed, if the language is really simple - e.g. you say that the only acceptable intents are transactions in the 'traditional' sense - then solving them is even simpler, since there is nothing to solve. So, a truer statement would be that 'as the expressivity of the intent language grows, so do grow the intellectual and computational burdens for the searchers that have to solve them.
 
-...But what are intents, and what does it mean to solve them? I think it would be useful to define a formal framework to state this problem. Hopefully, this framework will also turn into something practically useful at some point. Again, if you were around EthCC this summer, you may also have stumbled into me saying that 'intents can be formalized with a mix of algebraic topology and general relativity'. Unfortunately, I was wrong, and what seems to do the job instead is a mix of topology together with my least favourite part of maths after number theory: Classical mechanics.
+...But what are intents, and what does it mean to solve them? I think it would be useful to define a formal framework to state this problem. Hopefully, this framework will also turn into something practically useful at some point. Again, if you were around EthCC this summer, you may also have stumbled into me saying that 'intents can be formalised with a mix of algebraic topology and general relativity'. Unfortunately, I was wrong, and what seems to do the job instead is a mix of topology together with my least favourite part of maths after number theory: Classical mechanics.
 
 ## What are intents?
 
@@ -22,7 +22,7 @@ In blockchain tech, you get things done via *transactions*. A transaction is, co
 
 Things become more complicated in blockchains like Ethereum, where you have *smart contracts* around. Here, transactions can call contract functions, so you can use transactions to, say, swap a number of tokens A for a suitable number of tokens B by calling some smart contract that does exactly this job.
 
-...But *which* contract should you call? The problem is that there may be *many* ways to do so, e.g. there may be many different decentralized exchanges offering you different prices for the swap.
+...But *which* contract should you call? The problem is that there may be *many* ways to do so, e.g. there may be many different decentralised exchanges offering you different prices for the swap.
 So, the problem for the user becomes: 'Say I have a goal, e.g. swapping some tokens. Which is the *best* way to do so? Which transaction should I come up with to get the best deal I can?'
 
 ### Intents, informally
@@ -40,9 +40,9 @@ The entire goal of this blog post is to make this intuition formal.
 
 ### The state space
 
-First of all, we must formalize the concept of state space. Given some mechanism $G$, e.g. the Ethereum virtual machine, the *state space* has as *points* all the states in which the mechanism can be in. The *topology* on these points will be defined by the actions one can perform with the mechanism.
+First of all, we must formalise the concept of state space. Given some mechanism $G$, e.g. the Ethereum virtual machine, the *state space* has as *points* all the states in which the mechanism can be in. The *topology* on these points will be defined by the actions one can perform with the mechanism.
 
-A simple, idealized representation of the state space is the one below, where the little squares are states, and two states are adjacent if you can go from one to the other via some atomic action. In Ethereum land, points would be the states of the EVM, and two points would be adjacent if there is some EVM trace bringing you from one state to the other:
+A simple, idealised representation of the state space is the one below, where the little squares are states, and two states are adjacent if you can go from one to the other via some atomic action. In Ethereum land, points would be the states of the EVM, and two points would be adjacent if there is some EVM trace bringing you from one state to the other:
 
 ![A simplistic depiction of the state space.](../assetsPosts/2023-07-26-lagrangian-intent-search-i/stateSpace.png)
 
@@ -66,7 +66,7 @@ Compared to the physical example above, we see that the state space $S$ for a me
 
 ### Discretising tangent bundles
 
-*Disclaimer: If you know differential geometry, you will be upset. In this section I'm deliberately identifying points in a smooth manifold with their generalized coordinates. I'm doing so because the alternative would be to talk about charts and all the like, which would make this blog post tremendously long and out of scope.*
+*Disclaimer: If you know differential geometry, you will be upset. In this section I'm deliberately identifying points in a smooth manifold with their generalised coordinates. I'm doing so because the alternative would be to talk about charts and all the like, which would make this blog post tremendously long and out of scope.*
 
 Our main endeavor is trying to export techniques from Lagrangian mechanics to intentland. Lagrangians are very useful and versatile objects that describe the dyamics of physical systems. The first concepts one needs in describing a physical system are *positions* and *velocities*, and we need to define those in our setting to be able to define Lagrangians.
 
@@ -154,7 +154,7 @@ Here, $S^\mathfrak{i}_i, S^\mathfrak{i}_f$ represent the premises and conclusion
 
 ## The solver's perspective
 
-Now, we finally embrace the perspective of the intent solver, call it $\mathfrak{s}$: The solver must provide a path (we will formalize this concept shortly) that starts in the premises region $S_i$ and ends in the conclusions region $S_f$. But is every path on $T^\mathfrak{i} S$ satisfing this property enough to solve the intent? No! In fact, there may be paths that are crossing states where $\mathfrak{s}$ is not allowed to go for reasons that have nothing to do with the intent given by $\mathfrak{p}$, or that use transitions that may revert when sent by $\mathfrak{s}$.
+Now, we finally embrace the perspective of the intent solver, call it $\mathfrak{s}$: The solver must provide a path (we will formalise this concept shortly) that starts in the premises region $S_i$ and ends in the conclusions region $S_f$. But is every path on $T^\mathfrak{i} S$ satisfing this property enough to solve the intent? No! In fact, there may be paths that are crossing states where $\mathfrak{s}$ is not allowed to go for reasons that have nothing to do with the intent given by $\mathfrak{p}$, or that use transitions that may revert when sent by $\mathfrak{s}$.
 An example of this is if $\mathfrak{s}$ tries to call a given smart contract function without having the necessary permmissions - e.g. because of an `onlyowner` modifier when $\mathfrak{s}$ is not the owner of the contract. 
 
 So, we need to further refine $(T^\mathfrak{i} S, S^\mathfrak{i}_i, S^\mathfrak{i}_f)$ when taking the solver perspective: 
@@ -218,7 +218,7 @@ $$
 \mathcal{L}: TM \times \mathbb{R} \to \mathbb{R}
 $$
 
-such that $\mathcal{L}(\mathbf{q},\mathbf{\dot{q}},t)$ succintly summarizes the overall dynamics of the system. In many interesting cases, the Lagrangian does not directly depend on time, and one just writes $\mathcal{L}(\mathbf{q},\mathbf{\dot{q}})$. The idea is that you feed it with a position $\mathbf{q}$, and with a velocity $\mathbf{\dot{q}}$ at $\mathbf{q}$, and it spits out a number that gives you information about the dynamical status of the system at that point. In many problems in classical mechanics, the Lagrangian is just taken to be: $\text{kinetic energy} - \text{potential energy}$, where the first quantity depends only on velocity and the second may depend on both velocity and position. In this case, this Lagrangian is giving us the 'level of energy balance' at the given point: It will be positive if at that point there is more kinetic energy than potential energy, and negative if the opposite happens. As motion in classical mechanics is often caused by the potential energy being converted to kinetic energy, we can see why such a quantity may be of importance.
+such that $\mathcal{L}(\mathbf{q},\mathbf{\dot{q}},t)$ succintly summarises the overall dynamics of the system. In many interesting cases, the Lagrangian does not directly depend on time, and one just writes $\mathcal{L}(\mathbf{q},\mathbf{\dot{q}})$. The idea is that you feed it with a position $\mathbf{q}$, and with a velocity $\mathbf{\dot{q}}$ at $\mathbf{q}$, and it spits out a number that gives you information about the dynamical status of the system at that point. In many problems in classical mechanics, the Lagrangian is just taken to be: $\text{kinetic energy} - \text{potential energy}$, where the first quantity depends only on velocity and the second may depend on both velocity and position. In this case, this Lagrangian is giving us the 'level of energy balance' at the given point: It will be positive if at that point there is more kinetic energy than potential energy, and negative if the opposite happens. As motion in classical mechanics is often caused by the potential energy being converted to kinetic energy, we can see why such a quantity may be of importance.
 
 In intentland we do not have energy, **but we have MEV**. The comparison is apt: In physics, work and energy are the same thing, so the amount of work performed on a physical system has the units of energy. Similarly, in cryptoeconomic mechanisms the work performed can be quantified by the amount of *extractable value* one can take from the system. We can define utility functions for $\mathfrak{s}$ on both states and transitions of a system:
 - $\mathcal{U}^\mathfrak{s}: S \to \mathbb{R}$ quantifies the net utility that the solver $\mathfrak{s}$ has when the system is in a given state $\mathbf{q}$. This may correspond, for instance, to the aggregated token balance of $\mathfrak{s}$ at state $\mathbf{q}$. 
@@ -233,7 +233,7 @@ $$
 $$
 </div>
 
-This Lagrangian is the equivalent of the Lagrangian for the free particle in physics, which describes a system with no potential energy. This Lagrangian depends only on transitions (exactly as the free particle Lagrangian in physics depends only on velocities). It does not care of the utilities associated to the state, and as such, it represents the *selfless solver*: We will see shortly that the only thing the solver cares about here is to save on gas, but has no particular interest in preferring any given starting (ending) state for the path with respect to another.
+This Lagrangian is the equivalent of the Lagrangian for the free particle in physics, which describes a system with no potential energy. This Lagrangian depends only on transitions (exactly as the free particle Lagrangian in physics depends only on velocities). It does not care about the utilities associated to the state, and as such, it represents the *selfless solver*: We will see shortly that the only thing this solver cares about here is to save on gas, but has no particular interest in preferring any given starting (ending) state for a path with respect to another, as long as the paths are allowed and they cost the same gas.
 
 ![Example of free solver Lagrangian.](../assetsPosts/2023-07-26-lagrangian-intent-search-i/freeLagrangian.png)
 
@@ -247,11 +247,11 @@ $$
 \int_{t_0}^{t_1} \mathcal{L}(\mathbf{q}(t),\mathbf{\dot{q}}(t)) \delta t.
 $$
 
-This quantity is called *action*, and is a functional $A : (\mathbb{R} \to M) \times \mathbb{R} \times \mathbb{R} \to \mathbb{R}$ (the notation in physics for the action is $S$, but we're using $A$ here since we are already using $S$ for the state space). Given a path $\mathbf{q}: \mathbb{R} \to M$, $A(\mathbf{q}, t_0, t_1)$ returns a scalar defined as above.
+This quantity is called *action*, and is a functional $\mathcal{A} : (\mathbb{R} \to M) \times \mathbb{R} \times \mathbb{R} \to \mathbb{R}$ (the notation in physics for the action is $S$, but we're using $\mathcal{A}$ here since we are already using $S$ for the state space). Given a path $\mathbf{q}: \mathbb{R} \to M$, $\mathcal{A}(\mathbf{q}, t_0, t_1)$ returns a scalar defined as above.
 
-Notice that $A$ does not depend explicitly on $\mathbf{\dot{q}}$ since, for any path $\mathbf{q}$, the velocity $\mathbf{\dot{q}}$ is obtained by differentiating with respect to time: $\mathbf{\dot{q}} = \frac{d\mathbf{q}}{dt}$. This is often a hard point to understand: 
-- On one hand, the Lagrangian is defined for *any* point $(\mathbf{q},\mathbf{\dot{q}})$ in $TM$, and $\mathbf{q},\mathbf{\dot{q}}$ can be totally independent from each other;
-- On the other, when you have a path $\mathbf{q}: \mathbb{R} \to M$, you define a couple $(\mathbf{q}, \frac{d\mathbf{q}}{dt})$, where now the second component *does* depend on the first;
+Notice that $\mathcal{A}$ does not depend explicitly on $\mathbf{\dot{q}}$ since, for any path $\mathbf{q}$, the velocity $\mathbf{\dot{q}}$ is obtained by differentiating with respect to time: $\mathbf{\dot{q}} = \frac{d\mathbf{q}}{dt}$. This is often a hard point to understand, so let's clarify: 
+- On one hand, the Lagrangian is defined for *any* point $(\mathbf{q},\mathbf{\dot{q}})$ in $TM$, and $\mathbf{q}$ and $\mathbf{\dot{q}}$ can be totally independent from each other;
+- On the other hand, when you have a path $\mathbf{q}: \mathbb{R} \to M$, you define a couple $(\mathbf{q}, \frac{d\mathbf{q}}{dt})$ where now the second component *does* depend on the first;
 - By putting these points together, you can plug the couple $(\mathbf{q}, \frac{d\mathbf{q}}{dt})$ into $\mathcal{L}$, and obtain a functional that only depends on $\mathbf{q}$;
 - So, whereas $\mathcal{L}$ depends on the whole space $TM$, $\mathcal{A}$ only depends on *paths* defined on $M$.
 
@@ -261,11 +261,11 @@ $$
 \frac{d\mathcal{A}(\mathbf{q}, t_0, t_1)}{d\mathbf{q}} = 0.
 $$
 
-In particular, in mechanical systems the equations of motion of the system are often given by the paths that *minimize* $\mathcal{A}$, so for the paths $\mathbf{q}(t)$ for shich $\mathcal{A}(\mathbf{q}, t_0, t_1)$ is a (local) minimum. The meaning of this the following: At each point of $TM$, $\mathcal{L}$ gives us information about the energetic balance of the system at that point. Now imagine you have a path defined on the interval $[t_0, t_1]$. This path may be *non-physical*, e.g. a path where the trajectory changes direction even if it is not subjected to any force whatsoever. The 'forces' here are succintly embedded into the Lagrangian, since the presence of a force at a point will be accounted for in the overall energy balance given by $\mathcal{L}$ evaluated at that point. In this case, the paths that are *physical* are the ones that upset the energy balance defined by $\mathcal{L}$, along the path, as little as possible.
+In particular, in mechanical systems the equations of motion of the system are often given by the paths that *minimise* $\mathcal{A}$, so for the paths $\mathbf{q}(t)$ for which $\mathcal{A}(\mathbf{q}, t_0, t_1)$ is a (local) minimum. The meaning of this the following: At each point of $TM$, $\mathcal{L}$ gives us information about the energetic balance of the system at that point. Now imagine you have a path defined on the interval $[t_0, t_1]$. This path may be *non-physical*, e.g. a path where the trajectory changes direction even if it is not subjected to any force whatsoever. The 'forces' here are succintly embedded into the Lagrangian, since the presence of a force at a point will be accounted for in the overall energy balance given by $\mathcal{L}$ evaluated at that point. In this case, the paths that are *physical* are the ones that upset the energy balance defined by $\mathcal{L}$, along the path, as little as possible.
 
 ![Example of the principle of least action.](../assetsPosts/2023-07-26-lagrangian-intent-search-i/leastAction.png)
 
-In layman terms: Physics is tacky, and the trajectories of objects in a physical systems are the ones that minimize $\mathcal{A}$: Every small variation $\delta \mathbf{q}$ of the path $\mathbf{q}$ minimizing $\mathcal{A}$ would be non-physical, since it would make $\mathcal{A}$ bigger.
+In layman terms: Physics is tacky, and the trajectories of objects in a physical systems are the ones that minimise $\mathcal{A}$: Every small variation $\delta \mathbf{q}$ of the path $\mathbf{q}$ minimizing $\mathcal{A}$ would be non-physical, since it would make $\mathcal{A}$ bigger.
 
 In intentland, the lagrangian $\mathcal{L}^\mathfrak{s}$ defines the *utility balance* of $\mathfrak{s}$ at each point of $T^\mathfrak{i,p} S$, and our paths are discrete. If we have a path $(\mathbf{q}, \mathbf{\dot{q}}): [0,\dots,n] \to T^\mathfrak{i,p} S$, we define: 
 
@@ -277,7 +277,7 @@ $$
 $$
 </div>
 
-Notice that in our case $\mathcal{A}^\mathfrak{s}$ depends on both $\mathbf{q},\mathbf{\dot{q}}$ since the two come as a unique package in intentland: As we remarked above, in intentland we cannot obtain $\mathbf{\dot{q}}$ from $\mathbf{q}$ as we do not have a notion of derivation. So, whereas a path in physicland is just defined ad $\mathbf{q}$ (and we can compute its velocity $\mathbf{\dot{q}}$ by differentiating), we *defined* a path in intentland to be *the* couple $(\mathbf{q}, \mathbf{\dot{q}})$, and hence $\mathcal{A}^\mathfrak{s}$ depends on paths in perfect analogy with its physical counterpart, and has signature: 
+Notice that in our case $\mathcal{A}^\mathfrak{s}$ depends on both $\mathbf{q},\mathbf{\dot{q}}$ since the two come as a unique package in intentland: As we remarked above, in our discrete setting we cannot obtain $\mathbf{\dot{q}}$ from $\mathbf{q}$ as we do not have a notion of derivation. So, whereas a physical path is just defined as $\mathbf{q}$ (and we can compute its velocity $\mathbf{\dot{q}}$ by differentiating), we *defined* a path in intentland to *be* the couple $(\mathbf{q}, \mathbf{\dot{q}})$, and hence $\mathcal{A}^\mathfrak{s}$ depends on paths in perfect analogy with its physical counterpart, and has signature: 
 
 $$
 \mathcal{A}^\mathfrak{s} : \text{Allowed paths} \to \mathbb{R}.
@@ -286,7 +286,7 @@ $$
 The *principle of least action for intents* then reads as follows: 
 
 <div class="definition" markdown="1">
-The *best* solutions for the intent $\mathfrak{i}$ that $\mathfrak{s}$ can provide are the paths that *minimize* the action $\mathcal{A}^\mathfrak{s}$, that is, the couples 
+The *best* solutions for the intent $\mathfrak{i}$ that $\mathfrak{s}$ can provide are the paths that *minimise* the action $\mathcal{A}^\mathfrak{s}$, that is, the couples 
 
 $$
 (\mathbf{q}_{\text{best}},\mathbf{\dot{q}}_{\text{best}})
@@ -310,11 +310,11 @@ $$
 \end{align*}
 $$
 
-So, for instance, in a gasless axiomatization of the state space, and using $\mathcal{U}^\mathfrak{s}(\mathbb{\dot{q}}(i))$ to account for gas fees, a best solution for the intent $\mathfrak{i}$ under the free searcher Lagrangian $\mathcal{L}^\mathfrak{s}_{f}$ is any path that *minimizes the gas cost of the solution*, precisely as we would expect.
+So, for instance, in a gasless axiomatization of the state space, and using $\mathcal{U}^\mathfrak{s}(\mathbb{\dot{q}}(i))$ to account for gas fees, a best solution for the intent $\mathfrak{i}$ under the free searcher Lagrangian $\mathcal{L}^\mathfrak{s}_{f}$ is any path that *minimises the gas cost of the solution*, precisely as we would expect.
 
 ![Example of action of the free Lagrangian on a path.](../assetsPosts/2023-07-26-lagrangian-intent-search-i/freeAction.png)
 
-The fact that the searcher $\mathfrak{s}$ is considered *selflessness* comes from the fact that $\mathfrak{s}$ is only trying to reduce gas costs, and is not interested in picking any particular starting state (ending state, respectively) in $S^\mathfrak{i,p}_i$ ($S^\mathfrak{i,p}_f$, respectively), as long as they give the least gas cost.
+The fact that the searcher $\mathfrak{s}$ is considered *selfless* comes from the fact that $\mathfrak{s}$ is only trying to reduce gas costs, and is not interested in picking any particular starting state (ending state, respectively) in $S^\mathfrak{i,p}_i$ ($S^\mathfrak{i,p}_f$, respectively), as long as they give the least gas cost.
 
 ![Example of alternative best path.](../assetsPosts/2023-07-26-lagrangian-intent-search-i/freeAction2.png)
 
@@ -322,23 +322,23 @@ The fact that the searcher $\mathfrak{s}$ is considered *selflessness* comes fro
 
 In physics, a Lagrangian $\mathcal{L}(\mathbb{q},\mathbb{\dot{q}})$ is *local*: What it means is that, when evaluated on a point in $TM$, it only tells us information about what happens in that point. This is obvious, as the point is everything the Lagrangian depends on. But in intentland things are different, and we can cheat!
 
-This is because our definition of velocity is very different from the one of physics.In physics, a velocity $\mathbf{\dot{q}}$ at a point $\mathbf{q}$ represents 'and infinitesimal change in a given direction starting from $\mathbf{q}$. Since this change is infinitesimal in nature, it cannot bring us to any other point $\mathbf{\dot{q'}}$. This is radically different from what happens in our discrete setting: For us, velocities at $\mathbf{q}$ are atomic transitions $\mathbf{\dot{q}}$ that start at $\mathbf{q}$. By definition, we can just *apply* $\mathbf{\dot{q}}$ to $\mathbf{q}$ to end up in some other state $\mathbf{q'}$. As such, our notion of Lagrangian is intrinsically *non-local*: In practice, the dependence on $\mathbb{q},\mathbb{\dot{q}}$ is enough to operate also on the resulting state $\mathbb{q'}$. With this intuition in mind, we can define new Lagrangians:
+Indeed, our definition of velocity is very different from the one of physics. In physics, a velocity $\mathbf{\dot{q}}$ at a point $\mathbf{q}$ represents an infinitesimal change in a given direction starting from $\mathbf{q}$. Since this change is infinitesimal in nature, it cannot bring us to any other point $\mathbf{\dot{q'}}$. This is radically different from what happens in our discrete setting: For us, velocities at $\mathbf{q}$ are atomic transitions $\mathbf{\dot{q}}$ that start at $\mathbf{q}$. By definition, we can just *apply* $\mathbf{\dot{q}}$ to $\mathbf{q}$ to end up in some other state $\mathbf{q'}$. As such, our notion of Lagrangian is intrinsically *non-local*: In practice, the dependence on $\mathbf{q},\mathbf{\dot{q}}$ is enough to operate also on the resulting state $\mathbf{q'}$. With this intuition in mind, we can define new Lagrangians:
 
 <div class="definition" markdown="1">
 The *greedy solver Lagrangian* $\mathcal{L}^\mathfrak{s}_{g}$ is given by:
 
 $$
-\mathcal{L}^\mathfrak{s}_{g}(\mathbf{q},\mathbf{\dot{q}}) = \mathcal{U}^\mathfrak{s}(\mathbb{q}) - \mathcal{U}^\mathfrak{s}(\mathbb{q'})
+\mathcal{L}^\mathfrak{s}_{g}(\mathbf{q},\mathbf{\dot{q}}) = \mathcal{U}^\mathfrak{s}(\mathbf{q}) - \mathcal{U}^\mathfrak{s}(\mathbf{q'})
 $$
 </div>
 
 Where $\mathbf{q'}$ is again $\mathbf{\dot{q}}$ applied to $\mathbf{q}$.
 
-$\mathcal{L}^\mathfrak{s}_g(\mathbf{q},\mathbf{\dot{q}})$ measures the loss of utility in going from $\mathbf{q}$ to $\mathbf{q'}$. In contrast with $\mathcal{L}^\mathfrak{s}_f$, which is the intent analogous of only having kinetic energy around, $\mathcal{L}^\mathfrak{s}_g$ has the aspect of a pure potential: In depends on $\mathbf{\dot{q}}$ only insomuch to calculate the adjacent state $\mathbf{q'}$, but disregards the intrinsic externalities given by $\mathbf{\dot{q}}$ - the 'kinetic energy' - completely.
+$\mathcal{L}^\mathfrak{s}_g(\mathbf{q},\mathbf{\dot{q}})$ measures the loss of utility in going from $\mathbf{q}$ to $\mathbf{q'}$. In contrast with $\mathcal{L}^\mathfrak{s}_f$, which is the intent analogous of only having kinetic energy around, $\mathcal{L}^\mathfrak{s}_g$ has the aspect of a pure potential: It depends on $\mathbf{\dot{q}}$ only insomuch to calculate the adjacent state $\mathbf{q'}$, but disregards the intrinsic externalities given by $\mathbf{\dot{q}}$ - the 'kinetic energy' - completely.
 
 ![Example of greedy solver Lagrangian.](../assetsPosts/2023-07-26-lagrangian-intent-search-i/greedyLagrangian.png)
 
-Above, we depicted a greedy solver Lagrangian. We annotated the states with their utilities (which are as in the example of the free Lagrangian), and annotated transitions with the corresponding loss of utility.
+Above, we depicted a greedy solver Lagrangian. We annotated the states with their utilities (which are as in the example of the free Lagrangian), and annotated transitions with the corresponding loss delta.
 
 The action of this Lagrangian on an allowed path is:
 
@@ -362,7 +362,7 @@ We conclude by putting things together:
 The *weighted greedy Lagrangian* $\mathcal{L}^\mathfrak{s}_{w}$ is given by:
 
 $$
-\mathcal{L}^\mathfrak{s}_{w}(\mathbf{q},\mathbf{\dot{q}}) = \mathcal{U}^\mathfrak{s}(\mathbb{\dot{q}}) + \big(\mathcal{U}^\mathfrak{s}(\mathbb{q}) - \mathcal{U}^\mathfrak{s}(\mathbb{q'})\big)
+\mathcal{L}^\mathfrak{s}_{w}(\mathbf{q},\mathbf{\dot{q}}) = \mathcal{U}^\mathfrak{s}(\mathbb{\dot{q}}) + \big(\mathcal{U}^\mathfrak{s}(\mathbf{q}) - \mathcal{U}^\mathfrak{s}(\mathbf{q'})\big)
 $$
 </div>
 
@@ -376,9 +376,11 @@ $$
 \end{align*}
 $$
 
-The principle of least action applied to $\mathcal{L}^\mathfrak{s}_{w}$ says that the 'best' solutions for the intent $\mathfrak{i}$ are the paths that minimize the loss *where the externalities of transitions are accounted for*.
+The principle of least action applied to $\mathcal{L}^\mathfrak{s}_{w}$ says that the 'best' solutions for the intent $\mathfrak{i}$ are the paths that minimise the loss *where the externalities of transitions are accounted for*.
 
-In general, the intuition about Lagrangian mechanics applied to intents is that the behavior of the searcher (greedy, welfare maximizing, etc.) can be simply encoded in the Lagrangian.
+In general, the intuition about Lagrangian mechanics applied to intents is that:
+- The requirements of the intent can be encoded in the structure of the space.
+- The behavior of the searcher (greedy, welfare maximizing, etc.) can be encoded in the Lagrangian.
 
 ## Conclusion
 

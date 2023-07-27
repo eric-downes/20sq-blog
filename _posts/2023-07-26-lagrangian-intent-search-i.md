@@ -56,7 +56,7 @@ In the picture above we see the state diagram of a simple automaton that has not
 
 In any case, we can work with what we got:
 
-<div class="definition">
+<div class="definition" markdown="1">
 The *state space $S$ of a mechanism $G$* is the set of nodes of its state diagram.
 </div>
 
@@ -80,8 +80,8 @@ Velocities, on the other hand, are a bit harder. Given a representation of the p
 
 One can prove that when $M$ is a smooth manifold of dimension $n$, $T_\mathbf{q} M$ has the same dimension $n$ for each $\mathbf{q}$. I won't dwelve into the mathematical details of what this means. The take home message is that:
 
-- If $M$ has dimension $n$, then you can represent any position in $M$ as a tuple of n coordinates: $\mathbf{q} := (q_1, \dots, q_n)$;
-- Velocities at any point $\mathbf{q}$ can also be represented as a tuple of n coordinates: $\mathbf{\dot{q}} := (\dot{q}_1, \dots, \dot{q}_n)$.
+- If $M$ has dimension $n$, then you can represent any position in $M$ as $n$ coordinates: $\mathbf{q} := (q_1, \dots, q_n)$;
+- Velocities at any point $\mathbf{q}$ can also be represented as $n$ coordinates: $\mathbf{\dot{q}} := (\dot{q}_1, \dots, \dot{q}_n)$.
 
 We can put all these things together and define an object called *tangent bundle*, denoted $TM$, as follows:
 
@@ -89,7 +89,7 @@ $$
 TM := \bigsqcup_{\mathbf{q} \in M} T_\mathbf{q} M = \bigcup_{\mathbf{q} \in M} \{\mathbf{q}\} \times T_\mathbf{q} M = \{ (\mathbf{q},\mathbf{\dot{q}} ) \mid \mathbf{q} \in M, \mathbf{\dot{q}} \in T_\mathbf{q} M\}
 $$
 
-Now, if $M$ has dimension $n$, one can see that $TM$ has dimension $2n$. As spelled above, a point in $TM$ is a couple $(\mathbf{q}, \mathbf{\dot{q}})$, and can be described by a tuple of $2n$ coordinates: The first $n$ coordinates identify $\mathbf{q}$, the position; whereas the last $n$ coordinates identify the velocity $\mathbf{\dot{q}}$ at the position $\mathbf{q}$.
+Now, if $M$ has dimension $n$, one can see that $TM$ has dimension $2n$. As spelled above, a point in $TM$ is a couple $(\mathbf{q}, \mathbf{\dot{q}})$, and can be described by $2n$ coordinates: The first $n$ coordinates identify $\mathbf{q}$, the position; whereas the last $n$ coordinates identify the velocity $\mathbf{\dot{q}}$ at the position $\mathbf{q}$.
 
 To apply Lagrangian techniques to our setting, we need to define an equivalent of velocities and tangent bundles for our sad, discrete state space $S$. This is no easy task, as the kind of objects we use in classical mechanics are incredibly well behaved with respect to the ones we have, but let's try.
 

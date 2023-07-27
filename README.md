@@ -2,6 +2,14 @@
 
 20[ ] blog website, based on the [Reverie](https://jekyllthemes.io/theme/reverie) theme by Amit Merchant.
 
+## Workflow
+
+Standard github workflow: create a branch, add your post, make a PR and wait for approval. The blog will be automatically rebuilt once your PR is merged.
+
+### Previewing
+
+Since the blog uses Jekyll, you will need to [install it](https://jekyllrb.com/docs/installation/) to be able to preview your contents. Once the installation is complete, just give navigate to the repo folder and give `bundle exec jekyll serve`. Jekyll will spawn a local server (usually at `127.0.0.1:4000`) that will allow you to see the blog in locale.
+
 ## Usage
 
 Posts must be placed in the `_posts` folder. Post titles follow the convention `yyyy-mm-dd-title.md`. Post assets (such as images) go in the folder `assetsPost`, where you should create a folder with the same name of the post.
@@ -48,7 +56,7 @@ As for the content of the post, it should be typeset in markdown.
 
 ## LaTeX-like theorem environments
 
-We provide the following theorem environments: Definition, Proposition, Lemma, Theorem and Corollary. If you need others, just ask. The way these works is as follows:
+We provide the following theorem environments: Definition, Proposition, Lemma, Theorem and Corollary. Numbering is automatic. If you need others, just ask. The way these works is as follows:
 ```html
 <div class="definition" markdown="1">
 A *definition* is a blabla, such that: $...$. Furthermore, it is:
@@ -62,6 +70,23 @@ $$
 
 This gets rendered as a shaded box with your content inside, prepended with a bold **Definition.**. We don't have numbering yet, but we'll think about it should the need arise. Just swap `definition` inside the `class="..."` field above with `proposition`, `lemma`, `theorem` and `corollary` should you need those.
 
+If you need to reference results, just add an `id="..."` field: 
+
+```html
+<div class="definition" markdown="1" id="myDefinition">
+A *definition* is a blabla, such that: $...$. Furthermore, it is:
+
+$$
+...
+$$
+
+</div>
+```
+
+Then you can cite it as
+```markdown
+As we remarked in [Reference description](#myDefinition), we are awesome...
+```
 ## Images
 
 Whenever possible, we recommend the images to be `800` pixels in width, with **transparent** backround. Ideally, these should be easily readable on the light gray background of the blog website. You can strive from these guidelines if you have no alternative, but our definition and your definition of 'I had no alternative' may be different, and *we may complain*.

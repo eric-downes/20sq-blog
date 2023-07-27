@@ -12,3 +12,6 @@ As research moves fast in crypto, this blog will serve as a repository for ideas
 
 We are strong advocates of cooperation and we want to keep this blog as open and plural as possible. We plan to have guest posts by friends and colleagues working in the broader crypto ecosystem and beyond. Hopefully, they will start appearing soon. Feel free to ping us if you think you have something interesting to say that you want to see published here!
 
+### Post styling guidelines
+
+If you agreed to write a post for this blog, head over to the [repo README.md](https://github.com/20squares/blog/blob/master/README.md) to find the styling guidelines!

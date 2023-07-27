@@ -46,13 +46,22 @@ As for the content of the post, it should be typeset in markdown.
     $$
     ```
 
-- As a matter of style, we enclose math definitions, theorems and the like into blockquotes:
-    ```markdown
-    > An object $...$ is *a definition* if $...$ such that:
-    >
-    >$$
-    >display math
-    >$$
+## LaTeX-like theorem environments
 
+We provide the following theorem environments: Definition, Proposition, Lemma, Theorem and Corollary. If you need others, just ask. The way these works is as follows:
+```html
+<div class="definition" markdown="1">
+A *definition* is a blabla, such that: $...$. Furthermore, it is:
 
-    ```
+$$
+...
+$$
+
+</div>
+```
+
+This gets rendered as a shaded box with your content inside, prepended with a bold **Definition.**. We don't have numbering yet, but we'll think about it should the need arise. Just swap `definition` inside the `class="..."` field above with `proposition`, `lemma`, `theorem` and `corollary` should you need those.
+
+## Images
+
+Whenever possible, we recommend the images to be `800` pixels in width, with **transparent** backround. Ideally, these should be easily readable on the light gray background of the blog website. You can strive from these guidelines if you have no alternative, but our definition and your definition of 'I had no alternative' may be different, and *we may complain*.

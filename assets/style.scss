@@ -429,7 +429,48 @@ nav {
     font-weight: bold;
   }
 
+  .lemma {
+    margin: 1.8em .8em;
+    /*border-left: 2px solid $gray;*/
+    padding: 0.1em 1em;
+    color: $gray;
+    font-size: 22px;
+    font-style: regular;
+    background-color: #e0f2f0;
+  }
+  .lemma:before {
+    content: "Lemma.";
+    font-weight: bold;
+  }
 
+  .proposition {
+    margin: 1.8em .8em;
+    /*border-left: 2px solid $gray;*/
+    padding: 0.1em 1em;
+    color: $gray;
+    font-size: 22px;
+    font-style: regular;
+    background-color: #e0f2f0;
+  }
+  .proposition:before {
+    content: "Proposition.";
+    font-weight: bold;
+  }
+
+  .corollary {
+    margin: 1.8em .8em;
+    /*border-left: 2px solid $gray;*/
+    padding: 0.1em 1em;
+    color: $gray;
+    font-size: 22px;
+    font-style: regular;
+    background-color: #e0f2f0;
+  }
+  .corollary:before {
+    content: "Corollary.";
+    font-weight: bold;
+  }
+  
   .theorem {
     margin: 1.8em .8em;
     /*border-left: 2px solid $gray;*/
@@ -438,6 +479,10 @@ nav {
     font-size: 22px;
     font-style: italic;
     background-color: #e0f2f0;
+  }
+  .theorem:before {
+    content: "Theorem.";
+    font-weight: bold;
   }
 
   .thanks {

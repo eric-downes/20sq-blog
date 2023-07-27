@@ -229,7 +229,7 @@ With these ideas in mind, we can define a useful Lagrangian:
 The *free solver Lagrangian* $\mathcal{L}^\mathfrak{s}_{f}$ is given by:
 
 $$
-\mathcal{L}^\mathfrak{s}_{f}(\mathbf{q},\mathbf{\dot{q}}) = \mathcal{U}^\mathfrak{s}(\mathbb{\dot{q}}).
+\mathcal{L}^\mathfrak{s}_{f}(\mathbf{q},\mathbf{\dot{q}}) = \mathcal{U}^\mathfrak{s}(\mathbf{\dot{q}}).
 $$
 </div>
 
@@ -306,11 +306,11 @@ Let us see what this means in practice for the free searcher Lagrangian. Given a
 $$
 \begin{align*}
     \mathcal{A}^\mathfrak{s}(\mathbf{q},\mathbf{\dot{q}}) &:= \sum_{i=0}^{n} \mathcal{L}^\mathfrak{s}_{f}(\mathbf{q}(i),\mathbf{\dot{q}}(i))\\
-    &= \sum_{i=0}^{n} \Big(\mathcal{U}^\mathfrak{s}(\mathbb{\dot{q}}(i)) \Big).
+    &= \sum_{i=0}^{n} \Big(\mathcal{U}^\mathfrak{s}(\mathbf{\dot{q}}(i)) \Big).
 \end{align*}
 $$
 
-So, for instance, in a gasless axiomatization of the state space, and using $\mathcal{U}^\mathfrak{s}(\mathbb{\dot{q}}(i))$ to account for gas fees, a best solution for the intent $\mathfrak{i}$ under the free searcher Lagrangian $\mathcal{L}^\mathfrak{s}_{f}$ is any path that *minimises the gas cost of the solution*, precisely as we would expect.
+So, for instance, in a gasless axiomatization of the state space, and using $\mathcal{U}^\mathfrak{s}(\mathbf{\dot{q}}(i))$ to account for gas fees, a best solution for the intent $\mathfrak{i}$ under the free searcher Lagrangian $\mathcal{L}^\mathfrak{s}_{f}$ is any path that *minimises the gas cost of the solution*, precisely as we would expect.
 
 ![Example of action of the free Lagrangian on a path.](../assetsPosts/2023-07-26-lagrangian-intent-search-i/freeAction.png)
 
@@ -320,7 +320,7 @@ The fact that the searcher $\mathfrak{s}$ is considered *selfless* comes from th
 
 ### Cheating physics
 
-In physics, a Lagrangian $\mathcal{L}(\mathbb{q},\mathbb{\dot{q}})$ is *local*: What it means is that, when evaluated on a point in $TM$, it only tells us information about what happens in that point. This is obvious, as the point is everything the Lagrangian depends on. But in intentland things are different, and we can cheat!
+In physics, a Lagrangian $\mathcal{L}(\mathbf{q},\mathbf{\dot{q}})$ is *local*: What it means is that, when evaluated on a point in $TM$, it only tells us information about what happens in that point. This is obvious, as the point is everything the Lagrangian depends on. But in intentland things are different, and we can cheat!
 
 Indeed, our definition of velocity is very different from the one of physics. In physics, a velocity $\mathbf{\dot{q}}$ at a point $\mathbf{q}$ represents an infinitesimal change in a given direction starting from $\mathbf{q}$. Since this change is infinitesimal in nature, it cannot bring us to any other point $\mathbf{\dot{q'}}$. This is radically different from what happens in our discrete setting: For us, velocities at $\mathbf{q}$ are atomic transitions $\mathbf{\dot{q}}$ that start at $\mathbf{q}$. By definition, we can just *apply* $\mathbf{\dot{q}}$ to $\mathbf{q}$ to end up in some other state $\mathbf{q'}$. As such, our notion of Lagrangian is intrinsically *non-local*: In practice, the dependence on $\mathbf{q},\mathbf{\dot{q}}$ is enough to operate also on the resulting state $\mathbf{q'}$. With this intuition in mind, we can define new Lagrangians:
 
@@ -362,7 +362,7 @@ We conclude by putting things together:
 The *weighted greedy Lagrangian* $\mathcal{L}^\mathfrak{s}_{w}$ is given by:
 
 $$
-\mathcal{L}^\mathfrak{s}_{w}(\mathbf{q},\mathbf{\dot{q}}) = \mathcal{U}^\mathfrak{s}(\mathbb{\dot{q}}) + \big(\mathcal{U}^\mathfrak{s}(\mathbf{q}) - \mathcal{U}^\mathfrak{s}(\mathbf{q'})\big)
+\mathcal{L}^\mathfrak{s}_{w}(\mathbf{q},\mathbf{\dot{q}}) = \mathcal{U}^\mathfrak{s}(\mathbf{\dot{q}}) + \big(\mathcal{U}^\mathfrak{s}(\mathbf{q}) - \mathcal{U}^\mathfrak{s}(\mathbf{q'})\big)
 $$
 </div>
 
@@ -371,8 +371,8 @@ Where $\mathbf{q'}$ is again $\mathbf{\dot{q}}$ applied to $\mathbf{q}$. Trivial
 $$
 \begin{align*}
     \mathcal{A}^\mathfrak{s}(\mathbf{q},\mathbf{\dot{q}}) &:= \sum_{i=0}^{n} \mathcal{L}^\mathfrak{s}_{w}(\mathbf{q}(i),\mathbf{\dot{q}}(i))\\
-    &= \sum_{i=0}^{n} \Big( \mathcal{U}^\mathfrak{s}(\mathbb{\dot{q}}(i)) + \big(\mathcal{U}^\mathfrak{s}(\mathbb{q}(i)) - \mathcal{U}^\mathfrak{s}(\mathbb{q}(i+1))\big)\Big)\\
-    &= \sum_{i=0}^{n} \Big(\mathcal{U}^\mathfrak{s}(\mathbb{\dot{q}}(i))\Big) + \mathcal{U}^\mathfrak{s}(\mathbf{q}(0)) - \mathcal{U}^\mathfrak{s}(\mathbf{q}(n+1)).
+    &= \sum_{i=0}^{n} \Big( \mathcal{U}^\mathfrak{s}(\mathbf{\dot{q}}(i)) + \big(\mathcal{U}^\mathfrak{s}(\mathbf{q}(i)) - \mathcal{U}^\mathfrak{s}(\mathbf{q}(i+1))\big)\Big)\\
+    &= \sum_{i=0}^{n} \Big(\mathcal{U}^\mathfrak{s}(\mathbf{\dot{q}}(i))\Big) + \mathcal{U}^\mathfrak{s}(\mathbf{q}(0)) - \mathcal{U}^\mathfrak{s}(\mathbf{q}(n+1)).
 \end{align*}
 $$
 

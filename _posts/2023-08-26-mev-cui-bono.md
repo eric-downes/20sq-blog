@@ -79,7 +79,7 @@ Indeed, at 20[ ] we're very prone to consider builders and searchers as conceptu
 
 >The economic power of a given actor is proportional to two things:
 1. "**Brains**", that is, all the intangible knowledge that is needed to perform a job. In our setting this may be stuff like 'fast searching algorithms' or 'state of the art bots'.
-2. "**Possessions**", that is, all the stuff that you own and that can make you money from simply owning it, e.g. land, buildings, etc. In our setting this is staked ETH.
+2. "**Possessions**", that is, all the stuff that you own and that can make you money from simply owning it, e.g. land, real estate, etc. In our setting this is staked ETH.
 
 Whereas markets relying on 1. are often dynamic, since often just a little capital is needed to produce technological advantage, markets relying on 2. tend to be more static, because of very high initial investment costs.
 

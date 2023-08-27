@@ -55,7 +55,7 @@ Ok, so this is more or less where we stand. At the moment, the actors involved i
 
 >There is a hard line to be drawn between transaction providers and all the other actors: There is only one party that pays: Transaction providers, which just want their transactions to be included. All other actors make money off the transaction providers' transactions.
 
-Proposers and builders are paid to guarantee transaction inclusion. In the good old days of mining, this was pretty much evident as miners would be paid directly with gas fees. Now things are a bit more complicated, as proposers are paid indirectly by builders that in turn get transaction providers' transaction fees. Searchers may either get paid by the user willingly to perform some kind of service (such as for CowSwap), or unwillingly as in the case of exploitative sandwitch bots.
+Proposers and builders are paid to guarantee transaction inclusion. In the good old days of mining, this was pretty much evident as miners would be paid directly with gas fees. Now things are a bit more complicated, as proposers are paid indirectly by builders that in turn get transaction providers' transaction fees. Searchers may either get paid by the user willingly to perform some kind of service (such as for CowSwap), or unwillingly as in the case of exploitative sandwich bots.
 
 In any case, the number of parties a user has to 'talk with' to get their transaction on-chain is growing (and with [PBS Guild](https://collective.flashbots.net/t/pbs-guild-proposal-v3-wip/2223) Relayers will probably get a piece of the cut as well), and more complicated infrastructure such as fractionalized/recursive block auctions will make this phenomenon even worse.
 
@@ -112,7 +112,7 @@ For sure, things that may help with centralization are:
 
 As we pointed out in [Here come relayers](#here-come-relayers), there are forms of MEV that aren't necessarily bad for transaction providers: Given a set of transactions, for sure they can be ordered or more generally included in a block in a way that maximally benefits some actor, for instance a searcher. But there are also orderings that maximize some utility function that is taken to represent the overall welfare of the system. These orderings represent the 'best possible allocation of MEV'. This has been discussed at length, and has been embodied in various ideas of 'returning MEV back to the transaction provider'.
 
-Welfare-maximizing orderings may be proved by means of commitments or other cryptographic gadgets. We are only interested in the economic point of view here, so won't dive into details. Let's just say that With enough wits, we may force searchers to prove that the bundles they provided do not include any toxic MEV (such as sandwitches).
+Welfare-maximizing orderings may be proved by means of commitments or other cryptographic gadgets. We are only interested in the economic point of view here, so won't dive into details. Let's just say that With enough wits, we may force searchers to prove that the bundles they provided do not include any toxic MEV (such as sandwiches).
 Still, as we already said, actors involved in the MEV foodchain do not work for free. So,
 
 - Either there is a particular way to include transactions that produces MEV dependent on the transaction *set* (the MEV of the bundle is bigger than the sum of the MEV of its parts), which can then be used in part to pay searchers/builders and in part can be returned to the transaction provider, or

@@ -163,10 +163,10 @@ What this means is that user convenience and decentralization are easily at odds
 
 ## Conclusion
 
-In this post we explored several hot research topics in MEV-land in intuitive terms, and showed how often decentralization is paid in terms of bigger costs for the transaction providers. The reason for this at its core, seems to be the following vicious circle:
+In this post we explored several hot research topics in MEV-land in intuitive terms, and showed how often decentralization is paid in terms of bigger costs for the transaction providers. The reason for this, at its core, seems to be the following vicious circle:
 - 'Simple' systems can be gamed by unscrupulous third parties, creating a bad experience for users.
 - To mitigate this, we need to add additional actors to the mix.
 - Now we have multiple actors working on the protocol. They do not work for free, which reflects as a bigger cost on the end user.
-- To ensure that the newly added actors do not collude or obtain a state of monopoly, we need to make the infrastructure more beaurocratic and complicated, again at the end user cost.
+- To ensure that the newly added actors do not collude or obtain a state of monopoly, we need to make the infrastructure more bureaucratic and complicated, again at the end user cost.
 
 Ok, so this is it with regard to the bad news. As for the good news, at the moment we don't have any. We can only say that we're thinking about these problems very hard, and are always open to collaborate with whoever finds these ramblings interesting.

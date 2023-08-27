@@ -99,7 +99,7 @@ Looking at things from this point of view, integrated **searcher-builder-propose
 
 In addition to this, there's the problem of *orderflow monopoly*: If a transaction provider or a searcher wants to ensure fast inclusion, they will want to send their orderflow to builders that win blocks often. Inevitably, the better one is at winning, the more orderflow they will intercept.
 
-In the context of [Order Flow Auctions](https://writings.flashbots.net/order-flow-auctions-and-centralisation), where searchers pay transaction providers for their transactions, this will probably be even more accentuated: A good searcher will be able to extract more MEV, and thus will pay the order flow provider more, ensuring even better orderflow. This has again been [highlighted by SMG](https://www.mechanism.org/spec/02).
+In the context of [Order Flow Auctions](https://writings.flashbots.net/order-flow-auctions-and-centralisation), where searchers pay transaction providers for their transactions, this will probably become even more accentuated: A good searcher will be able to extract more MEV, and thus will pay the order flow provider more, ensuring even better orderflow. This has again been [highlighted by SMG](https://www.mechanism.org/spec/02).
 
 
 ## Are there any mitigating solutions?

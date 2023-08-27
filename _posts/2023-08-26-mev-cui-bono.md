@@ -22,7 +22,7 @@ To understand what is happening now, we first have to understand how we got here
 > 1. The realization that you, the transaction provider, can pay for your transaction:
     - Explicitly, in the form of gas fees.
     - Implicitly, in the form actors extracting value from your transaction. This payment sometimes comes out of your pocket, e.g. when you get sandwiched, and sometimes does not.
-2. The realization that gas prices and network congestion were heavily influenced by searchers: At the time, gas price was basically the only parameter searchers could tweak to ensure their transactions would end where they wanted in the block, which resulted in soaring gas prices in a multitude of situations.
+2. The realization that gas prices and network congestion were heavily influenced by searchers: At the time, gas price was basically the only parameter searchers could tweak to ensure their transactions would end where they wanted in the block, which often resulted in soaring gas prices.
 
 ## Here come relayers
 

@@ -8,7 +8,7 @@ Standard github workflow: create a branch, add your post, make a PR and wait for
 
 ### Previewing
 
-Since the blog uses Jekyll, you will need to [install it](https://jekyllrb.com/docs/installation/) to be able to preview your contents. Once the installation is complete, just give navigate to the repo folder and give `bundle exec jekyll serve`. Jekyll will spawn a local server (usually at `127.0.0.1:4000`) that will allow you to see the blog in locale.
+Since the blog uses Jekyll, you will need to [install it](https://jekyllrb.com/docs/installation/) to be able to preview your contents. Once the installation is complete, just navigate to the repo folder and give `bundle exec jekyll serve`. Jekyll will spawn a local server (usually at `127.0.0.1:4000`) that will allow you to see the blog in locale.
 
 ## Usage
 

@@ -51,7 +51,7 @@ Ok, so this is more or less where we stand. At the moment, the actors involved i
 - **Transaction providers** (users etc.), which create transactions.
 - **Searchers**, that try to extract MEV from transactions.
 - **Builders**, which assemble the blocks.
-- **Proposers**/**Validators**, which put the block on-chain.
+- **Proposers**/**Validators**, which put the blocks on-chain.
 
 >There is a hard line to be drawn between transaction providers and all the other actors: There is only one party that pays: Transaction providers, which just want their transactions to be included. All other actors make money off the transaction providers' transactions.
 

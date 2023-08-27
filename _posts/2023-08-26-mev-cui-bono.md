@@ -116,7 +116,7 @@ For sure, things that may help with centralization are:
 
 As we pointed out in [Here come relayers](#here-come-relayers), there are forms of MEV that aren't necessarily bad for transaction providers: Given a set of transactions, for sure they can be ordered or more generally included in a block in a way that maximally benefits some actor, for instance a searcher. But there are also orderings that maximize some utility function that is taken to represent the overall welfare of the system. These orderings represent the 'best possible allocation of MEV'. This has been discussed at length, and has been embodied in various ideas of 'returning MEV back to the transaction provider'.
 
-Welfare-maximizing orderings may be proved by means of commitments or other cryptographic gadgets. We are only interested in the economic point of view here, so won't dive into details. Let's just say that With enough wits, we may force searchers to prove that the bundles they provided do not include any toxic MEV (such as sandwiches).
+Welfare-maximizing orderings may be proved by means of commitments or other cryptographic gadgets. We are only interested in the economic point of view here, so won't dive into details. Let's just say that with enough wits, we may force searchers to prove that the bundles they provided do not include any toxic MEV (such as sandwiches).
 Still, as we already said, actors involved in the MEV foodchain do not work for free. So,
 
 - Either there is a particular way to include transactions that produces MEV dependent on the transaction *set* (the MEV of the bundle is bigger than the sum of the MEV of its parts), which can then be used in part to pay searchers/builders and in part can be returned to the transaction provider, or

@@ -65,7 +65,7 @@ To give you an example, consider [CowSwap](https://swap.cow.fi/#/faq/protocol). 
 
 In turn, CowSwap and other protocols that offer this kind of services will have to get their bundles into a block. Unless they do the block building themselves (and often they don't have enough orderflow to), they will have to rely on a third party block-builder, that will ask for its cut and will bring the end cost to the user even higher.
 
-So, all in all, what PBS is solving isn't really much of a UX problem: Indeed, the UX is probably getting economically worse for the end user in many circumstances (especially for users moving little money, which are less likely to be pray of MEV bots). PBS solves a centralization problem, fragmenting and disciplining a monolithic infrastructure. Or does it?
+So, all in all, what PBS is solving isn't really much of a UX problem: Indeed, the UX is probably getting economically worse for the end user in many circumstances - especially for users moving little money, which are less likely to be pray of MEV bots. PBS solves a centralization problem, fragmenting and disciplining a monolithic infrastructure. Or does it?
 
 ## Here comes centralization
 

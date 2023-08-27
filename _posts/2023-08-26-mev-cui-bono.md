@@ -151,7 +151,7 @@ Finally, let us spend some words on intents. The idea of intents is that we give
 
 > Given a set of constraints defining an intent, the third party will always try to do as little as possible to 'honor' the intent, while maximizing his own profit.
 
-We formalized this mathematically in our previous post, [ ]. Again, this should not be surprising. For example, suppose that we give \\$10K to someone - let's call him 'John' - with the task of buying us a car. If John finds a retailer that will sell us the car for \\$8K, he is incentivated to say that he found us a car for exactly \\$10K, and to pocket the \\$2K difference.
+We formalized this mathematically in our previous post, [Lagrangian mechanics of intent solving I]({% post_url 2023-07-26-lagrangian-intent-search-i %}). Again, this should not be surprising. For example, suppose that we give \\$10K to someone - let's call him 'John' - with the task of buying us a car. If John finds a retailer that will sell us the car for \\$8K, he is incentivated to say that he found us a car for exactly \\$10K, and to pocket the \\$2K difference.
 
 The natural way to solve this problem is to task multiple intermediaries, thus making the market competitive. The best intermediary providing the best price will be the winning one - hoping they do not collude. But then we run again into a problem of centralization: We may very well see, pretty quickly, that one intermediary works better than anyone else. And gets the biggest share of the market.
 

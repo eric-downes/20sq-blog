@@ -119,7 +119,7 @@ As we pointed out in [Here come relayers](#here-come-relayers), there are forms 
 Welfare-maximizing orderings may be proved by means of commitments or other cryptographic gadgets. We are only interested in the economic point of view here, so won't dive into details. Let's just say that with enough wits, we may force searchers to prove that the bundles they provided do not include any toxic MEV (such as sandwiches).
 Still, as we already said, actors involved in the MEV foodchain do not work for free. So,
 
-- Either there is a particular way to include transactions that produces MEV dependent on the transaction *set* (the MEV of the bundle is bigger than the sum of the MEV of its parts), which can then be used in part to pay searchers/builders and in part can be returned to the transaction provider, or
+- Either there is a particular way to include transactions that produce MEV dependent on the transaction *set* (the MEV of the bundle is bigger than the sum of the MEV of its parts), which can then be used in part to pay searchers/builders and in part can be returned to the transaction provider, or
 - There is not such thing, in which case either searchers/builders will get MEV out of transaction providers' pockets, or they will simply refuse to include such transactions in case the fees paid are not high enough.
 
 As we stressed already, the 'real' fee a transaction provider has to pay is:

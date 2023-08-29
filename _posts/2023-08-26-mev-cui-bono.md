@@ -65,21 +65,23 @@ To give you an example, consider [CowSwap](https://swap.cow.fi/#/faq/protocol). 
 
 In turn, CowSwap and other protocols that offer this kind of services will have to get their bundles into a block. Unless they do the block building themselves (and often they don't have enough orderflow to), they will have to rely on a third party block-builder, that will ask for its cut and will bring the end cost to the user even higher.
 
-So, all in all, what PBS is solving isn't really much of a UX problem: Indeed, the UX is probably getting economically worse for the end user in many circumstances - especially for users moving little money, which are less likely to be pray of MEV bots. PBS solves a centralization problem, fragmenting and disciplining a monolithic infrastructure. Or does it?
+So, all in all, what PBS is solving isn't really much of a UX problem: Indeed, the UX is probably getting economically worse for the end user in many circumstances - especially for users moving little money, which are less likely to be pray of MEV bots. PBS was intended as a solution to a centralization problem, fragmenting and disciplining a monolithic infrastructure, at the proposer layer. 
+
+But what happens to rest of the value chain? And how does the rest of the value chain affect proposers?
 
 ## Here comes centralization
 
 In a [recent tweet](https://twitter.com/specialmech/status/1691178038640492544), Special Mechanism Group highlights how integrated builder-searchers are on the rise. An integrated builder-searcher is nothing more than a searcher that bids directly for blockspace.
 
-This should not be conceptually surprising, and it is indeed a very old strategy in business: If I have enough surplus resources at my disposal, a very clever thing to do is to *verticalize* and basically cut off third parties to which I previously offsourced parts of my business. If successful, I will now pay the previously offsourced goods at production cost, taking out any fee an intermediary could take.
+This should not be conceptually surprising, and it is indeed a very old phenomenon: Depending on my own capabilities and the price setting by third parties, I can *verticalize* my operations. If sufficiently effective, I will now pay the previously outsourced goods at lower costs, taking out fees an intermediary could take. Moreover, over time, through learning, I might be able to further reduce my costs and increase my margin.
 
 ### Integrating proposers
 
-Indeed, at 20[ ] we're very prone to consider builders and searchers as conceptualy isomorphic: A profitable, wealthy searcher will inevitably venture into block building to cut costs and be able to reinvest. Indeed,
+Indeed, at 20[ ] we're very prone to consider builders and searchers as conceptualy isomorphic: A profitable searcher with sufficient capital will inevitably venture into block building to cut costs and be able to increase margins. Indeed,
 
->The economic power of a given actor is proportional to two things:
-1. "**Brains**", that is, all the intangible knowledge that is needed to perform a job. In our setting this may be stuff like 'fast searching algorithms' or 'state of the art bots'.
-2. "**Possessions**", that is, all the stuff that you own and that can make you money from simply owning it, e.g. land, real estate, etc. In our setting this is staked ETH.
+>The economic power of a given actor in the blockchain space is proportional to two things:
+1. "**Brains**", that is, all the intangible know-how that is needed to perform a job. In our setting this may be stuff like 'fast searching algorithms' or 'state of the art bots'.
+2. "**Barriers to entry**", that is, all the stuff that protects you from competition. In our setting this is staked ETH.
 
 Whereas markets relying on 1. are often dynamic, since often just a little capital is needed to produce technological advantage, markets relying on 2. tend to be more static, because of very high initial investment costs.
 

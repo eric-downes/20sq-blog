@@ -73,7 +73,9 @@ But what happens to rest of the value chain? And how does the rest of the value 
 
 In a [recent tweet](https://twitter.com/specialmech/status/1691178038640492544), Special Mechanism Group highlights how integrated builder-searchers are on the rise. An integrated builder-searcher is nothing more than a searcher that bids directly for blockspace.
 
-This should not be conceptually surprising, and it is indeed a very old phenomenon: Depending on my own capabilities and the price setting by third parties, I can *verticalize* my operations. If sufficiently effective, I will now pay the previously outsourced goods at lower costs, taking out fees an intermediary could take. Moreover, over time, through learning, I might be able to further reduce my costs and increase my margin.
+This should not be conceptually surprising, and it is indeed a very old phenomenon: Depending on my own capabilities and the price setting by third parties, I can *verticalize* my operations. If sufficiently effective, I will now pay the previously outsourced goods at lower costs, taking out fees an intermediary could take. Over time, through learning, I might be able to further reduce my costs and increase my margin.
+
+What is interesting though, there might be an additional rationale at work when it comes to integrating proposers: This might open routes to entrenching block building business by take significant staking positions.
 
 ### Integrating proposers
 

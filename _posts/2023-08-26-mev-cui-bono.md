@@ -79,7 +79,7 @@ What is interesting though, there might be an additional rationale at work: Thro
 
 ### Integrating proposers
 
-Indeed, at 20[ ] we're very prone to consider builders and searchers as conceptualy isomorphic: A profitable searcher with sufficient capital will inevitably venture into block building to be able to increase margins. While the logic of integration for costs reasons does not readily apply to proposer integration - remember, a business intentionally designed to be relative dumb - the logic of integration for reducing competition possibly does.
+Indeed, at 20[ ] we're very prone to consider builders and searchers as conceptualy isomorphic: A profitable searcher with sufficient capital will inevitably venture into block building to be able to increase margins. While the logic of integration for costs reasons does not readily apply to proposer integration - remember, a business intentionally designed to be relatively dumb - the logic of integration for reducing competition possibly does.
 
 In other words, a searcher with sufficiently deep pockets can invest in staking with the goal of dynamically shifting the scales in his favor. An integrated searcher/builder still needs to buy blockspace from a proposer. Becoming a proposer as well, the searcher can intercept at least some of that money outflow and cut searcher competitors out. Now, we are speculating here - we are not aware of empirical evidence in this direction. Moreover, we have not built a formal model. All we want here is to raise attention for the possibility: 
 

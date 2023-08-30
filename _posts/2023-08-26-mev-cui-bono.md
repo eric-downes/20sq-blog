@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Developing the MEV infrastructure: Cui bono?"
-author: Fabrizio Genovese, Daniele Palombi
+author: Fabrizio Genovese, Daniele Palombi, Philipp Zahn
 categories: [MEV, economics, user experience, intents, PBS]
 excerpt: A non technical, common-sense investigation of how an increasingly complex MEV infrastructure will look like from the end-user perspective.
 usemathjax: true

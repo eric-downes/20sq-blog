@@ -75,41 +75,34 @@ In a [recent tweet](https://twitter.com/specialmech/status/1691178038640492544),
 
 This should not be conceptually surprising, and it is indeed a very old phenomenon: Depending on my own capabilities and the price setting by third parties, I can *verticalize* my operations. If sufficiently effective, I will now pay the previously outsourced goods at lower costs, taking out fees an intermediary could take. Over time, through learning, I might be able to further reduce my costs and increase my margin.
 
-What is interesting though, there might be an additional rationale at work when it comes to integrating proposers: This might open routes to entrenching block building business by take significant staking positions.
+What is interesting though, there might be an additional rationale at work: Through integration I, as a searcher, might erect barriers of entries that make it harder for a new competitor to enter the search space. Such moves per se are not specific to PBS or crypto for that matter but are standard topics for (controversial) discussions in markets.
 
 ### Integrating proposers
 
-Indeed, at 20[ ] we're very prone to consider builders and searchers as conceptualy isomorphic: A profitable searcher with sufficient capital will inevitably venture into block building to cut costs and be able to increase margins. Indeed,
+Indeed, at 20[ ] we're very prone to consider builders and searchers as conceptualy isomorphic: A profitable searcher with sufficient capital will inevitably venture into block building to be able to increase margins. While the logic of integration for costs reasons does not readily apply to proposer integration - remember, a business intentionally designed to be relative dumb - the logic of integration for reducing competition possibly does.
 
->The economic power of a given actor in the blockchain space is proportional to two things:
-1. "**Brains**", that is, all the intangible know-how that is needed to perform a job. In our setting this may be stuff like 'fast searching algorithms' or 'state of the art bots'.
-2. "**Barriers to entry**", that is, all the stuff that protects you from competition. In our setting this is staked ETH.
-
-Whereas markets relying on 1. are often dynamic, since often just a little capital is needed to produce technological advantage, markets relying on 2. tend to be more static, because of very high initial investment costs.
-
-So, it makes a lot of sense to reinvests profits made quickly via 1. into 2, as this solidifies an actor's position in the market in a way that is more difficult to overtake. All in all,
+In other words, a searcher with sufficiently deep pockets can invest in staking with the goal of dynamically shifting the scales in his favor. An integrated searcher/builder still needs to buy blockspace from a proposer. Becoming a proposer as well, the searcher can intercept at least some of that money outflow and cut searcher competitors out. Now, we are speculating here - we are not aware of empirical evidence in this direction. Moreover, we have not built a formal model. All we want here is to raise attention for the possibility: 
 
 > We bet 50cents and a six pack that in the next months/years we'll see the rise of **integrated searcher-builder-proposers**.
 
-An integrated searcher/builder still needs to buy blockspace from a proposer. Becoming a proposer as well, the searcher can intercept at least some of that money outflow. We speculate that the only reason why we are not yet seeing this overwhelmingly happening is because many profitable searchers are investing their earnigns into optimizing other parts of their infrastructure, e.g. latency.
-
-But so, does PBS really solve centralization? As things stand now we're a bit skeptical about that. Given how much technological advantage matters in this space, we would not expect a state of monopoly to hold for long (a better searcher may always enter the market and steal the crown). Yet, 
+But if so, does PBS really prevent centralization? As things stand now we're a bit skeptical about that. Given how much technological advantage matters in this space, we would not expect a state of monopoly to hold for long (a better searcher may always enter the market and steal the crown). Yet, 
 
 > We deem it likely to see the market stabilizing into a sort of 'succession of dynasties' ecosystem where a very small number of integrated players reigns sovereing (old dynasty) for months/years until some more technological advanced player trumps the game (change of dynasty). 
 
-Looking at things from this point of view, integrated **searcher-builder-proposers** really seem inevitable: in securing part of the proposer market a searcher is hedging against a decreasing capacity of doing state-of-the-art search: "My block searching may not be the best, but oftentimes I won't pay for blocks!"
+Looking at things from this point of view, integrated **searcher-builder-proposers** really seem inevitable: in securing part of the proposer market a searcher can distort the fierce competition on state-of-the-art search. Maybe this strategy works only for a while but extending one's reign even for a while can be very lucrative.
 
 ### Orderflow monopoly
 
 In addition to this, there's the problem of *orderflow monopoly*: If a transaction provider or a searcher wants to ensure fast inclusion, they will want to send their orderflow to builders that win blocks often. Inevitably, the better one is at winning, the more orderflow they will intercept.
 
-In the context of [Order Flow Auctions](https://writings.flashbots.net/order-flow-auctions-and-centralisation), where searchers pay transaction providers for their transactions, this will probably become even more accentuated: A good searcher will be able to extract more MEV, and thus will pay the order flow provider more, ensuring even better orderflow. This has again been [highlighted by SMG](https://www.mechanism.org/spec/02).
+In the context of [Order Flow Auctions](https://writings.flashbots.net/order-flow-auctions-and-centralisation), where searchers pay transaction providers for their transactions, this will probably become even more accentuated: A good searcher will be able to extract more MEV, and thus will pay the order flow provider more, ensuring even better orderflow. This has again been [highlighted by SMG](https://www.mechanism.org/spec/02). 
 
 
 ## Are there any mitigating solutions?
 
 For sure, things that may help with centralization are:
 
+- Breaking up the monolithic block structure as a whole-sale good could reduce incentives and opportunity to distort competition.
 - Fractionalized block auctions. This is something we've been working on in terms of building a generalized simulation stack for the job, see e.g. [our talk at EthCC](https://www.youtube.com/watch?v=uZfmvJfFmqM).
 - Giving searcher/builders a way to talk to each other. Often builders know beforehand if they are going to win the block auction or not. When they aren't, it would be useful for them to ask the winning builder if they have some free blockspace to squeeze their transactions in. A matchmaking/contracting mechanism around this would ensure that less fortunate builders do not have to aggressively defend their orderflow by means of block subsidization and the like.
 - Proposals such as [MEV Burn](https://ethresear.ch/t/mev-burn-a-simple-design/15590) will help smoothing out centralization issues during large MEV spikes.
@@ -149,9 +142,9 @@ MEV pressure aside, from a more general point of view,
 
 > welfare-maximizing MEV seems to be at odds with the current fee market structure.
 
-This is because, as they are defined now, fees serve a pretty individualistic purpose: An actor pays a fee to get a better service. The higher the fee paid, the higher the actor's priority with respect to being included. Yet, if we are maximizing for welfare, it may very well be that a given transaction, even if being provided with the highest fee, would serve a much better purpose if it wasn't included first. In this case we face a dilemma: An actor paid a lot to be included first, but the overall welfare is maximized (maybe with a little loss for the actor in question) if the transaction is included later. What do we do? Do we honor the idea that 'the more you pay, the better you get treated' or do we maximize welfare altogether?
+This is because, as they are defined now, fees serve a one-dimensional purpose: An actor pays a fee to get a better service. The higher the fee paid, the higher the actor's priority with respect to being included. Yet, if we are maximizing for welfare, it may very well be that a given transaction, even if being provided with the highest fee, would serve a much better purpose if it wasn't included first. In this case we face a dilemma: An actor paid a lot to be included first, but the overall welfare is maximized (maybe with a little loss for the actor in question) if the transaction is included later. What do we do? Do we honor the idea that 'the more you pay, the better you get treated' or do we maximize welfare altogether?
 
-We do not have an answer for this, and whatever decision one takes has a clear political and ideological connotation. We are merely pointing out that as things stand now welfare-maximization may be at odds with how market fees are defined.
+We do not have an answer for this, and whatever decision one takes has a clear political and ideological connotation. As others have, we are merely pointing out that as things stand now welfare-maximization may be at odds with how market fees are defined.
 
 ## Intents: Better UX but for a price
 

@@ -5,7 +5,7 @@ author: Fabrizio Genovese, Daniele Palombi, Philipp Zahn
 categories: [MEV, economics, user experience, intents, PBS]
 excerpt: A non technical, common-sense investigation of how an increasingly complex MEV infrastructure will look like from the end-user perspective.
 usemathjax: true
-thanks: We want to thank Aniket from Bicotomy, since the bulk of this post is elaborated over material surfaced in a chat with him.
+thanks: We want to thank Aniket from Biconomy, since the bulk of this post is elaborated over material surfaced in a chat with him.
 ---
 
 MEV and MEV-related topics have been at the forefront of crypto research for years now.

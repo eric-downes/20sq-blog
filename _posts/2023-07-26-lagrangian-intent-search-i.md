@@ -4,7 +4,7 @@ title: Lagrangian mechanics of intent solving I
 author: Fabrizio Genovese
 categories: [intents, search, physics, lagrangian]
 excerpt: Where we try to apply second year undergrad physics to the world of intent solving.
-image: /assetsPosts/2023-07-26-lagrangian-intent-search-i/greedyAction.png
+image: assetsPosts/2023-07-26-lagrangian-intent-search-i/greedyAction.png
 usemathjax: true
 thanks: I want to thank my fellow team members at 20[ ] and the guys at Anoma, Blockswap and Frontier Research for the useful discussions that helped me shaping what follows.
 ---

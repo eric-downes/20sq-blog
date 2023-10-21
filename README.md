@@ -22,7 +22,7 @@ title: the title of your post
 author: your name. Autor defaults to '20[ ] team' if left blank
 categories: keyword or a list of keywords [keyword1, keyword2, keyword3]
 excerpt: A short summary of your post
-image: assetsPosts/yourPostFolder/imageToBeUsedAsThumbnails.png
+image: assetsPosts/yourPostFolder/imageToBeUsedAsThumbnails.png This is optional, but useful if e.g. you share the post on Twitter.
 usemathjax: true (omit this line if you don't need to typeset math)
 thanks: A short acknowledged message. It will be shown immediately above the content of your post.
 ---

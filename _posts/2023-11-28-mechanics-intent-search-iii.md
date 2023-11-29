@@ -227,7 +227,7 @@ $$
 
 Now, notice this: If $f:A \to B$ is invertible, then for any other morphism $g:X \to B$ there is a morphism $h: X \to A$ for which we have $g = h;f$, or, as we category theorists like to say, for which this diagram *commutes*:
 
-{% quiver %}
+{% quiver {"id":"commutingTriangle"} %}
 <!-- https://q.uiver.app/#q=WzAsMyxbMCwwLCJYIl0sWzEsMiwiQiJdLFsyLDAsIkEiXSxbMCwxLCJnIiwxXSxbMiwxLCJmIiwxXSxbMCwyLCJoIiwxXV0= -->
 <iframe class="quiver-embed" src="https://q.uiver.app/#q=WzAsMyxbMCwwLCJYIl0sWzEsMiwiQiJdLFsyLDAsIkEiXSxbMCwxLCJnIiwxXSxbMiwxLCJmIiwxXSxbMCwyLCJoIiwxXV0=&embed" width="432" height="432" style="border-radius: 8px; border: none;"></iframe>
 {% endquiver %}
@@ -246,15 +246,36 @@ In jargon, we say that *$f$ is invertible if every $g$ factors through $f$ uniqu
 A morphism $f:A \to B$ is invertible if and only if any other morphism $g:X \to B$ factors through it.
 {% endprop %}
 
-This theorem is an if and only if, meaning that if $f$ is not invertible, then there will always be some $g: X \to B$ for which this is not true. On the other hand, such a $g$ can be seen as an *onstruction* to $f$'s invertibility.
+This proposition is an if and only if, meaning that if $f$ is not invertible, then there will always be some $g: X \to B$ for which this is not true. On the other hand, such a $g$ can be seen as an *onstruction* to $f$'s invertibility.
 
 There are two ways in which such a $g$ can fail to factor uniquely through $f$:
-- g doesn't factor through $f$ at all, that is, there is no $h$ that makes the triangle above commute;
-- g factors through $f$ in multiple ways, that is, there are at least two $h_1 \neq h_2$ for which the triangle above commutes.
+- g doesn't factor through $f$ at all, that is, there is no $h$ that makes the triangle in [Figure 1](#commutingTriangle) commute:
+    {% quiver %}
+    <!-- https://q.uiver.app/#q=WzAsMyxbMCwwLCJYIl0sWzEsMiwiQiJdLFsyLDAsIkEiXSxbMCwxLCJnIiwxXSxbMiwxLCJmIiwxXSxbMCwyLCI/Pz8iLDEseyJjb2xvdXIiOlswLDYwLDYwXX0sWzAsNjAsNjAsMV1dXQ== -->
+    <iframe class="quiver-embed" src="https://q.uiver.app/#q=WzAsMyxbMCwwLCJYIl0sWzEsMiwiQiJdLFsyLDAsIkEiXSxbMCwxLCJnIiwxXSxbMiwxLCJmIiwxXSxbMCwyLCI/Pz8iLDEseyJjb2xvdXIiOlswLDYwLDYwXX0sWzAsNjAsNjAsMV1dXQ==&embed" width="432" height="432" style="border-radius: 8px; border: none;"></iframe>
+    {% endquiver %}
+- g factors through $f$ in multiple ways, that is, there are at least two $h_0 \neq h_1$ for which the triangle in [Figure 1](#commutingTriangle) commutes:
+    {% quiver %}
+    <!-- https://q.uiver.app/#q=WzAsMyxbMCwwLCJYIl0sWzEsMiwiQiJdLFsyLDAsIkEiXSxbMCwxLCJnIiwxXSxbMiwxLCJmIiwxXSxbMCwyLCJoXzAiLDEseyJjdXJ2ZSI6LTJ9XSxbMCwyLCJoXzEiLDEseyJjdXJ2ZSI6Mn1dXQ== -->
+    <iframe class="quiver-embed" src="https://q.uiver.app/#q=WzAsMyxbMCwwLCJYIl0sWzEsMiwiQiJdLFsyLDAsIkEiXSxbMCwxLCJnIiwxXSxbMiwxLCJmIiwxXSxbMCwyLCJoXzAiLDEseyJjdXJ2ZSI6LTJ9XSxbMCwyLCJoXzEiLDEseyJjdXJ2ZSI6Mn1dXQ==&embed" width="432" height="432" style="border-radius: 8px; border: none;"></iframe>  
+    {% endquiver %}
 
+Now, the conceptually hard part. If you squint your eyes enough, you'll notice that the morphism $h$ in [Figure 1](#commutingTriangle) is somehow a 'morphism between morphisms': What I mean is that, through $h$, we can map $g$ into $f$. So yes, $h$ goes from $X$ to $A$, but changing perspective, we could also write:
 
+$$
+h: g \to f.
+$$
 
+Embracing these perspective, we can depict morphisms to a fixed object $B$ (such as $f$ and $g$) as points of some space (or object of a category, for the mathematically aware), and morphisms that make the triangles as the one in [Figure 1](#commutingTriangle) commute as paths (morphimsms) in this space.
 
-{% prop {"id":"test"} %}
+Having taken this conceptual leap, saying that $f:A \to B$ is invertible amounts to say that for any other point of this space, there is *exactly one path to $f$*. For the mathematically versed, this is made formal by saying that:
+
+{% prop {"id":"isoInSliceCat"} %}
 A morphism $f:A \to B$ in a category $\mathcal{C}$ is invertible if and only if it is a terminal object in the slice category $\mathcal{C}/B$.
 {% endprop %}
+
+So, there you have it: We transformed our problem once more: Instead of studying obstructions to invertibility directly, we need to study obstructions to terminality, that is:
+
+> A point in some space (e.g. a topological space, or a graph) is terminal precisely when, for any other point, there is exactly one way to reach it.
+>
+> Can we qualitatively describe obstructions for a point to have this propriety?

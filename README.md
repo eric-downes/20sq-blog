@@ -229,5 +229,5 @@ Referencing works exactly as for diagrams:
 ```latex
 {% figure {"id":"your_reference_tag"} %}
   ![image description](image_path)
-{% endtikz %}
+{% endfigure %}
 ```

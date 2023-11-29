@@ -4,7 +4,14 @@
 
 ## Workflow
 
-Standard github workflow: create a branch, add your post, make a PR and wait for approval. The blog will be automatically rebuilt once your PR is merged.
+Standard github workflow: 
+- Clone this repo
+- Create a branch
+- Write your post
+- Make a PR
+- Wait for approval
+ 
+The blog will be automatically rebuilt once your PR is merged.
 
 ### Previewing
 
@@ -29,6 +36,9 @@ thanks: A short acknowledged message. It will be shown immediately above the con
 ```
 
 As for the content of the post, it should be typeset in markdown.
+
+### Latex
+
 - Inline math is shown by using `$ ... $`. Notice that some expressions such as `a_b` typeset correctly, while expressions like `a_{b}` or `a_\command` sometimes do not. I guess this is because mathjax expects `_` to be followed by a literal.
 - Display math is shown by using `$$ ... $$`. The problem above doesn't show up in this case, but you gotta be careful:
     ```markdown
@@ -55,10 +65,10 @@ As for the content of the post, it should be typeset in markdown.
     $$
     ```
 
-### LaTeX-like theorem environments
+#### LaTeX-like theorem environments
 
 We provide the following theorem environments: Definition, Proposition, Lemma, Theorem and Corollary. Numbering is automatic. If you need others, just ask. The way these works is as follows:
-```html
+```latex
 {% def %}
 A *definition* is a blabla, such that: $...$. Furthermore, it is:
 
@@ -69,32 +79,78 @@ $$
 {% enddef %}
 ```
 
-This gets rendered as a shaded box with your content inside, prepended with a bold **Definition.**. We don't have numbering yet, but we'll think about it should the need arise. Just swap `definition` inside the `class="..."` field above with `proposition`, `lemma`, `theorem` and `corollary` should you need those.
+This gets rendered as a shaded box with your content inside, prepended with a bold **Definition.**. Numbering is automatic. 
 
-If you need to reference results, just give:
+Use the tags:
+
+```latex
+{% def %}
+    For your definitions
+{% enddef %}
+
+{% prop %}
+    For your propositions
+{% endprop %}
+
+{% lem %}
+    For your lemmas
+{% endlem %}
+
+{% thm %}
+    For your theorems
+{% endthm %}
+
+{% cor %}
+    For your corollaries
+{% endcor %}
+```
+
+##### Referencing
+
+If you need to reference results just append a `{"id":"your_reference_tag"}` after the tag, where `your_reference_tag` is the same as a LaTex label. Fore example:
 
 
-```html
-{% prop {"id":"your_reference_tag"} %}
+```latex
+{% def {"id":"your_reference_tag"} %}
 A *definition* is a blabla, such that: $...$. Furthermore, it is:
 
 $$
 ...
 $$
 {% enddef %}
-</div>
 ```
 
-Then you can cite it as
+Then you can reference this by doing:
+
 ```markdown
 As we remarked in [Reference description](#your_reference_tag), we are awesome...
 ```
 
-### Tikz
+#### Diagrams
 
-You can render tikz diagrams by enclosing tikz code into the `tikz` tag, as follows:
+We support two types of diagrams: quiver and TikZ.
+
+##### Quiver
+
+You can render [quiver](https://q.uiver.app/) diagrams by enclosing quiver expoted iframes between `quiver` tags: 
+- On [quiver](https://q.uiver.app/), click on `Export: Embed code`
+- Copy the code
+- In the blog, put it between delimiters as follows:
 
 ```html
+{% quiver %}
+<!-- https://q.uiver.app/codecodecode-->
+<iframe codecodecode></iframe>
+{% endquiver %}
+```
+
+**Please deselect `fixed size` when exporting the quiver diagram.**
+
+##### Tikz
+
+You can render tikz diagrams by enclosing tikz code between `tikz` tags, as follows:
+
+```latex
 {% tikz %}
   \begin{tikzpicture}
     \draw (0,0) circle (1in);
@@ -102,8 +158,37 @@ You can render tikz diagrams by enclosing tikz code into the `tikz` tag, as foll
 {% endtikz %}
 ```
 
-Notice that at the moment tikz rendering does not support usage of exernal tikz libraries such as `calc`, `arrows`, etc. We're working on it. Should you need those, you'll have to render the tikz diagrams by yourself and import them as images (see below).
+Notice that at the moment tikz rendering:
+- Supports any option you put after `\begin{document}` in a `.tex` file. So you can use this to include any stuff you'd typeset with LaTex (but we STRONGLY advise against it).
+- Does not support usage of anything that should go in the LaTex preamble, that is, before `\begin{document}`. This includes exernal tikz libraries such as `calc`, `arrows`, etc; and packages such as `tikz-cd`. Should you need `tikz-cd`, use quiver as explained above. If you need fancier stuff, you'll have to render the tikz diagrams by yourself and import them as images (see below).
+
+##### Referencing
+
+Referencing works also for the quiver and tikz tags, as in:
+
+```latex
+{% tikz {"id":"your_reference_tag"} %}
+...
+{% endtikz %}
+```
+
+Whenever possible, we encourage you to enclose diagrams into definitions/propositions/etc should you need to reference them.
 
 ### Images
 
-Whenever possible, we recommend the images to be `800` pixels in width, with **transparent** backround. Ideally, these should be easily readable on the light gray background of the blog website. You can strive from these guidelines if you have no alternative, but our definition and your definition of 'I had no alternative' may be different, and *we may complain*.
+Images are included via standard markdown syntax:
+
+```markdown
+![image description](image_path)
+```
+
+`image_path` can be a remote link. Should you need to upload images to this blog post, do as follows:
+
+- Create a folder in `assetsPosts` with the same title of the blog post file. So if the blogpost file is `yyyy-mm-dd-title.md`, create the folder `assetsPosts/yyyy-mm-dd-title`
+- Place your images there
+- Reference the images by doing:
+    ```markdown
+    ![image description](../assetsPosts/yyyy-mm-dd-title/image)
+    ```
+
+Whenever possible, we recommend the images to be in the format `.png`, and to be `800` pixels in width, with **transparent** backround. Ideally, these should be easily readable on the light gray background of the blog website. You can strive from these guidelines if you have no alternative, but our definition and your definition of 'I had no alternative' may be different, and *we may complain*.

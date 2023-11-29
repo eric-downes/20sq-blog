@@ -18,8 +18,9 @@ module Jekyll
 				jdata = JSON.parse(@input)
 				if( jdata.key?("id") )
 					id = jdata["id"].strip
-					output = "{:.tikzCaption}"
+					output = "<div class=\"tikzCaption\" id=\"#{id}\">"    
 					output += noCaption
+					output += "</div>"
 				end
 				end
 			rescue
@@ -45,8 +46,9 @@ module Jekyll
 				jdata = JSON.parse(@input)
 				if( jdata.key?("id") )
 					id = jdata["id"].strip
-					output = "{:.quiverCaption}"
+					output = "<div class=\"quiverCaption\" id=\"#{id}\">"    
 					output += noCaption
+					output += "</div>"
 				end
 				end
 			rescue

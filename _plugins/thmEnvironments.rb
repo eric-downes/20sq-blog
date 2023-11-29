@@ -26,6 +26,78 @@ module Jekyll
         end
     end
 
+    class NotEnvironment < Liquid::Block
+        def initialize(tag_name, input, tokens)
+            super
+            @input = input
+        end
+        def render(context)
+            id = ""    
+            text = super
+            begin
+                if( !@input.nil? && !@input.empty? )
+                jdata = JSON.parse(@input)
+                if( jdata.key?("id") )
+                    id = jdata["id"].strip
+                end
+                end
+            rescue
+            end
+            output =  "<div class=\"notation\" markdown=\"1\" id=\"#{id}\">"        
+            output += "#{text}"
+            output += "</div>"
+            return output;
+        end
+    end
+
+    class ExEnvironment < Liquid::Block
+        def initialize(tag_name, input, tokens)
+            super
+            @input = input
+        end
+        def render(context)
+            id = ""    
+            text = super
+            begin
+                if( !@input.nil? && !@input.empty? )
+                jdata = JSON.parse(@input)
+                if( jdata.key?("id") )
+                    id = jdata["id"].strip
+                end
+                end
+            rescue
+            end
+            output =  "<div class=\"example\" markdown=\"1\" id=\"#{id}\">"        
+            output += "#{text}"
+            output += "</div>"
+            return output;
+        end
+    end
+
+    class DiagEnvironment < Liquid::Block
+        def initialize(tag_name, input, tokens)
+            super
+            @input = input
+        end
+        def render(context)
+            id = ""    
+            text = super
+            begin
+                if( !@input.nil? && !@input.empty? )
+                jdata = JSON.parse(@input)
+                if( jdata.key?("id") )
+                    id = jdata["id"].strip
+                end
+                end
+            rescue
+            end
+            output =  "<div class=\"diagram\" markdown=\"1\" id=\"#{id}\">"        
+            output += "#{text}"
+            output += "</div>"
+            return output;
+        end
+    end
+
     class PropEnvironment < Liquid::Block
         def initialize(tag_name, input, tokens)
             super
@@ -129,3 +201,6 @@ module Jekyll
     Liquid::Template.register_tag('cor', Jekyll::CorEnvironment)
 end
   
+
+
+

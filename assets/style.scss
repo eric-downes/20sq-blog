@@ -415,9 +415,9 @@ nav {
     background-color: $lightblue;
   }
 
-  counter-reset: definition notation example diagram proposition lemma theorem corollary;
+  counter-reset: definition notation example proposition lemma theorem corollary;
 
-  .definition, .notation, .example, .diagram, .figure, .proposition, .lemma, .theorem, .corollary {
+  .definition, .notation, .example, .figure, .proposition, .lemma, .theorem, .corollary {
     margin: 1.8em .8em;
     /*border-left: 2px solid $gray;*/
     padding: 0.1em 1em;
@@ -448,18 +448,6 @@ nav {
     font-weight: bold;
   }
 
-  .figure:after {
-    font-family: plexMono;
-    color: $darkerGray;
-    display: flex;
-    line-height: 1.7;
-    margin: 0.8em 0 0 0.8em;
-    padding: 0;
-    justify-content: center;
-    counter-increment: figure;
-    content: "Figure " counter(figure) ".";
-  }
-
   .proposition:before {
     counter-increment: proposition;
     content: "Proposition " counter(proposition) ".";
@@ -484,6 +472,19 @@ nav {
     font-weight: bold;
   }
 
+  counter-reset: figure;
+  
+  .figure:after {
+    font-family: plexMono;
+    color: $darkerGray;
+    display: flex;
+    line-height: 1.7;
+    margin: 0.8em 0 0 0.8em;
+    padding: 0;
+    justify-content: center;
+    counter-increment: figure;
+    content: "Figure " counter(figure) ".";
+  }
 
   .quiver, .tikz {
     margin: 1.8em 0em 0em 0.8em;
@@ -507,8 +508,8 @@ nav {
     margin: -0.5em 0 0em 0.8em;
     padding: 0;
     justify-content: center;
-    counter-increment: diagram;
-    content: "Diagram " counter(diagram) ".";
+    counter-increment: figure;
+    content: "Figure " counter(figure) ".";
   }
 
   .thanks {

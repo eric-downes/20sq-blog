@@ -15,6 +15,7 @@
     - [Tikz](#tikz)
     - [Referencing](#referencing-1)
 - [Images](#images)
+    - [Referencing](#referencing-2)
 
 ## Workflow
 
@@ -102,6 +103,18 @@ Use the tags:
     For your definitions
 {% enddef %}
 
+{% not %}
+    For your notations
+{% endnot %}
+
+{% ex %}
+    For your examples
+{% endex %}
+
+{% diag %}
+    For your diagrams
+{% enddiag %}
+
 {% prop %}
     For your propositions
 {% endprop %}
@@ -186,6 +199,8 @@ Referencing works also for the quiver and tikz tags, as in:
 {% endtikz %}
 ```
 
+This automatically creates a numbered 'Figure' caption under the figure.
+
 Whenever possible, we encourage you to enclose diagrams into definitions/propositions/etc should you need to reference them.
 
 ## Images
@@ -206,3 +221,13 @@ Images are included via standard markdown syntax:
     ```
 
 Whenever possible, we recommend the images to be in the format `.png`, and to be `800` pixels in width, with **transparent** backround. Ideally, these should be easily readable on the light gray background of the blog website. You can strive from these guidelines if you have no alternative, but our definition and your definition of 'I had no alternative' may be different, and *we may complain*.
+
+#### Referencing
+
+Referencing works exactly as for diagrams:
+
+```latex
+{% figure {"id":"your_reference_tag"} %}
+  ![image description](image_path)
+{% endtikz %}
+```

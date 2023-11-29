@@ -7,7 +7,6 @@ module Jekyll
 		def render(context)
 			id = ""    
 			text = super
-	
 			begin
 				if( !@input.nil? && !@input.empty? )
 				jdata = JSON.parse(@input)
@@ -17,7 +16,6 @@ module Jekyll
 				end
 			rescue
 			end
-	
 			output =  "<div class=\"tikz\" id=\"#{id}\">"    
 			output += "<script type=\"text/tikz\">"
 			output += "#{text}"
@@ -26,6 +24,7 @@ module Jekyll
 			return output;
 		end
     end
+
     class QuiverEnvironment < Liquid::Block
 		def initialize(tag_name, input, tokens)
 			super
@@ -34,7 +33,6 @@ module Jekyll
 		def render(context)
 			id = ""    
 			text = super
-	
 			begin
 				if( !@input.nil? && !@input.empty? )
 				jdata = JSON.parse(@input)
@@ -44,17 +42,13 @@ module Jekyll
 				end
 			rescue
 			end
-			
 			output =  "<div class=\"quiver\" style=\"display: flex; justify-content: center;\" id=\"#{id}\">"    
 			output += "#{text}"
 			output += "</div>"
 			return output;
 		end
-  end
+  	end
+
+	Liquid::Template.register_tag('tikz', Jekyll::TikzEnvironment)
+	Liquid::Template.register_tag('quiver', Jekyll::QuiverEnvironment)
 end
-
-Liquid::Template.register_tag('tikz', Jekyll::TikzEnvironment)
-Liquid::Template.register_tag('quiver', Jekyll::QuiverEnvironment)
-
-
-# <div style="display: flex; justify-content: center;">

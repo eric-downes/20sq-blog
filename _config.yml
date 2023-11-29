@@ -88,6 +88,8 @@ plugins:
   - jekyll-seo-tag
   - jekyll-paginate
 
+plugins_dir: ./_plugins
+
 include: ['_pages']
 
 paginate: 6

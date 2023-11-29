@@ -55,39 +55,53 @@ As for the content of the post, it should be typeset in markdown.
     $$
     ```
 
-## LaTeX-like theorem environments
+### LaTeX-like theorem environments
 
 We provide the following theorem environments: Definition, Proposition, Lemma, Theorem and Corollary. Numbering is automatic. If you need others, just ask. The way these works is as follows:
 ```html
-<div class="definition" markdown="1">
+{% def %}
 A *definition* is a blabla, such that: $...$. Furthermore, it is:
 
 $$
 ...
 $$
 
-</div>
+{% enddef %}
 ```
 
 This gets rendered as a shaded box with your content inside, prepended with a bold **Definition.**. We don't have numbering yet, but we'll think about it should the need arise. Just swap `definition` inside the `class="..."` field above with `proposition`, `lemma`, `theorem` and `corollary` should you need those.
 
-If you need to reference results, just add an `id="..."` field: 
+If you need to reference results, just give:
+
 
 ```html
-<div class="definition" markdown="1" id="myDefinition">
+{% prop {"id":"your_reference_tag"} %}
 A *definition* is a blabla, such that: $...$. Furthermore, it is:
 
 $$
 ...
 $$
-
+{% enddef %}
 </div>
 ```
 
 Then you can cite it as
 ```markdown
-As we remarked in [Reference description](#myDefinition), we are awesome...
+As we remarked in [Reference description](#your_reference_tag), we are awesome...
 ```
-## Images
+
+### Tikz
+
+You can render tikz diagrams by enclosing tikz code into the `tikz` tag, as follows:
+
+```html
+{% tikz %}
+  \begin{tikzpicture}
+    \draw (0,0) circle (1in);
+  \end{tikzpicture}
+{% endtikz %}
+```
+
+### Images
 
 Whenever possible, we recommend the images to be `800` pixels in width, with **transparent** backround. Ideally, these should be easily readable on the light gray background of the blog website. You can strive from these guidelines if you have no alternative, but our definition and your definition of 'I had no alternative' may be different, and *we may complain*.

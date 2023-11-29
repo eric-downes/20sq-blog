@@ -412,84 +412,103 @@ nav {
     color: $gray;
     font-size: 22px;
     font-style: regular;
-    background-color: #e0f2f0;
+    background-color: $lightblue;
   }
 
-  counter-reset: definition lemma proposition theorem corollary;
+  counter-reset: definition notation example diagram proposition lemma theorem corollary;
 
-  .definition {
+  .definition, .notation, .example, .diagram, .figure, .proposition, .lemma, .theorem, .corollary {
     margin: 1.8em .8em;
     /*border-left: 2px solid $gray;*/
     padding: 0.1em 1em;
-    color: $gray;
     font-size: 22px;
     font-style: regular;
-    background-color: #e0f2f0;
   }
+
+  .definition, .notation, .example, .proposition, .lemma, .theorem, .corollary {
+    color: $gray;
+    background-color: $lightblue;
+  }
+
   .definition:before {
     counter-increment: definition;
     content: "Definition " counter(definition) ".";
     font-weight: bold;
   }
 
-  .lemma {
-    margin: 1.8em .8em;
-    /*border-left: 2px solid $gray;*/
-    padding: 0.1em 1em;
-    color: $gray;
-    font-size: 22px;
-    font-style: regular;
-    background-color: #e0f2f0;
-  }
-  .lemma:before {
-    counter-increment: lemma;
-    content: "Lemma " counter(definition) ".";
+  .notation:before {
+    counter-increment: notation;
+    content: "Notation " counter(notation) ".";
     font-weight: bold;
   }
 
-  .proposition {
-    margin: 1.8em .8em;
-    /*border-left: 2px solid $gray;*/
-    padding: 0.1em 1em;
-    color: $gray;
-    font-size: 22px;
-    font-style: regular;
-    background-color: #e0f2f0;
+  .example:before {
+    counter-increment: example;
+    content: "Example " counter(example) ".";
+    font-weight: bold;
   }
+
+  .figure:after {
+    font-family: plexMono;
+    color: $darkerGray;
+    display: flex;
+    line-height: 1.7;
+    margin: 0.8em 0 0 0.8em;
+    padding: 0;
+    justify-content: center;
+    counter-increment: figure;
+    content: "Figure " counter(figure) ".";
+  }
+
   .proposition:before {
     counter-increment: proposition;
     content: "Proposition " counter(proposition) ".";
     font-weight: bold;
   }
 
-  .corollary {
-    margin: 1.8em .8em;
-    /*border-left: 2px solid $gray;*/
-    padding: 0.1em 1em;
-    color: $gray;
-    font-size: 22px;
-    font-style: regular;
-    background-color: #e0f2f0;
+  .lemma:before {
+    counter-increment: lemma;
+    content: "Lemma " counter(definition) ".";
+    font-weight: bold;
   }
+  
+  .theorem:before {
+    counter-increment: theorem;
+    content: "Theorem " counter(theorem) ".";
+    font-weight: bold;
+  }
+
   .corollary:before {
     counter-increment: corollary;
     content: "Corollary " counter(corollary) ".";
     font-weight: bold;
   }
-  
-  .theorem {
-    margin: 1.8em .8em;
-    /*border-left: 2px solid $gray;*/
-    padding: 0.1em 1em;
-    color: $gray;
-    font-size: 22px;
-    font-style: italic;
-    background-color: #e0f2f0;
+
+
+  .quiver, .tikz {
+    margin: 1.8em 0em 0em 0.8em;
+    padding: 0em 1em 1em 0em;
+    display: flex;
+    flex-direction: wrap;
+    justify-content: center;
   }
-  .theorem:before {
-    counter-increment: theorem;
-    content: "Theorem " counter(theorem) ".";
-    font-weight: bold;
+
+  .quiverCaption, .tikzCaption {
+    flex-direction: wrap;
+    justify-content: center;
+  }
+  .quiverCaption:after, .tikzCaption:after {
+    font-size: 22px;
+    font-style: regular;
+    font-family: plexMono;
+    color: $darkerGray;
+    display: flex;
+    line-height: 1.7;
+    margin: -0.5em 0 0em 0.8em;
+    padding: 0;
+    justify-content: center;
+    counter-increment: diagram;
+    content: "Diagram " counter(diagram) ".";
   }
 
   .thanks {

@@ -102,6 +102,8 @@ You can render tikz diagrams by enclosing tikz code into the `tikz` tag, as foll
 {% endtikz %}
 ```
 
+Notice that at the moment tikz rendering does not support usage of exernal tikz libraries such as `calc`, `arrows`, etc. We're working on it. Should you need those, you'll have to render the tikz diagrams by yourself and import them as images (see below).
+
 ### Images
 
 Whenever possible, we recommend the images to be `800` pixels in width, with **transparent** backround. Ideally, these should be easily readable on the light gray background of the blog website. You can strive from these guidelines if you have no alternative, but our definition and your definition of 'I had no alternative' may be different, and *we may complain*.

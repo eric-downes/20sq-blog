@@ -57,9 +57,9 @@ In the picture above we see the state diagram of a simple automaton that has not
 
 In any case, we can work with what we got:
 
-<div class="definition" markdown="1">
+{% def %}
 The *state space $S$ of a mechanism $G$* is the set of nodes of its state diagram.
-</div>
+{% enddef %}
 
 Compared to the physical example above, we see that the state space $S$ for a mechanism $G$ has no real notion of continuity, differentiability or cohesion of any sort. It's just a set.
 
@@ -73,9 +73,9 @@ Our main endeavor is trying to export techniques from Lagrangian mechanics to in
 
 Positions are easy to understand: You have some notion of space $M$ (which in classical mechanics is very well behaved and is called a *smooth manifold*) and a position is nothing more than a point in it, call it $\mathbf{q}$. This we can easy port to our discretised setting: 
 
-<div class="definition" markdown="1">
+{% def %}
 A *position* $\mathbf{q}$ is just an element of the state space $S$.
-</div>
+{% enddef %}
 
 Velocities, on the other hand, are a bit harder. Given a representation of the physical space $M$, the velocity of a particle *at* a point represents a direction where the particle 'wants' to go while it stays in that point. Given $M$, at each point $\mathbf{q}$ we can build the *tangent space to $M$ at $\mathbf{q}$*, denoted with $T_\mathbf{q} M$. Velocities at point $\mathbf{q}$ are points in this space, and we denote them as $\mathbf{\dot{q}}$:
 
@@ -102,7 +102,7 @@ As we said in the beginning, our state space $S$ is built out of a graph, the st
 
 From this, we can define:
 
-<div class="definition" markdown="1">
+{% def %}
 *Velocities* at $\mathbf{q}$, denoted $\mathbf{\dot{q}}$, are atomic transitions that start in $\mathbf{q}$.
 
 The *tangent space* at $\mathbf{q}$ is defined as:
@@ -116,7 +116,7 @@ The *tangent bundle of the state space* is defined as:
 $$
 TS := \bigsqcup_{\mathbf{q} \in S} T_\mathbf{q} S = \{ (\mathbf{q},\mathbf{\dot{q}} ) \mid \mathbf{q} \in S, \mathbf{\dot{q}} \in T_\mathbf{q} S\}.
 $$
-</div>
+{% enddef %}
 
 ![Example of tangent bundle of the state space.](../assetsPosts/2023-07-26-lagrangian-intent-search-i/TS.png)
 
@@ -138,16 +138,16 @@ We won't focus on the latter type of constraints in this post, as it will be exp
 
 Further constraints clearly must be reflected on the structure of $TS$: If we 'disallow' some points in the state space $S$, then we also have to 'disallow' velocities that lead to those points. Elaborating on this further, we are quickly made aware of the fact that intents may also contain constraints that intervene purely on the $\mathbf{\dot{q}}$, that is, constraints that disallow using a given transition when in a given state. In general, we have to work with a restriction of the tangent bundle of the state space $TS$.
 
-<div class="definition" markdown="1">
+{% def %}
 An *intent space* is a subset $T^i S \subseteq TS$ such that if $(\mathbf{q},\mathbf{\dot{q}}) \in T^\mathfrak{i} S$ and $\mathbf{q} \xrightarrow{\mathbf{\dot{q}}} \mathbf{q'}$, then $\mathbf{q'} \in \pi_1 (T^i S)$.
-</div>
+{% enddef %}
 
 Here, $\pi_1: TS \to S$ is the projection on the first coordinate.
 In words: If $(\mathbf{q},\mathbf{\dot{q}})$ is in the intent space and $\mathbf{\dot{q}}$ leads to $\mathbf{q'}$, then $\mathbf{q'}$ must be included in the intent space as well somehow. Finally, 
 
-<div class="definition" markdown="1">
+{% def %}
 An *intent* $\mathfrak{i}$ is a triple $(T^\mathfrak{i} S, S^\mathfrak{i}_i, S^\mathfrak{i}_f)$ with $S^\mathfrak{i}_i, S^\mathfrak{i}_f \subseteq S$.
-</div>
+{% enddef %}
 
 Here, $S^\mathfrak{i}_i, S^\mathfrak{i}_f$ represent the premises and conclusions regions of $\mathfrak{i}$, respectively.
 
@@ -160,12 +160,12 @@ An example of this is if $\mathfrak{s}$ tries to call a given smart contract fun
 
 So, we need to further refine $(T^\mathfrak{i} S, S^\mathfrak{i}_i, S^\mathfrak{i}_f)$ when taking the solver perspective: 
 
-<div class="definition" markdown="1">
+{% def %}
 An *intent $\mathfrak{i}$ from the perspective of solver $\mathfrak{s}$* is a triple $(T^\mathfrak{i,s} S, S^\mathfrak{i,s}_i, S^\mathfrak{i,s}_f)$ where:
 - $T^\mathfrak{i,s} S := T^\mathfrak{i} S \cap \lbrace$ regions of $T^\mathfrak{i} S$ where $\mathfrak{s}$ is allowed to go $\rbrace$;
 - $S^\mathfrak{i,s}_i := S^\mathfrak{i}_i \cap \pi_1(T^\mathfrak{i,s} S)$;
 - $S^\mathfrak{i,s}_f := S^\mathfrak{i}_f \cap \pi_1(T^\mathfrak{i,s} S)$.
-</div>
+{% enddef %}
 
 In practice, $T^\mathfrak{i,s} S$ is just $T^\mathfrak{i} S$ where we punched even more holes, corresponding to states that cannot be reached by the solver $\mathfrak{s}$ and to the transitions that $\mathfrak{s}$ cannot use.
 
@@ -201,9 +201,9 @@ In stark contrast with physics, $\mathbf{\dot{q}}$ *cannot* be just determined f
 
 ![Example of non-differentiability of paths.](../assetsPosts/2023-07-26-lagrangian-intent-search-i/nonDifferentiability.png)
 
-<div class="definition" markdown="1">
+{% def %}
 A path $(\mathbf{q}(i), \mathbf{\dot{q}}(i))_{0 \leq i \leq n}$ in $T^\mathfrak{i,p} S$ is *allowed* if $\mathbf{q}(0) \in S^\mathfrak{i,p}_i$ and $\mathbf{q}(n+1) \in S^\mathfrak{i,p}_f$.
-</div>
+{% enddef %}
 
 Indeed, allowed paths represent *solutions* for the intent $\mathfrak{i}$ that are *feasible* for the solver $\mathfrak{s}$.
 
@@ -226,13 +226,13 @@ In intentland we do not have energy, **but we have MEV**. The comparison is apt:
 - Similarly, and overloading notation, $\mathcal{U}^\mathfrak{s}: T_\mathbf{q} S \to \mathbb{R}$, for each $\mathbf{q}$, quantifies the net utility that $\mathfrak{s}$ obtains in performing the transition $\mathbf{\dot{q}}$. This utility can, for instance, be negative, and quantifies externalities that come in performing the transition $\mathbf{\dot{q}}$ which aren't already accounted in the state.
 With these ideas in mind, we can define a useful Lagrangian: 
 
-<div class="definition" markdown="1">
+{% def %}
 The *free solver Lagrangian* $\mathcal{L}^\mathfrak{s}_{f}$ is given by:
 
 $$
 \mathcal{L}^\mathfrak{s}_{f}(\mathbf{q},\mathbf{\dot{q}}) = \mathcal{U}^\mathfrak{s}(\mathbf{\dot{q}}).
 $$
-</div>
+{% enddef %}
 
 This Lagrangian is the equivalent of the Lagrangian for the free particle in physics, which describes a system with no potential energy. This Lagrangian depends only on transitions (exactly as the free particle Lagrangian in physics depends only on velocities). It does not care about the utilities associated to the state, and as such, it represents the *selfless solver*: We will see shortly that the only thing this solver cares about here is to save on gas, but has no particular interest in preferring any given starting (ending) state for a path with respect to another, as long as the paths are allowed and they cost the same gas.
 
@@ -270,13 +270,13 @@ In layman terms: Physics is tacky, and the trajectories of objects in a physical
 
 In intentland, the lagrangian $\mathcal{L}^\mathfrak{s}$ defines the *utility balance* of $\mathfrak{s}$ at each point of $T^\mathfrak{i,p} S$, and our paths are discrete. If we have a path $(\mathbf{q}, \mathbf{\dot{q}}): [0,\dots,n] \to T^\mathfrak{i,p} S$, we define: 
 
-<div class="definition" markdown="1">
+{% def %}
 The *action* for $\mathfrak{s}$ is:
 
 $$
 \mathcal{A}^\mathfrak{s}(\mathbf{q},\mathbf{\dot{q}}) := \sum_{i=0}^{n} \mathcal{L}^\mathfrak{s}(\mathbf{q}(i),\mathbf{\dot{q}}(i)).
 $$
-</div>
+{% enddef %}
 
 Notice that in our case $\mathcal{A}^\mathfrak{s}$ depends on both $\mathbf{q},\mathbf{\dot{q}}$ since the two come as a unique package in intentland: As we remarked above, in our discrete setting we cannot obtain $\mathbf{\dot{q}}$ from $\mathbf{q}$ as we do not have a notion of derivation. So, whereas a physical path is just defined as $\mathbf{q}$ (and we can compute its velocity $\mathbf{\dot{q}}$ by differentiating), we *defined* a path in intentland to *be* the couple $(\mathbf{q}, \mathbf{\dot{q}})$, and hence $\mathcal{A}^\mathfrak{s}$ depends on paths in perfect analogy with its physical counterpart, and has signature: 
 
@@ -286,7 +286,7 @@ $$
 
 The *principle of least action for intents* then reads as follows: 
 
-<div class="definition" markdown="1">
+{% def %}
 The *best* solutions for the intent $\mathfrak{i}$ that $\mathfrak{s}$ can provide are the paths that *minimise* the action $\mathcal{A}^\mathfrak{s}$, that is, the couples 
 
 $$
@@ -298,7 +298,7 @@ such that:
 $$
 \mathcal{A}^\mathfrak{s}(\mathbf{q}_{\text{best}},\mathbf{\dot{q}}_{\text{best}}) = \min_{(\mathbf{q},\mathbf{\dot{q}}) \in \text{allowed paths}} \mathcal{A}^\mathfrak{s}(\mathbf{q},\mathbf{\dot{q}}).
 $$
-</div>
+{% enddef %}
 
 ### Simple example: Action of the free searcher Lagrangian
 
@@ -325,13 +325,13 @@ In physics, a Lagrangian $\mathcal{L}(\mathbf{q},\mathbf{\dot{q}})$ is *local*: 
 
 Indeed, our definition of velocity is very different from the one of physics. In physics, a velocity $\mathbf{\dot{q}}$ at a point $\mathbf{q}$ represents an infinitesimal change in a given direction starting from $\mathbf{q}$. Since this change is infinitesimal in nature, it cannot bring us to any other point $\mathbf{\dot{q'}}$. This is radically different from what happens in our discrete setting: For us, velocities at $\mathbf{q}$ are atomic transitions $\mathbf{\dot{q}}$ that start at $\mathbf{q}$. By definition, we can just *apply* $\mathbf{\dot{q}}$ to $\mathbf{q}$ to end up in some other state $\mathbf{q'}$. As such, our notion of Lagrangian is intrinsically *non-local*: In practice, the dependence on $\mathbf{q},\mathbf{\dot{q}}$ is enough to operate also on the resulting state $\mathbf{q'}$. With this intuition in mind, we can define new Lagrangians:
 
-<div class="definition" markdown="1">
+{% def %}
 The *greedy solver Lagrangian* $\mathcal{L}^\mathfrak{s}_{g}$ is given by:
 
 $$
 \mathcal{L}^\mathfrak{s}_{g}(\mathbf{q},\mathbf{\dot{q}}) = \mathcal{U}^\mathfrak{s}(\mathbf{q}) - \mathcal{U}^\mathfrak{s}(\mathbf{q'})
 $$
-</div>
+{% enddef %}
 
 Where $\mathbf{q'}$ is again $\mathbf{\dot{q}}$ applied to $\mathbf{q}$.
 
@@ -359,13 +359,13 @@ In particular, if it is $\min_{(\mathbf{q},\mathbf{\dot{q}}) \in \text{allowed p
 
 We conclude by putting things together:
 
-<div class="definition" markdown="1">
+{% def %}
 The *weighted greedy Lagrangian* $\mathcal{L}^\mathfrak{s}_{w}$ is given by:
 
 $$
 \mathcal{L}^\mathfrak{s}_{w}(\mathbf{q},\mathbf{\dot{q}}) = \mathcal{U}^\mathfrak{s}(\mathbf{\dot{q}}) + \big(\mathcal{U}^\mathfrak{s}(\mathbf{q}) - \mathcal{U}^\mathfrak{s}(\mathbf{q'})\big)
 $$
-</div>
+{% enddef %}
 
 Where $\mathbf{q'}$ is again $\mathbf{\dot{q}}$ applied to $\mathbf{q}$. Trivially, $\mathcal{L}^\mathfrak{s}_w = \mathcal{L}^\mathfrak{s}_f + \mathcal{L}^\mathfrak{s}_g$. This is the intent counterpart of the usual $\text{kinetic energy} - \text{potential energy}$ Lagrangian in classical mechanics. It measures both the intrinsic loss in going from $\mathbf{q}$ to $\mathbf{q'}$ - the 'potential energy' - *and* the extrinsic cost of of the transition $\mathbf{\dot{q}}$ - the 'kinetic energy'. Computing the action, we have:
 

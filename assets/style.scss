@@ -415,7 +415,7 @@ nav {
     background-color: $lightblue;
   }
 
-  counter-reset: definition notation example proposition lemma theorem corollary;
+  counter-reset: definition notation example proposition lemma theorem corollary figure;
 
   .definition, .notation, .example, .figure, .proposition, .lemma, .theorem, .corollary {
     margin: 1.8em .8em;
@@ -471,15 +471,13 @@ nav {
     content: "Corollary " counter(corollary) ".";
     font-weight: bold;
   }
-
-  counter-reset: figure;
   
   .figure:after {
     font-family: plexMono;
-    color: $darkerGray;
+    color: $gray;
     display: flex;
     line-height: 1.7;
-    margin: 0.8em 0 0 0.8em;
+    margin: 0.8em 0 1.8em 0em;
     padding: 0;
     justify-content: center;
     counter-increment: figure;
@@ -487,7 +485,10 @@ nav {
   }
 
   .quiver, .tikz {
-    margin: 1.8em 0em 0em 0.8em;
+    margin: 1.8em .8em;
+    /*border-left: 2px solid $gray;*/
+    padding: 0.1em 1em;
+    margin: 1.8em .8em;
     padding: 0em 1em 1em 0em;
     display: flex;
     flex-direction: wrap;
@@ -502,10 +503,10 @@ nav {
     font-size: 22px;
     font-style: regular;
     font-family: plexMono;
-    color: $darkerGray;
+    color: $gray;
     display: flex;
     line-height: 1.7;
-    margin: -0.5em 0 0em 0.8em;
+    margin: -1em .8em 1.8em;
     padding: 0;
     justify-content: center;
     counter-increment: figure;

@@ -9,15 +9,15 @@ usemathjax: true
 thanks: I want to thank Caterina Puca, Amar Hadzihasanovic and Bob Coecke, without which this piece of formal theory would not have been developed.
 ---
 
-Part of the 20[ ] team has been busy in the last week with a research retreat around *obstructions to compositionality*. In this post, I'll explain how this may have a direct role in better understanding intent search.
+Part of the 20[ ] team has been busy in the last week with a research retreat focused on *obstructions to compositionality*. In this post, I'll explain how this may have a direct role in better understanding intent search.
 
 ## Recap and Introduction
 
 If you recall, a few months ago we gave a [Lagrangian account](/lagrangian-intent-search-i) of what intent solving was. To recap:
 
 - We have a graph where:
-  -  vertexes are (EVM) states;
-  -  edges represent actions that lead from a state to another (e.g. calling a function with a given payload);
+  -  Vertexes are (EVM) states;
+  -  Edges represent actions that lead from a state to another (e.g. calling a function with a given payload);
 - An intent specifies a couple of regions in this graph:
   - One region indentifies the *premises* of the intent, that is, the states in which intent search can be triggered;
   - The other region identifies the *conclusions* of the intent, that is, the states that the intent proposer considers as acceptable solutions;
@@ -30,8 +30,8 @@ This is a hard problem, and we'd really like it to be compositional. *Compositio
 *Compositionality* is the study of why and how proprieties of a given system can be inferred from the proprieties of its parts. Dually, it is the study of how to lift proprieties of smaller systems to the propriety of the system obtained by composing them according to some rule.
 {% enddef %}
 
-Breaking this down, we usually build complex systems by first building some pieces in isolation and then by gluing them together. This is very well known to developers that first implement modules and libraries and then tie everything together into a final product. Such approach is called 'modular', and I have written about how this is different from compositionality [some time ago](https://medium.com/statebox/modularity-vs-compositionality-a-history-of-misunderstandings-be0150033568).
-In a nutshell, Compositionality is stronger than modularity: Modularity means being able to compose things, whereas compositionality means that some proprieties of the components (e.g. being 'safe' according to some spec) lift to the composed system ('a system made by composing safe components is guaranteed to be safe').
+Breaking this down, we usually build complex systems by first building some pieces in isolation and then gluing them together. This is very well known to developers that first implement modules and libraries and then tie everything together into a final product. Such approach is called *modular* - or, in crypto circles, *composable* - and I have written about how this is different from compositionality [some time ago](https://medium.com/statebox/modularity-vs-compositionality-a-history-of-misunderstandings-be0150033568).
+In a nutshell, Compositionality is stronger than modularity or composability: Modularity means being able to compose things, whereas compositionality means that some proprieties of the components (e.g. being 'safe' according to some spec) lift to the composed system ('a system made by composing safe components is guaranteed to be safe').
 
 Simple examples of non-safe modular systems are:
   - Plugs and sockets: You can stick a needle into a socket and get electrocuted. So the system is modular (the needle fits the socket) but non-compositional with respect to safety.
@@ -65,7 +65,7 @@ Even more practically, the formal study of obstructions to compositionality can 
 
 ## Setting the stage
 
-In this post, I'll explain the approach to obstructions to compositionality that I have worked out with several coauthors in [an omonimous paper](https://arxiv.org/abs/2307.14461). I redirect you there for a more formal treatment of this topic.
+> In this post, I'll explain the approach to obstructions to compositionality that I have worked out with several coauthors in [an omonimous paper](https://arxiv.org/abs/2307.14461). I redirect you there for a more formal treatment of this topic.
 
 
 ### Open Graphs
@@ -152,7 +152,7 @@ Then they can be composed in the obvious way:
 
 {% endex %}
 
-Now, suppose that we want to map each graph to the *reachability* relation between its interfaces. This means that, for instance, we want to map the open graph:
+Now, suppose that we want to map each graph to the *reachability relation between its interfaces*. This means that, for instance, we want to map the open graph:
 
 {% tikz %}
     \rotatebox{0}{
@@ -169,7 +169,7 @@ Now, suppose that we want to map each graph to the *reachability* relation betwe
     }
 {% endtikz %}
 
-to a relation between the sets $\\{1\\}$ and $\\{1,2,3\\}$, where the only element in $\\{1\\}$ will be related to an element in $\\{1,2,3\\}$ if only if the corresponding open graph connects them. We see that, in this case this relation is empty since there is no way to reach any point in the right interface if you start from the left interface.
+to a relation between the sets $\\{1\\}$ and $\\{1,2,3\\}$, where the only element in $\\{1\\}$ will be related to an element in $\\{1,2,3\\}$ if only if the corresponding open graph connects them. We see that in this case this relation is empty since there is no way to reach any point in the right interface if you start from the left interface.
 
 As we can compose open graphs if their interfaces match, so we can compose relations:
 
@@ -200,14 +200,14 @@ This example is not an outlier: Indeed, almost all compositional problems can be
 - Our problem will be compositional precisely when this (op-)lax functor is *strong*;
 - Characterizing obstructions to compositionality means characterizing obstructions for this functor to be strong.
 
-There are a lot of definitions in the list above (*category*,*functor*) that would require a lot of time to unpack, but this is not important at the moment: What is important is to understand that a lax functor is strong precisely when a particular 'function' (more precisely a *morphism* in some *category of functors and natural transfomations between them*) is invertible.
+There are a lot of definitions in the list above - *category*,*functor*- that would require a lot of time to unpack, but this is not important at the moment: What is important is understanding that a lax functor is strong precisely when a particular 'function' (more precisely a *morphism* in some *category of functors and natural transfomations between them*) is invertible.
 
-So, as we can characterize obstructions to compositionality in the open graph problem by studying obstructions to some function being invertible, so we can study obstructions to compositionality for *any* problem by studying if some *morphism* (that is, a fancier generalization of function) is invertible. All this is to say that, what we are doing here in this toy example directly generalizes to much more complicated classes of problems.
+So, as we can characterize obstructions to compositionality in the open graph problem by studying obstructions to some function being invertible, so we can study obstructions to compositionality for *any* problem by studying if some *morphism* (that is, a fancier generalization of function) is invertible. All this is to say that what we are doing in this toy example directly generalizes to much more complicated classes of problems.
 
 
 ## From invertibility to terminality
 
-> In the following, I will use the word *morphism* quite a lot. *morphisms* are just a generalization of the concept of function. Functions are defined between sets, e.g. $A \xrightarrow{f} B$ is a function from set $A$ to set $B$. More generally, morphisms are defined between *objects* in some environment called a *category*. If this confuses you, in the reminder of this post, you can think 'function' or 'path' or 'a transformation of sorts' almost every time you read 'morphism'.
+> In the following, I will use the word *morphism* quite a lot. *morphisms* are just a generalization of the concept of function. Functions are defined between sets - e.g. $A \xrightarrow{f} B$ is a function from set $A$ to set $B$. More generally, morphisms are defined between *objects* in some environment called a *category*. If this confuses you, in the reminder of this post you can think 'function' or 'path' or 'a transformation of sorts' almost every time you read 'morphism'.
 
 Ok, so our new problem at hand is: Given a morphism $f: A \to B$, when is it invertible? First of all, a formal definition:
 
@@ -271,7 +271,7 @@ h_0 &= h_0;id_A\\
 \end{align*}
 $$
 
-In jargon, we say that *$f$ is invertible if every $g$ factors through $f$ uniquely*. So, we have:
+In jargon, we say that *$g$ factors through $f$ uniquely*. So, we have:
 
 {% prop %}
 A morphism $f:A \to B$ is invertible if and only if any other morphism $g:X \to B$ factors through it uniquely.
@@ -311,7 +311,7 @@ So we transformed our problem once more. Instead of studying obstructions to inv
 >
 > ...Can we qualitatively describe obstructions for a point to have this propriety?
 
-In a way that mimicks verbatim our considerations regarding invertible morphsims, a point - call it $\mathtt{1}$ - fails to be terminal precisely when one of the following two conditions are satisfied:
+In a way that mimicks verbatim our considerations regarding invertible morphsims, a point - call it $\mathtt{1}$ - fails to be terminal precisely when one of the following two conditions is satisfied:
 
 {% def {"id":"obstructionZeroth"} %}
 Given a space $\mathcal{C}$ and a chosen point $\mathtt{1}$, an *obstruction of the zeroth kind for $\mathtt{1}$ in $\mathcal{C}$* is a point $x$ from which $\mathtt{1}$ is not reachable:
@@ -343,7 +343,7 @@ A *poset* is a set $P$ with a relation $\leq$ on it that is:
 {% enddef %}
 
 The most obvious example of posets are the integers, with the usual 'less or equal' relation on them. This is a boring poset since for any couple of numbers $n,m$, either $n \leq m$, $n = m$ or $n \geq m$.
-A more interesting example is, say, $n \times n$ matrices over the integers. In this case we can set $M \leq N$ if for every $0 \leq i,j \leq n$, the $ij$-th entry of $M$ is less or equal than the $ij$-th entry of $N$. It is easy to see that the $\leq$ so defined respects the [Poset axioms](#defPoset), and so the set of all $n \times n$ integer matrices is a poset under this relation. In this poset not all elements are comparable: For instance, considering the matrices
+A more interesting example is, say, $n \times n$ matrices over the integers. In this case we can set $M \leq N$ if for every $0 \leq i,j \leq (n-1)$, the $ij$-th entry of $M$ is less or equal than the $ij$-th entry of $N$. It is easy to see that the $\leq$ so defined respects the [Poset axioms](#defPoset), and so the set of all $n \times n$ integer matrices is a poset under this relation. In this poset not all elements are comparable: For instance, considering the matrices
 
 $$
 \mathbf{0} = \left(\begin{matrix}0 & 0\\ 0 & 0\end{matrix}\right) 
@@ -365,7 +365,7 @@ Given two points $x, y$ in $\mathcal{C}$, we set $x \leq y$ if there is a direct
 
 If we have directed paths $x \to y$ and $y \to x$, then $x \leq y$ and $y \leq x$, and because of the antysymmetric property of $\leq$, $x = y$. Hence, we are *contracting* points among which we can freely move. Similarly, it doesn't matter how many directed paths there are between $x$ and $y$, as long as there is at least one, we will have $x \leq y$. Hence, we are intentionally forgetting about multiple ways to go from $x$ to $y$ (remember we're focusing on [obstructions of the zeroth kind](#obstructionZeroth)).
 
-Now, we make a further step: We do not care about any point $x$ such that $x \leq \mathtt{1}$ as by definition this means that there is at least directed path from $x$ to $\mathtt{1}$, and so $x$ cannot an obstruction of the zeroth kind. So, we identify all of these 'trivial' points, and we write $[\mathtt{1}]$ for the 'generalized point' including any $x$ as above. Notice that $[\mathtt{1}]$ also includes $\mathtt{1}$ since obviously $\mathtt{1} \leq \mathtt{1}$.
+Now, we make a further step: We do not care about any point $x$ such that $x \leq \mathtt{1}$ as by definition this means that there is at least directed path from $x$ to $\mathtt{1}$, and so $x$ cannot be an obstruction of the zeroth kind. So, we identify all of these 'trivial' points, and we write $[\mathtt{1}]$ for the 'generalized point' including any $x$ as above. Notice that $[\mathtt{1}]$ also includes $\mathtt{1}$ since obviously $\mathtt{1} \leq \mathtt{1}$.
 
 > For the mathematically versed, we are quotienting the poset by the downset generated by $\mathtt{1}$.
 
@@ -423,7 +423,7 @@ Any other function from any set $X$ to $\\{0,1,2,3\\}$ can be shown to be equal 
 <iframe class="quiver-embed" src="https://q.uiver.app/#q=WzAsMTMsWzIsNCwiW2ZdIl0sWzIsMiwiXFx7MiwzXFx9Il0sWzEsMiwiXFx7MSwyXFx9Il0sWzAsMiwiXFx7MCwyXFx9Il0sWzMsMiwiXFx7MCwzXFx9Il0sWzQsMiwiXFx7MSwzXFx9Il0sWzMsMywiXFx7M1xcfSJdLFsxLDMsIlxcezJcXH0iXSxbMCwxLCJcXHswLDEsMlxcfSJdLFsxLDEsIlxcezAsMiwzXFx9Il0sWzMsMSwiXFx7MSwyLDNcXH0iXSxbNCwxLCJcXHswLDEsM1xcfSJdLFsyLDAsIlxcezAsMSwyLDNcXH0iXSxbNywwLCIiLDEseyJzdHlsZSI6eyJoZWFkIjp7Im5hbWUiOiJub25lIn19fV0sWzAsNiwiIiwxLHsic3R5bGUiOnsiaGVhZCI6eyJuYW1lIjoibm9uZSJ9fX1dLFs3LDEsIiIsMSx7InN0eWxlIjp7ImhlYWQiOnsibmFtZSI6Im5vbmUifX19XSxbMSw2LCIiLDEseyJzdHlsZSI6eyJoZWFkIjp7Im5hbWUiOiJub25lIn19fV0sWzYsNCwiIiwxLHsic3R5bGUiOnsiaGVhZCI6eyJuYW1lIjoibm9uZSJ9fX1dLFs2LDUsIiIsMSx7InN0eWxlIjp7ImhlYWQiOnsibmFtZSI6Im5vbmUifX19XSxbNywyLCIiLDEseyJzdHlsZSI6eyJoZWFkIjp7Im5hbWUiOiJub25lIn19fV0sWzcsMywiIiwxLHsic3R5bGUiOnsiaGVhZCI6eyJuYW1lIjoibm9uZSJ9fX1dLFszLDgsIiIsMSx7InN0eWxlIjp7ImhlYWQiOnsibmFtZSI6Im5vbmUifX19XSxbMiw4LCIiLDEseyJzdHlsZSI6eyJoZWFkIjp7Im5hbWUiOiJub25lIn19fV0sWzMsOSwiIiwxLHsic3R5bGUiOnsiaGVhZCI6eyJuYW1lIjoibm9uZSJ9fX1dLFsxLDksIiIsMSx7InN0eWxlIjp7ImhlYWQiOnsibmFtZSI6Im5vbmUifX19XSxbMiwxMCwiIiwxLHsic3R5bGUiOnsiaGVhZCI6eyJuYW1lIjoibm9uZSJ9fX1dLFs1LDEwLCIiLDEseyJzdHlsZSI6eyJoZWFkIjp7Im5hbWUiOiJub25lIn19fV0sWzEsMTAsIiIsMSx7InN0eWxlIjp7ImhlYWQiOnsibmFtZSI6Im5vbmUifX19XSxbNCw5LCIiLDEseyJzdHlsZSI6eyJoZWFkIjp7Im5hbWUiOiJub25lIn19fV0sWzQsMTEsIiIsMSx7InN0eWxlIjp7ImhlYWQiOnsibmFtZSI6Im5vbmUifX19XSxbNSwxMSwiIiwxLHsic3R5bGUiOnsiaGVhZCI6eyJuYW1lIjoibm9uZSJ9fX1dLFs4LDEyLCIiLDEseyJzdHlsZSI6eyJoZWFkIjp7Im5hbWUiOiJub25lIn19fV0sWzksMTIsIiIsMSx7InN0eWxlIjp7ImhlYWQiOnsibmFtZSI6Im5vbmUifX19XSxbMTAsMTIsIiIsMSx7InN0eWxlIjp7ImhlYWQiOnsibmFtZSI6Im5vbmUifX19XSxbMTEsMTIsIiIsMSx7InN0eWxlIjp7ImhlYWQiOnsibmFtZSI6Im5vbmUifX19XV0=&embed" width="1000" height="400" style="border-radius: 8px; border: none;"></iframe>
 {% endquiver %}
 
-This means that in the case of functions between sets, obstructions of the zeroth kind are precisely *obstructions to surjectivity*. Furthermore, any surjective function will have a trivial $\pi_0$ consisting of only one element, meaning that 'nothing is an obstruction'.
+This means that in the case of functions between sets, *obstructions of the zeroth kind are precisely obstructions to surjectivity*. Furthermore, any surjective function will have a trivial $\pi_0$ consisting of only one element, meaning that 'nothing is an obstruction'.
 
 ## The first homotopy poset
 
@@ -455,7 +455,7 @@ $$
 
 And so $h_0 = h_1$. This is clearly an if and only if: There is no way to make both triangles commute at the same time if $h_0$ and $h_1$ are different.
 
-To understand where this triangle 'lives', consider a new space where points are couple of paths $x \xrightarrow{f_0,f_1} \mathtt{1}$, and where a (higher level, if you wish) path from point $x \xrightarrow{f_0,f_1} \mathtt{1}$ to point $y \xrightarrow{g_0,g_1} \mathtt{1}$ is a path $x \xrightarrow{h} y$ which makes both these triangles commute:
+To understand where this triangle 'lives', consider a new space where points are couple of paths $x \xrightarrow{f_0,f_1} \mathtt{1}$, and where a - higher level, if you wish - path from point $x \xrightarrow{f_0,f_1} \mathtt{1}$ to point $y \xrightarrow{g_0,g_1} \mathtt{1}$ is a path $x \xrightarrow{h} y$ which makes both these triangles commute:
 {% quiver %}
 <!-- https://q.uiver.app/#q=WzAsNCxbMiw0LCJcXG1hdGh0dHsxfSJdLFswLDAsIngiXSxbNCwwLCJ5Il0sWzIsMywiXFxtYXRodHR7MX0iXSxbMSwzLCJmXzAiLDEseyJjdXJ2ZSI6LTF9XSxbMSwwLCJmXzEiLDEseyJjdXJ2ZSI6MX1dLFsyLDMsImdfMCIsMSx7ImN1cnZlIjoxfV0sWzIsMCwiZ18xIiwxLHsiY3VydmUiOi0xfV0sWzEsMiwiaCIsMV1d -->
 <iframe class="quiver-embed" src="https://q.uiver.app/#q=WzAsNCxbMiw0LCJcXG1hdGh0dHsxfSJdLFswLDAsIngiXSxbNCwwLCJ5Il0sWzIsMywiXFxtYXRodHR7MX0iXSxbMSwzLCJmXzAiLDEseyJjdXJ2ZSI6LTF9XSxbMSwwLCJmXzEiLDEseyJjdXJ2ZSI6MX1dLFsyLDMsImdfMCIsMSx7ImN1cnZlIjoxfV0sWzIsMCwiZ18xIiwxLHsiY3VydmUiOi0xfV0sWzEsMiwiaCIsMV1d&embed" width="1000" height="400" style="border-radius: 8px; border: none;"></iframe>
@@ -492,9 +492,9 @@ $$
 
 ### Calculating a simple $\pi_1$
 
-A characterization of $\pi_1\left(\mathcal{C}/\mathtt{1}\right)$ can be obtained applying the [characterization of the zeroth homotopy poset](#structureOfPi0) to the [definition of $\pi_1\left(\mathcal{C}/\mathtt{1}\right)$](#posetFirst). That's a lot of piggybacking, and it's not worth to cover in this post. Instead, it again makes sense to compute $\pi_1$ for a simple function.
+A characterization of $\pi_1\left(\mathcal{C}/\mathtt{1}\right)$ can be obtained applying the [characterization of the zeroth homotopy poset](#structureOfPi0) to the [definition of $\pi_1\left(\mathcal{C}/\mathtt{1}\right)$](#posetFirst). That's a lot of piggybacking, and it's not worth to cover in this post. Instead, it is probably more useful to compute $\pi_1$ for a simple function.
 
-Let $f:\\{0,1\\} \to \\{\*\\}$ the function that sends both $0,1$ to $\*$, and let's calculate its $\pi_1$. This poset will classify functions $g : X \to \\{\*\\}$ for which there are two different functions $h_0, h_1$ that make the following triangle commute:
+Let $f:\\{0,1\\} \to \\{\*\\}$ the function that sends both $0,1$ to $\*$, and let us calculate its $\pi_1$. This poset will classify functions $g : X \to \\{\*\\}$ for which there are two different functions $h_0, h_1$ that make the following triangle commute:
 {% quiver %}
 <!-- https://q.uiver.app/#q=WzAsMyxbMCwwLCJYIl0sWzEsMiwiQiJdLFsyLDAsIkEiXSxbMCwxLCJnIiwxXSxbMiwxLCJmIiwxXSxbMCwyLCJoXzAiLDEseyJjdXJ2ZSI6LTJ9XSxbMCwyLCJoXzEiLDEseyJjdXJ2ZSI6Mn1dXQ== -->
 <iframe class="quiver-embed" src="https://q.uiver.app/#q=WzAsMyxbMCwwLCJYIl0sWzEsMiwiQiJdLFsyLDAsIkEiXSxbMCwxLCJnIiwxXSxbMiwxLCJmIiwxXSxbMCwyLCJoXzAiLDEseyJjdXJ2ZSI6LTJ9XSxbMCwyLCJoXzEiLDEseyJjdXJ2ZSI6Mn1dXQ==&embed" width="432" height="432" style="border-radius: 8px; border: none;"></iframe>  
@@ -509,41 +509,45 @@ Remember that our $\pi_1$ is defined in terms of $\pi_0$ on the space of paralle
 
 In this diagram we depict functions in blue, functions seen as 'paths between functions' in black, and functions seen as 'paths between paths between functions' in red, so that we can try to keep track of how things act at different levels. The diagram says that $g$ is an obstruction of the first kind for $f$ if and only if $h_0 \neq h_1$, if and only if $(h_0, h_1)$ can't factor through $(id_{\\{0,1\\}},id_{\\{0,1\\}})$. This means that there is no path from the former to the latter, and so that $(h_0, h_1)$ is an obstruction of the zeroth kind for $(id_{\\{0,1\\}},id_{\\{0,1\\}})$.
 
-As $\pi_1$ is defined in terms of $\pi_0$ on the space of parallel paths, in the poset $\pi_1$ every $g$ is classified in terms of the couples of parallel functions that go from $g$ to $f$. These will be couple of parallel functions from some set $X$ to $\\{0,1\\}$, the domain of $f$. To keep the notation manageable, we will encode these pairs as sets of pairs made of $0$s and $1$s. The set itself represents the domain of the two functions. The first function is obtained by taking the first projection, the second function by taking the second. So, for instance, the set:
+As $\pi_1$ is defined in terms of $\pi_0$ on the space of parallel paths, in the poset $\pi_1$ every $g$ is classified in terms of the couples of parallel functions that go from $g$ to $f$. These will be couples of parallel functions from some set $X$ to $\\{0,1\\}$, the domain of $f$.
 
-$$
-\\{(0,0),(0,1),(1,1)\\}
-$$
+{% not {"id":"pairEncoding"}%}
+>To keep the notation manageable, we will encode these pairs as sets of pairs made of $0$s and $1$s. The set itself represents the domain of the two functions. The first function is obtained by taking the first projection, the second function by taking the second. So, for instance, the set:
+>
+>$$
+>\\{(0,0),(0,1),(1,1)\\}
+>$$
+>
+>Represents the following pair of functions $(h_0,h_1)$:
+>
+>$$
+>\require{extpfeil}
+>\begin{align*}
+>(0,0) \xmapsto{h_0} 0
+>&\qquad
+>(0,0) \xmapsto{h_1} 0\\
+>(0,1) \xmapsto{h_0} 0
+>&\qquad
+>(0,1) \xmapsto{h_1} 1\\
+>(1,1) \xmapsto{h_0} 1
+>&\qquad
+>(1,1) \xmapsto{h_1} 1
+>\end{align*}
+>$$
+{% endnot %}
 
-Represents the following pair of functions $(h_0,h_1)$:
+Now, let's finally describe our $\pi_1$.
 
-$$
-\require{extpfeil}
-\begin{align*}
-(0,0) \xmapsto{h_0} 0
-&\qquad
-(0,0) \xmapsto{h_1} 0\\
-(0,1) \xmapsto{h_0} 0
-&\qquad
-(0,1) \xmapsto{h_1} 1\\
-(1,1) \xmapsto{h_0} 1
-&\qquad
-(1,1) \xmapsto{h_1} 1
-\end{align*}
-$$
-
-Now, let's finally describe the structure of $\pi_1$.
-
-- At the bottom of the poset, we find $[(id_{\\{0,1\\}},id_{\\{0,1\\}})]$ wich witnesses couple of equal arrows, that is, 'non-obstructions' of the first kind.
-- Right above this, there is the couple $\\{(0,1)\\}$ (we are using our encoding here). Explicitly, this couple is given by the two functions $\\{(0,1)\\} \to \\{0,1\\}$ sending $(0,1)$ to $0$ and $1$, respectively. Since in our formalism pair of functions do not commute, we also include $\\{1,0\\}$ ad an independent element of the poset. To see why these elements are directly above $[(id_{\\{0,1\\}},id_{\\{0,1\\}})]$, consider $\\{(0,1)\\}$: following the rules of the zeroth homotopy poset, it will be 
-$\\{(0,1)\\} \leq [(id_{\\{0,1\\}},id_{\\{0,1\\}})]$ if we can find some other couple $(x,y)$ such that $(x,y) \leq (0,1)$ and $(x,y) \leq (id_{\\{0,1\\}},id_{\\{0,1\\}})$. The couple in question is a pair of empty functions, as can be seen in the following diagram:
+- At the bottom of the poset, we find $[(id_{\\{0,1\\}},id_{\\{0,1\\}})]$ wich witnesses couples of equal arrows, that is, 'non-obstructions' of the first kind.
+- Right above this, there is the couple $\\{(0,1)\\}$ (we are using our [encoding](#pairEncoding) here). Explicitly, this couple is given by the two functions $\\{(0,1)\\} \to \\{0,1\\}$ sending $(0,1)$ to $0$ and $1$, respectively. Since in our formalism pairs of functions do not commute, we also include $\\{1,0\\}$ as an independent element of the poset. To see why these elements are directly above $[(id_{\\{0,1\\}},id_{\\{0,1\\}})]$, consider $\\{(0,1)\\}$: following the rules of the zeroth homotopy poset, it will be 
+$\\{(0,1)\\} \leq [(id_{\\{0,1\\}},id_{\\{0,1\\}})]$ if we can find some other couple $(x,y)$ such that $(x,y) \leq (0,1)$ and $(x,y) \leq (id_{\\{0,1\\}},id_{\\{0,1\\}})$. The couple in question is a pair of empty functions, as can be seen in the following - terrible - diagram:
   {% quiver %}
     <!-- https://q.uiver.app/#q=WzAsNSxbMiwzLCJcXHsqXFx9Il0sWzEsMCwiXFxlbXB0eXNldCJdLFsyLDEsIlxcezAsMVxcfSJdLFswLDEsIlxcezAsMVxcfSJdLFszLDAsIlxceygwLDEpXFx9Il0sWzQsMCwiaWRfe1xce1xcYnVsbGV0XFx9fSIsMSx7ImNvbG91ciI6WzAsNjAsNjBdLCJzdHlsZSI6eyJoZWFkIjp7Im5hbWUiOiJub25lIn19fSxbMCw2MCw2MCwxXV0sWzIsMCwiZiIsMSx7ImNvbG91ciI6WzAsNjAsNjBdfSxbMCw2MCw2MCwxXV0sWzEsMCwiXFxlbXB0eXNldCIsMSx7ImNvbG91ciI6WzAsNjAsNjBdfSxbMCw2MCw2MCwxXV0sWzMsMCwiZiIsMSx7ImNvbG91ciI6WzAsNjAsNjBdfSxbMCw2MCw2MCwxXV0sWzMsMiwiaWRfe1xcezAsMVxcfX0iLDEseyJjdXJ2ZSI6LTEsInN0eWxlIjp7ImhlYWQiOnsibmFtZSI6Im5vbmUifX19XSxbMywyLCJpZF97XFx7MCwxXFx9fSIsMSx7ImN1cnZlIjoxLCJzdHlsZSI6eyJoZWFkIjp7Im5hbWUiOiJub25lIn19fV0sWzEsMiwiXFxlbXB0eSIsMSx7ImN1cnZlIjotMX1dLFsxLDIsIlxcZW1wdHkiLDEseyJjdXJ2ZSI6MX1dLFs0LDIsIlxcZm9vdG5vdGVzaXplKDAsMSlcXG1hcHN0byAwIiwxLHsiY3VydmUiOjF9XSxbNCwyLCJcXGZvb3Rub3Rlc2l6ZSgwLDEpXFxtYXBzdG8gMSIsMSx7ImN1cnZlIjotMX1dLFsxLDMsIlxcZW1wdHkiLDEseyJjb2xvdXIiOlsyNDAsNjAsNjBdfSxbMjQwLDYwLDYwLDFdXSxbMSw0LCJcXGVtcHR5IiwxLHsiY29sb3VyIjpbMjQwLDYwLDYwXX0sWzI0MCw2MCw2MCwxXV1d -->
     <iframe class="quiver-embed" src="https://q.uiver.app/#q=WzAsNSxbMiwzLCJcXHsqXFx9Il0sWzEsMCwiXFxlbXB0eXNldCJdLFsyLDEsIlxcezAsMVxcfSJdLFswLDEsIlxcezAsMVxcfSJdLFszLDAsIlxceygwLDEpXFx9Il0sWzQsMCwiaWRfe1xce1xcYnVsbGV0XFx9fSIsMSx7ImNvbG91ciI6WzAsNjAsNjBdLCJzdHlsZSI6eyJoZWFkIjp7Im5hbWUiOiJub25lIn19fSxbMCw2MCw2MCwxXV0sWzIsMCwiZiIsMSx7ImNvbG91ciI6WzAsNjAsNjBdfSxbMCw2MCw2MCwxXV0sWzEsMCwiXFxlbXB0eXNldCIsMSx7ImNvbG91ciI6WzAsNjAsNjBdfSxbMCw2MCw2MCwxXV0sWzMsMCwiZiIsMSx7ImNvbG91ciI6WzAsNjAsNjBdfSxbMCw2MCw2MCwxXV0sWzMsMiwiaWRfe1xcezAsMVxcfX0iLDEseyJjdXJ2ZSI6LTEsInN0eWxlIjp7ImhlYWQiOnsibmFtZSI6Im5vbmUifX19XSxbMywyLCJpZF97XFx7MCwxXFx9fSIsMSx7ImN1cnZlIjoxLCJzdHlsZSI6eyJoZWFkIjp7Im5hbWUiOiJub25lIn19fV0sWzEsMiwiXFxlbXB0eSIsMSx7ImN1cnZlIjotMX1dLFsxLDIsIlxcZW1wdHkiLDEseyJjdXJ2ZSI6MX1dLFs0LDIsIlxcZm9vdG5vdGVzaXplKDAsMSlcXG1hcHN0byAwIiwxLHsiY3VydmUiOjF9XSxbNCwyLCJcXGZvb3Rub3Rlc2l6ZSgwLDEpXFxtYXBzdG8gMSIsMSx7ImN1cnZlIjotMX1dLFsxLDMsIlxcZW1wdHkiLDEseyJjb2xvdXIiOlsyNDAsNjAsNjBdfSxbMjQwLDYwLDYwLDFdXSxbMSw0LCJcXGVtcHR5IiwxLHsiY29sb3VyIjpbMjQwLDYwLDYwXX0sWzI0MCw2MCw2MCwxXV1d&embed" width="1000" height="400" style="border-radius: 8px; border: none;"></iframe>
   {% endquiver %}
-  - One level above, we have the sets $\\{(1,1),(0,1)\\}$, $\\{(0,0),(0,1)\\}$, $\\{(0,1),(1,0)\\}$, $\\{(1,1),(1,0)\\}$ and $\\{(0,0),(1,0)\\}$. These are all pairs of functions from a two element set to $(0,1)$, that disagree on at least one value.
-  - One level above, we have $\\{(0,0),(0,1),(1,1)\\}$, $\\{(0,1),(1,0),(1,1)\\}$, $\\{(0,0),(0,1),(1,0)\\}$ and $\\{(0,0),(1,0),(1,1)\\}$. These are all pairs of functions from a three element set to $\\{0,1\\}$, again disagreeing on at least one value.
-  - Finally, the top of the poset is composed by just one pair of functions from a four element set to $\\{0,1\\}$, namely $\\{(0,0),(0,1),(1,0),(1,1)\\}$.
+- One level above, we have the sets $\\{(1,1),(0,1)\\}$, $\\{(0,0),(0,1)\\}$, $\\{(0,1),(1,0)\\}$, $\\{(1,1),(1,0)\\}$ and $\\{(0,0),(1,0)\\}$. These are all pairs of functions from a two element set to $(0,1)$, that disagree on at least one value.
+- One level above, we have $\\{(0,0),(0,1),(1,1)\\}$, $\\{(0,1),(1,0),(1,1)\\}$, $\\{(0,0),(0,1),(1,0)\\}$ and $\\{(0,0),(1,0),(1,1)\\}$. These are all pairs of functions from a three element set to $\\{0,1\\}$, again disagreeing on at least one value.
+- Finally, the top of the poset is composed by just one pair of functions from a four element set to $\\{0,1\\}$, namely $\\{(0,0),(0,1),(1,0),(1,1)\\}$.
 
 All in all, the poset looks like this:
 
@@ -552,17 +556,17 @@ All in all, the poset looks like this:
 <iframe class="quiver-embed" src="https://q.uiver.app/#q=WzAsMTMsWzIsNCwiWyhpZF97XFx7MCwxXFx9fSxpZF97XFx7MCwxXFx9fSldIl0sWzIsMiwiXFx7KDAsMSksKDEsMClcXH0iXSxbMSwyLCJcXHsoMCwwKSwoMCwxKVxcfSJdLFswLDIsIlxceygxLDEpLCgwLDEpXFx9Il0sWzMsMiwiXFx7KDEsMSksKDEsMClcXH0iXSxbNCwyLCJcXHsoMCwwKSwoMSwwKVxcfSJdLFszLDMsIlxceygxLDApXFx9Il0sWzEsMywiXFx7KDAsMSlcXH0iXSxbMCwxLCJcXHsoMCwwKSwoMCwxKSwoMSwxKVxcfSJdLFsxLDEsIlxceygwLDEpLCgxLDApLCgxLDEpXFx9Il0sWzMsMSwiXFx7KDAsMCksKDAsMSksKDEsMClcXH0iXSxbNCwxLCJcXHsoMCwwKSwoMSwwKSwoMSwxKVxcfSJdLFsyLDAsIlxceygwLDApLCgwLDEpLCgxLDApLCgxLDEpXFx9Il0sWzcsMCwiIiwxLHsic3R5bGUiOnsiaGVhZCI6eyJuYW1lIjoibm9uZSJ9fX1dLFswLDYsIiIsMSx7InN0eWxlIjp7ImhlYWQiOnsibmFtZSI6Im5vbmUifX19XSxbNywxLCIiLDEseyJzdHlsZSI6eyJoZWFkIjp7Im5hbWUiOiJub25lIn19fV0sWzEsNiwiIiwxLHsic3R5bGUiOnsiaGVhZCI6eyJuYW1lIjoibm9uZSJ9fX1dLFs2LDQsIiIsMSx7InN0eWxlIjp7ImhlYWQiOnsibmFtZSI6Im5vbmUifX19XSxbNiw1LCIiLDEseyJzdHlsZSI6eyJoZWFkIjp7Im5hbWUiOiJub25lIn19fV0sWzcsMiwiIiwxLHsic3R5bGUiOnsiaGVhZCI6eyJuYW1lIjoibm9uZSJ9fX1dLFs3LDMsIiIsMSx7InN0eWxlIjp7ImhlYWQiOnsibmFtZSI6Im5vbmUifX19XSxbMyw4LCIiLDEseyJzdHlsZSI6eyJoZWFkIjp7Im5hbWUiOiJub25lIn19fV0sWzIsOCwiIiwxLHsic3R5bGUiOnsiaGVhZCI6eyJuYW1lIjoibm9uZSJ9fX1dLFszLDksIiIsMSx7InN0eWxlIjp7ImhlYWQiOnsibmFtZSI6Im5vbmUifX19XSxbMSw5LCIiLDEseyJzdHlsZSI6eyJoZWFkIjp7Im5hbWUiOiJub25lIn19fV0sWzIsMTAsIiIsMSx7InN0eWxlIjp7ImhlYWQiOnsibmFtZSI6Im5vbmUifX19XSxbNSwxMCwiIiwxLHsic3R5bGUiOnsiaGVhZCI6eyJuYW1lIjoibm9uZSJ9fX1dLFsxLDEwLCIiLDEseyJzdHlsZSI6eyJoZWFkIjp7Im5hbWUiOiJub25lIn19fV0sWzQsOSwiIiwxLHsic3R5bGUiOnsiaGVhZCI6eyJuYW1lIjoibm9uZSJ9fX1dLFs0LDExLCIiLDEseyJzdHlsZSI6eyJoZWFkIjp7Im5hbWUiOiJub25lIn19fV0sWzUsMTEsIiIsMSx7InN0eWxlIjp7ImhlYWQiOnsibmFtZSI6Im5vbmUifX19XSxbOCwxMiwiIiwxLHsic3R5bGUiOnsiaGVhZCI6eyJuYW1lIjoibm9uZSJ9fX1dLFs5LDEyLCIiLDEseyJzdHlsZSI6eyJoZWFkIjp7Im5hbWUiOiJub25lIn19fV0sWzEwLDEyLCIiLDEseyJzdHlsZSI6eyJoZWFkIjp7Im5hbWUiOiJub25lIn19fV0sWzExLDEyLCIiLDEseyJzdHlsZSI6eyJoZWFkIjp7Im5hbWUiOiJub25lIn19fV1d&embed" width="1797" height="288" style="border-radius: 8px; border: none;"></iframe>
 {% endquiver %}
 
-As for $\pi_0$, any $g:X \to \\{0,1\\}$ that is an obstruction of the second kind through $f$ will exhibit a number of non equal paths $(h_0,h_1)$ that can be ultimately shown to be equal to one of the elements in the poset above.
+As for $\pi_0$, any $g:X \to \\{0,1\\}$ that is an obstruction of the first kind to $f$ will exhibit a number of non equal paths $(h_0,h_1)$, each one to be equal to one of the elements in the poset above.
 
-Finally, you may have noticed that for functions $\pi_1$ acts in a dual way with respect to $\pi_0$: It witnesses obstructions to $f$ being *injective*!
+Finally, you may have noticed that for functions $\pi_1$ acts in a dual way with respect to $\pi_0$. Indeed, for functions between sets, $\pi_1$ *witnesses obstructions to $f$ being injective*.
 
 
 ## Closing remarks
 
-If you made it so far, you may be thinking "what the actual fuck? You promised me a post about intents and everything I'm seeing is a bunch of horrendous math!", and you would basically be right. But the fact is this: The theory we so far developed, and that I have tried to exemplify by means of very simple examples, can be applied to a *wide, wide* range of problems, among which we can for sure find graph reachability, which is deeply related to intent search as you may already know from our previous [Lagrangian account](/lagrangian-intent-search-i). Indeed, we spent the best part of the paper we published by characterizing these groups further in various contexts - how these groups relate, how do they transform when your problem domain changes, and so on and so forth. The hope is that these complicated techniques may give us insights about what exactly makes intent solving and bundling difficult, and how to circumvent these difficulties.
+If you made it so far, you may be thinking "what the actual fuck? You promised me a post about intents and everything I'm seeing is a bunch of horrendous math!", and you would basically be right. But the fact is this: The theory we so far developed, and that I have tried to exemplify by means of very simple examples, can be applied to a *wide, wide* range of problems, among which graph reachability, which is deeply related to intent search as you may already know from our previous [Lagrangian account](/lagrangian-intent-search-i). Indeed, we spent the best part of the paper we published by characterizing how homotopy posets behave in various contexts - how they relate to each other, how do they transform when your problem domain changes, and so on and so forth. The hope is that these complicated techniques may give us insights about what exactly makes intent solving and bundling difficult, and how to circumvent these difficulties.
 
 Another approach that we have been developing at the workshop I mentioned, and on which I'm very bullish, is based on a possibly even more abstract tool called *sheaf cohomology*. The reason why I'm so bullish about it is that, whereas we still don't know which way is the best to compute homotopy posets efficiently, the sheaf approach spits out, pretty much by design, computantional lower bounds on the complexity of the problem at hand. When we realized that we were looking at results such as "if the n-th cohomology group of your sheaf is trivial, then your problem can be solved in linear time" it literally blew my mind away.
 
 So, you can expect another followup post talking about sheaf cohomology in the future. This won't be anytime soon tho, since we have a working paper to be published first. Stay tuned!
 
-> If you are interested, do not forget to check out our paper, [Obstructions to Compositionality](https://arxiv.org/abs/2307.14461).
+> If you want to know more, do not forget to check out our paper, [Obstructions to Compositionality](https://arxiv.org/abs/2307.14461).

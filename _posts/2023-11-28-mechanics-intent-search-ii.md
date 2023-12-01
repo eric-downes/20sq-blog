@@ -2,7 +2,7 @@
 layout: post
 title: Mechanics of intent solving II - Obstructions to Compositionality
 author: Fabrizio Genovese
-categories: [intents, search, physics, lagrangian]
+categories: [intents, posets, category theory, homotopy, obstructions]
 excerpt: Where we try to apply grad topology to the world of intent solving.
 image: assetsPosts/2023-11-28-mechanics-intent-search-ii/thumbnail.png
 usemathjax: true

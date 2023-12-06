@@ -195,6 +195,9 @@ module Jekyll
     end
     
     Liquid::Template.register_tag('def', Jekyll::DefEnvironment)
+    Liquid::Template.register_tag('not', Jekyll::NotEnvironment)
+    Liquid::Template.register_tag('ex', Jekyll::ExEnvironment)
+    Liquid::Template.register_tag('diag', Jekyll::DiagEnvironment)
     Liquid::Template.register_tag('prop', Jekyll::PropEnvironment)
     Liquid::Template.register_tag('lem', Jekyll::LemEnvironment)
     Liquid::Template.register_tag('thm', Jekyll::ThmEnvironment)

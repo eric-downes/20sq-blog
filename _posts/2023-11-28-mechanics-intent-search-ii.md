@@ -65,7 +65,7 @@ Even more practically, the formal study of obstructions to compositionality can 
 
 ## Setting the stage
 
-> In this post, I'll explain the approach to obstructions to compositionality that I have worked out with several coauthors in [an omonimous paper](https://arxiv.org/abs/2307.14461). I redirect you there for a more formal treatment of this topic.
+> In this post, I'll explain the approach to obstructions to compositionality that I have worked out with several coauthors in [a homonimous paper](https://arxiv.org/abs/2307.14461). I redirect you there for a more formal treatment of this topic.
 
 
 ### Open Graphs

@@ -75,20 +75,7 @@ To illustrate how our technique works, let's consider the following example.
 {% ex %}
 An *open graph* is a graph as below:
 
-{% tikz %}
-    \rotatebox{0}{
-        \scalebox{1}{
-            \begin{tikzpicture}
-                    \node[circle, fill, minimum size=5pt, inner sep=0pt, label=left:{$1$}] (al1) at (-2,0) {};
-                    \node[circle, fill, minimum size=5pt, inner sep=0pt, label=right:{$1$}] (ar1) at (0,0) {};
-                    \node[circle, fill, minimum size=5pt, inner sep=0pt, label=right:{$2$}] (ar2) at (0,-1) {};
-                    \node[circle, fill, minimum size=5pt, inner sep=0pt, label=right:{$3$}] (ar3) at (0,-2) {};
-                        \draw[thick] (al1) to (ar1);
-                        \draw[thick, out=180, in=180, looseness=2] (ar2) to (ar3);
-            \end{tikzpicture}
-        }
-    }
-{% endtikz %}
+![Open Graph](/assetsPosts/2023-11-28-mechanics-intent-search-ii/GraphLeft.png)
 
 Intuitively, it is a graph with 'open interfaces', in this case the sets $\\{1\\}$ and $\\{1,2,3\\}$.
 {% endex %}
@@ -96,78 +83,17 @@ Intuitively, it is a graph with 'open interfaces', in this case the sets $\\{1\\
 {% ex {"id":"exOpenGraphs"} %}
 If we have two open graphs, and if their interfaces match:
 
-{% tikz %}
-    \rotatebox{0}{
-        \scalebox{1}{
-            \begin{tikzpicture}
-                \begin{scope}[xshift=-1cm]
-                    \node[circle, fill, minimum size=5pt, inner sep=0pt, label=left:{$1$}] (al1) at (-2,0) {};
-                    \node[circle, fill, minimum size=5pt, inner sep=0pt, label=right:{$1$}] (ar1) at (0,0) {};
-                    \node[circle, fill, minimum size=5pt, inner sep=0pt, label=right:{$2$}] (ar2) at (0,-1) {};
-                    \node[circle, fill, minimum size=5pt, inner sep=0pt, label=right:{$3$}] (ar3) at (0,-2) {};
-                        \draw[thick] (al1) to (ar1);
-                        \draw[thick, out=180, in=180, looseness=2] (ar2) to (ar3);
-                \end{scope}
-                \begin{scope}[xshift=1cm]
-                    \node[circle, fill, minimum size=5pt, inner sep=0pt, label=right:{$1$}] (br3) at (2,-2) {};
-                    \node[circle, fill, minimum size=5pt, inner sep=0pt, label=left:{$1$}] (bl1) at (0,0) {};
-                    \node[circle, fill, minimum size=5pt, inner sep=0pt, label=left:{$2$}] (bl2) at (0,-1) {};
-                    \node[circle, fill, minimum size=5pt, inner sep=0pt, label=left:{$3$}] (bl3) at (0,-2) {};
-                        \draw[thick, out=0, in=0, looseness=2] (bl1) to (bl2);
-                        \draw[thick] (bl3) to (br3);
-                \end{scope}
-            \end{tikzpicture}
-        }
-    }
-{% endtikz %}
+![Open Graph](/assetsPosts/2023-11-28-mechanics-intent-search-ii/Graphs.png)
 
 Then they can be composed in the obvious way:
 
-{% tikz %}
-    \rotatebox{0}{
-        \scalebox{1}{
-            \begin{tikzpicture}
-            \begin{scope}[xshift=0cm]
-                \begin{scope}[xshift=-0cm]
-                    \node[circle, fill, minimum size=5pt, inner sep=0pt,label=left:{$1$}] (al1) at (-2,0) {};
-                    \node[circle, fill, minimum size=5pt, inner sep=0pt] (ar1) at (0,0) {};
-                    \node[circle, fill, minimum size=5pt, inner sep=0pt] (ar2) at (0,-1) {};
-                    \node[circle, fill, minimum size=5pt, inner sep=0pt] (ar3) at (0,-2) {};
-                        \draw[thick] (al1) to (ar1);
-                        \draw[thick, out=180, in=180, looseness=2] (ar2) to (ar3);
-                \end{scope}
-                \begin{scope}[xshift=0cm]
-                    \node[circle, fill, minimum size=5pt, inner sep=0pt, label=right:{$1$}] (br3) at (2,-2) {};
-                    \node[circle, fill, minimum size=5pt, inner sep=0pt] (bl1) at (0,0) {};
-                    \node[circle, fill, minimum size=5pt, inner sep=0pt] (bl2) at (0,-1) {};
-                    \node[circle, fill, minimum size=5pt, inner sep=0pt] (bl3) at (0,-2) {};
-                        \draw[thick, out=0, in=0, looseness=2] (bl1) to (bl2);
-                        \draw[thick] (bl3) to (br3);
-                \end{scope}
-            \end{scope}
-            \end{tikzpicture}
-        }
-    }
-{% endtikz %}
+![Open Graph](/assetsPosts/2023-11-28-mechanics-intent-search-ii/Composed.png)
 
 {% endex %}
 
 Now, suppose that we want to map each graph to the *reachability relation between its interfaces*. This means that, for instance, we want to map the open graph:
 
-{% tikz %}
-    \rotatebox{0}{
-        \scalebox{1}{
-            \begin{tikzpicture}
-                    \node[circle, fill, minimum size=5pt, inner sep=0pt, label=left:{$1$}] (al1) at (-2,0) {};
-                    \node[circle, fill, minimum size=5pt, inner sep=0pt, label=right:{$1$}] (ar1) at (0,0) {};
-                    \node[circle, fill, minimum size=5pt, inner sep=0pt, label=right:{$2$}] (ar2) at (0,-1) {};
-                    \node[circle, fill, minimum size=5pt, inner sep=0pt, label=right:{$3$}] (ar3) at (0,-2) {};
-                        \draw[thick] (al1) to (ar1);
-                        \draw[thick, out=180, in=180, looseness=2] (ar2) to (ar3);
-            \end{tikzpicture}
-        }
-    }
-{% endtikz %}
+![Open Graph](/assetsPosts/2023-11-28-mechanics-intent-search-ii/GraphLeft.png)
 
 to a relation between the sets $\\{1\\}$ and $\\{1,2,3\\}$, where the only element in $\\{1\\}$ will be related to an element in $\\{1,2,3\\}$ if only if the corresponding open graph connects them. We see that in this case this relation is empty since there is no way to reach any point in the right interface if you start from the left interface.
 

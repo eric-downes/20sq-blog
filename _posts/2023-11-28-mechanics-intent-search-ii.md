@@ -16,7 +16,7 @@ Part of the 20[ ] team has been busy in the last week with a research retreat fo
 If you recall, a few months ago we gave a [Lagrangian account](/lagrangian-intent-search-i) of what intent solving was. To recap:
 
 - We have a graph where:
-  -  Vertexes are (EVM) states;
+  -  Vertices are (EVM) states;
   -  Edges represent actions that lead from a state to another (e.g. calling a function with a given payload);
 - An intent specifies a couple of regions in this graph:
   - One region indentifies the *premises* of the intent, that is, the states in which intent search can be triggered;
@@ -27,7 +27,7 @@ If you recall, a few months ago we gave a [Lagrangian account](/lagrangian-inten
 This is a hard problem, and we'd really like it to be compositional. *Compositionality* is a pervasive idea in engineering. In a very handwavy way, we can say that:
 
 {% def %}
-*Compositionality* is the study of why and how proprieties of a given system can be inferred from the proprieties of its parts. Dually, it is the study of how to lift proprieties of smaller systems to the propriety of the system obtained by composing them according to some rule.
+*Compositionality* is the study of why and how properties of a given system can be inferred from the properties of its parts. Dually, it is the study of how to lift properties of smaller systems to the property of the system obtained by composing them according to some rule.
 {% enddef %}
 
 Breaking this down, we usually build complex systems by first building some pieces in isolation and then gluing them together. This is very well known to developers that first implement modules and libraries and then tie everything together into a final product. Such approach is called *modular* - or, in crypto circles, *composable* - and I have written about how this is different from compositionality [some time ago](https://medium.com/statebox/modularity-vs-compositionality-a-history-of-misunderstandings-be0150033568).
@@ -363,7 +363,7 @@ Now we build a poset out of our starting space by squeezing out redundant inform
 Given two points $x, y$ in $\mathcal{C}$, we set $x \leq y$ if there is a directed path from $x$ to $y$. The resulting poset is called the *poset reflection* of $\mathcal{C}$.
 {% enddef %}
 
-If we have directed paths $x \to y$ and $y \to x$, then $x \leq y$ and $y \leq x$, and because of the antysymmetric property of $\leq$, $x = y$. Hence, we are *contracting* points among which we can freely move. Similarly, it doesn't matter how many directed paths there are between $x$ and $y$, as long as there is at least one, we will have $x \leq y$. Hence, we are intentionally forgetting about multiple ways to go from $x$ to $y$ (remember we're focusing on [obstructions of the zeroth kind](#obstructionZeroth)).
+If we have directed paths $x \to y$ and $y \to x$, then $x \leq y$ and $y \leq x$, and because of the antisymmetric property of $\leq$, $x = y$. Hence, we are *contracting* points among which we can freely move. Similarly, it doesn't matter how many directed paths there are between $x$ and $y$, as long as there is at least one, we will have $x \leq y$. Hence, we are intentionally forgetting about multiple ways to go from $x$ to $y$ (remember we're focusing on [obstructions of the zeroth kind](#obstructionZeroth)).
 
 Now, we make a further step: We do not care about any point $x$ such that $x \leq \mathtt{1}$ as by definition this means that there is at least directed path from $x$ to $\mathtt{1}$, and so $x$ cannot be an obstruction of the zeroth kind. So, we identify all of these 'trivial' points, and we write $[\mathtt{1}]$ for the 'generalized point' including any $x$ as above. Notice that $[\mathtt{1}]$ also includes $\mathtt{1}$ since obviously $\mathtt{1} \leq \mathtt{1}$.
 
@@ -431,7 +431,7 @@ Now, we want to capture [obstructions of the first kind](#obstructionFirst), tha
 
 ### Defining the first homotopy poset
 
-Again, let us fix some space $\mathcal{C}$ and a point $\mathtt{1}$. An obstruction of the first kind is a point $x$ that reaches $\mathtt{1}$ it at least two different ways:
+Again, let us fix some space $\mathcal{C}$ and a point $\mathtt{1}$. An obstruction of the first kind is a point $x$ that reaches $\mathtt{1}$ in at least two different ways:
 
 {% quiver %}
 <!-- https://q.uiver.app/#q=WzAsMixbMCwwLCJ4Il0sWzIsMCwiXFxtYXRodHR7MX0iXSxbMCwxLCJoXzAiLDEseyJjdXJ2ZSI6LTJ9XSxbMCwxLCJoXzEiLDEseyJjdXJ2ZSI6Mn1dXQ== -->
@@ -565,7 +565,7 @@ Finally, you may have noticed that for functions $\pi_1$ acts in a dual way with
 
 If you made it so far, you may be thinking "what the actual fuck? You promised me a post about intents and everything I'm seeing is a bunch of horrendous math!", and you would basically be right. But the fact is this: The theory we so far developed, and that I have tried to exemplify by means of very simple examples, can be applied to a *wide, wide* range of problems, among which graph reachability, which is deeply related to intent search as you may already know from our previous [Lagrangian account](/lagrangian-intent-search-i). Indeed, we spent the best part of the paper we published by characterizing how homotopy posets behave in various contexts - how they relate to each other, how do they transform when your problem domain changes, and so on and so forth. The hope is that these complicated techniques may give us insights about what exactly makes intent solving and bundling difficult, and how to circumvent these difficulties.
 
-Another approach that we have been developing at the workshop I mentioned, and on which I'm very bullish, is based on a possibly even more abstract tool called *sheaf cohomology*. The reason why I'm so bullish about it is that, whereas we still don't know which way is the best to compute homotopy posets efficiently, the sheaf approach spits out, pretty much by design, computantional lower bounds on the complexity of the problem at hand. When we realized that we were looking at results such as "if the n-th cohomology group of your sheaf is trivial, then your problem can be solved in linear time" it literally blew my mind away.
+Another approach that we have been developing at the workshop I mentioned, and on which I'm very bullish, is based on a possibly even more abstract tool called *sheaf cohomology*. The reason why I'm so bullish about it is that, whereas we still don't know which way is the best to compute homotopy posets efficiently, the sheaf approach spits out, pretty much by design, computational lower bounds on the complexity of the problem at hand. When we realized that we were looking at results such as "if the n-th cohomology group of your sheaf is trivial, then your problem can be solved in linear time" it literally blew my mind away.
 
 So, you can expect another followup post talking about sheaf cohomology in the future. This won't be anytime soon tho, since we have a working paper to be published first. Stay tuned!
 

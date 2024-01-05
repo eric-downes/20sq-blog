@@ -4,7 +4,7 @@ title: Correctly pricing blockspace in a causally parallel world
 author: Fabrizio Genovese, Daniele Palombi
 categories: [parallelization, causality, MEV, EVM, Jito]
 excerpt: Where we investigate the thread that ties Jito, the parallel EVM, auction theory and physics together.
-image: assetsPosts/2023-07-26-lagrangian-intent-search-i/greedyAction.png
+image: assetsPosts/2024-01-05-correctly-pricing-txs-parallel/PetriConflict.png
 usemathjax: true
 thanks: 
 ---

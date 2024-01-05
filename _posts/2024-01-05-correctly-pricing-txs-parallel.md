@@ -31,7 +31,14 @@ Now, our idea is very simple. Parallelization is good because it makes execution
 
 Naïvely, we'd like 'highly parallelizable' transactions to be cheaper as the amount of computation one must do is more efficient. Paradoxically, this is easier said than done, and depends on the fact that fees represent costs for some actors, but revenues for others. If we were to make 'highly parallel transactions' fees cheaper - e.g. by multiplying the transaction gas size by a 'parallelization coefficient' ranging from 0 to 1 - we would incentivize one end of the pipeline (end users, dapp developers) to push for highly parallel blocks. At the same time, we would incentivize the other end of the pipeline (the fee recipients, so validators, builders, etc) to reject highly parallel blocks in favor of sequential ones, just because they pay better.
 
-This has the very counterintuitive effect that if a user really wants a transaction to be included, they could stand a better chance by just opting for a highly sequential implementation of whatever they want to do (e.g. using a bad, gas guzzling unparallelized dapp instead of a nice one).
+One consequence of this is that whatever gas pricing mechanism we adopt, it cannot be too naïve. One possible way to align agents across the pipeline would be the following:
+- As transaction fees, users specify gas for the 'worst case scenario', when the transaction is not parallelizable at all;
+- At block simulation, a certain degree of parallelization is established as a function of the block;
+- The users receive a discount on their fee based on this;
+- The block builder receives instead the whole value of the user transaction, maybe plus a small bonus;
+- The delta between what the user pays and what the builder receives is simply created, as block rewards are created now.
+
+We are not claiming that this is the right way to do it. The example above only shows how one must be a bit creative when it comes to incentive design to make sure all actors are aligned. Luckily for us, there's a vast literature on topics such as cloud infrastructure pricing that we can boorrow from, so we don't have to start from scratch. We will probably come up with some follow-up posts about this in the future.
 
 ## A story of ordering
 

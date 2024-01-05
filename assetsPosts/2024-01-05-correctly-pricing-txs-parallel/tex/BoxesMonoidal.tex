@@ -1,0 +1,163 @@
+
+\documentclass{standalone}
+\usepackage{tikz}
+\usepackage{amsfonts}
+
+  %
+  \usepackage{tikz} %
+  \usetikzlibrary{
+	petri, %
+	backgrounds, %
+	arrows, %
+	positioning, %
+	decorations.markings, %
+	calc,  %
+	fit, %
+  }
+\tikzstyle{inarrow}=[->, >=stealth, shorten >=.03cm,line width=0.5]
+\tikzstyle{outarrow}=[<-, >=stealth, shorten <=.03cm,line width=1.5]
+
+
+
+
+  %
+  \tikzset{ %
+		oriented WD/.style={%
+			every to/.style={
+        out=0,in=180,draw
+      },
+			label/.style={
+				font=\everymath\expandafter{\the\everymath\scriptstyle},
+				inner sep=0pt,
+        node distance=2pt and -2pt
+      },
+			semithick,
+			node distance=1 and 1,
+			decoration={
+        markings, mark=at position \stringdecpos with \stringdec
+      },
+			ar/.style={
+        postaction={decorate}
+      },
+			execute at begin picture={
+        \tikzset{
+					x=\bbx, y=\bby,
+					every fit/.style={
+            inner xsep=\bbx, inner ysep=\bby
+          }
+        }
+      }
+		},
+		string decoration/.store in=\stringdec,
+		string decoration={
+      \arrow{stealth};
+    },
+		string decoration pos/.store in=\stringdecpos,
+		string decoration pos=.7,
+		bbx/.store in=\bbx,
+		bbx = 1.5cm,
+		bby/.store in=\bby,
+		bby = 1.5ex,
+		bb port sep/.store in=\bbportsep,
+		bb port sep=1.5,
+		bb port length/.store in=\bbportlen,
+		bb port length=4pt,
+		bb penetrate/.store in=\bbpenetrate,
+		bb penetrate=0,
+		bb min width/.store in=\bbminwidth,
+		bb min width=1cm,
+		bb rounded corners/.store in=\bbcorners,
+		bb rounded corners=2pt,
+		bb small/.style={
+      bb port sep=1, 
+      bb port length=2.5pt, 
+      bbx=.4cm, bb min width=.4cm, 
+      bby=.7ex
+    },
+		bb medium/.style={
+      bb port sep=1, 
+      bb port length=2.5pt, 
+      bbx=.4cm, 
+      bb min width=.4cm, 
+      bby=.9ex
+    },
+		bb/.code 2 args={%
+			\pgfmathsetlengthmacro{\bbheight}{\bbportsep * (max(#1,#2)+1) * \bby}
+			\pgfkeysalso{
+        draw,
+        minimum height=\bbheight,
+        minimum width=\bbminwidth,
+        outer sep=0pt,
+        rounded corners=\bbcorners,
+        thick,
+				prefix after command={
+          \pgfextra{\let\fixname\tikzlastnode}
+        },
+				append after command={
+          \pgfextra{
+            \draw
+            \ifnum #1=0
+              {} 
+            \else 
+              foreach \i in {1,...,#1} {
+						  	($(\fixname.north west)!{\i/(#1+1)}!(\fixname.south west)$) +(-
+							\bbportlen,0) 
+              coordinate (\fixname_in\i) -- +(\bbpenetrate,0) coordinate (\fixname_in\i')
+              }
+            \fi 
+						%
+            \ifnum 
+              #2=0{} 
+            \else 
+              foreach \i in {1,...,#2} {
+							($(\fixname.north east)!{\i/(#2+1)}!(\fixname.south east)$) +(-
+							\bbpenetrate,0) 
+              coordinate (\fixname_out\i') -- +(\bbportlen,0) coordinate (\fixname_out\i)
+              }
+            \fi;
+          }
+        }
+      }
+		},
+		bb name/.style={
+      append after command={
+        \pgfextra{
+          \node[anchor=north] at (\fixname.north) {#1}
+        ;}
+      }
+    }
+	}
+
+	 \begin{document}
+	
+\scalebox{3}{
+\begin{tikzpicture}[oriented WD, bb port length=10pt]
+  %
+  \node[bb={2}{1}, fill={black!20}] (X1) {$f$};
+  %
+  %
+  \draw[label] 
+    node [left=2pt of X1_in1] {$A_1$}
+	node [left=2pt of X1_in2] {$A_2$}
+    node [right=2pt of X1_out1] {$B$}
+    ;
+  %
+  \begin{scope}[xshift=10em]
+  \node[bb={3}{2}, fill={black!20}] (X2) {$g$};
+  %
+  %
+  \draw[label] 
+    node [left=2pt of X2_in1] {$B_1$}
+	node [left=2pt of X2_in2] {$B_2$}
+	node [left=2pt of X2_in3] {$B_3$}
+
+    node [right=2pt of X2_out1] {$C_1$}
+	node [right=2pt of X2_out2] {$C_2$}
+	;
+  \end{scope}
+
+\end{tikzpicture}
+}{}
+
+
+\end{document}

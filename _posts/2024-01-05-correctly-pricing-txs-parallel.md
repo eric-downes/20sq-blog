@@ -35,7 +35,7 @@ One consequence of this is that whatever gas pricing mechanism we adopt, it cann
 - As transaction fees, users specify gas for the 'worst case scenario', when the transaction is not parallelizable at all;
 - At block simulation, a certain degree of parallelization is established as a function of the block;
 - The users receive a discount on their fee based on this;
-- The block builder receives instead the whole value of the user transaction, maybe plus a small bonus;
+- The block builder instead receives the whole value of the user transaction, maybe plus a small bonus;
 - The delta between what the user pays and what the builder receives is simply created, as block rewards are created now.
 
 We are not claiming that this is the right way to do it. The example above only shows how one must be a bit creative when it comes to incentive design to make sure all actors are aligned. Luckily for us, there's a vast literature on topics such as cloud infrastructure pricing that we can boorrow from, so we don't have to start from scratch. We will probably come up with some follow-up posts about this in the future.

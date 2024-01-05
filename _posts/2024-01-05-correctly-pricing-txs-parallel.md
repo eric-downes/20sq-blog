@@ -46,7 +46,7 @@ In the most ideal setting described above, transaction fees are taken to represe
 
 This observation is what ties together parallel computation and MEV. Imagine that there are two transactions that compete for being top of the block. Assume furthermore that there is no overlap whatsoever between the state read and written by them. Are the transactions 'really' competing? The answer is no, because the way you order them does not matter: By definition, whatever one transaction does won't influence what the other does, and hence it doesn't matter who ends up being on top.
 
-This is precisely what happens in Jito, where 'transactions that do not stomp on each other's feet' are put into different auctions running in parallel. This difference was highlighted in a very approachable way in [Tarun's twitter thread](https://warpcast.com/pinged/0xa6d3fe25).
+This is precisely what happens in [Jito](https://www.jito.wtf/), where 'transactions that do not stomp on each other's feet' are put into different auctions running in parallel. This difference was highlighted in a very approachable way in [Tarun's twitter thread](https://warpcast.com/pinged/0xa6d3fe25).
 
 In a way, this tells us that there are MEV auctions out there that already take parallelization into account. On the surface this shouldn't surprise, as Solana's execution layer is already parallelized. Yet, do not let yourself be fooled by this. Indeed:
 

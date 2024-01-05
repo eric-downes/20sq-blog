@@ -38,7 +38,7 @@ One consequence of this is that whatever gas pricing mechanism we adopt, it cann
 - The block builder instead receives the whole value of the user transaction, maybe plus a small bonus;
 - The delta between what the user pays and what the builder receives is simply created, as block rewards are created now.
 
-We are not claiming that this is the right way to do it. The example above only shows how one must be a bit creative when it comes to incentive design to make sure all actors are aligned. Luckily for us, there's a vast literature on topics such as cloud infrastructure pricing that we can boorrow from, so we don't have to start from scratch. We will probably come up with some follow-up posts about this in the future.
+We are not claiming that this is the right way to do it (and indeed it's not, because it may require to sequentially simulate the block to calculate the improvement coefficient, that defies the purpose of parallelization completely). The example above only shows how one must be a bit creative when it comes to incentive design to make sure all actors are aligned. Luckily for us, there's a vast literature on topics such as cloud infrastructure pricing that we can boorrow from, so we don't have to start from scratch. We will probably come up with some follow-up posts about this in the future.
 
 ## A story of ordering
 

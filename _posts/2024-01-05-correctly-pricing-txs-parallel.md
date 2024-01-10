@@ -87,7 +87,7 @@ As you can see, in the net you can fire $t$ and $u$ independently, and indeed th
 ### And so parallel computation and parallel auctions can be independent
 
 Going back to our point, causality is what enables parallelization **both** at the computational and economic layer: Causally independent transactions - as $t$ and $u$ above - can be executed on different cores. Similarly, they do not compete for ordering in a block, and can be put into different auctions. 
-But you see, these two facts are **not** mutually related: Their are both caused by having causally-independent transactions (yes, pun intended and yes, this is higher-level causality!).
+But you see, these two facts are **not** mutually related: They are both caused by having causally-independent transactions (yes, pun intended and yes, this is higher-level causality!).
 
 Indeed, in the (currently) non-parallel EVM we could definitely split the block not only horizontally - as in the top of the block/bottom of the block paradigm - but also vertically, allowing for multiple transactions to be top of the block and by running multiple auctions in parallel. Granted, this split only exists at 'MEV time' and the block will be fully sequentialized at 'executon time', but then again this does not matter because of the Eckmann-Hilton argument before: You can sequentialize in any ordering you want!
 

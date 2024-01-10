@@ -265,11 +265,11 @@ p > img {
 
 // Specify the color of the selection
 ::-moz-selection {
-  color: $black;
+  color: $selectionblue;
   background: $lightGray;
 }
 ::selection {
-  color: $black;
+  color: $selectionblue;
   background: $lightGray;
 }
 

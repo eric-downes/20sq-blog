@@ -1,14 +1,14 @@
 ---
 layout: post
 title: "Splitting the block"
-excerpt: "In the last months, we have been tasked with defining the mechanisms underlying MEV Protocol Protocol, a novel market design that can be realized now without changes to the Ethereum core protocol. As MEV Protocol Protocol is getting very close to launch, we deem it timely to offer a brief description of how it works."
+excerpt: "In the last months, we have been tasked with defining the mechanisms underlying MEV Protocol, a novel market design that can be realized now without changes to the Ethereum core protocol. As MEV  Protocol is getting very close to launch, we deem it timely to offer a brief description of how it works."
 author: Philipp Zahn
-categories: [MEV Protocol Protocol, ethereum, L2s, MEV Protocol, PBS, market design]
+categories: [MEV Protocol, ethereum, L2s, MEV Protocol, PBS, market design]
 date: 2024-02-07
 usemathjax: true
 ---
 
-In the last months, we have been tasked with defining the mechanisms underlying [MEV Protocol Protocol](https://mev.io), a novel market design that can be realized now without changes to the Ethereum core protocol. We think of MEV Protocol as a radical but also pragmatic proposal to change the way block space is allocated in Ethereum - thereby (hopefully) introducing new dynamism in the whole value chain. As the basic MEV Protocol design is in place, and given recent discussion popping up around [Blockspace futures](https://ethresear.ch/t/execution-tickets/17944), we deem it timely to offer a brief description of how it works.
+In the last months, we have been tasked with defining the mechanisms underlying [MEV Protocol](https://mev.io), a novel market design that can be realized now without changes to the Ethereum core protocol. We think of MEV Protocol as a radical but also pragmatic proposal to change the way block space is allocated in Ethereum - thereby (hopefully) introducing new dynamism in the whole value chain. As the basic MEV Protocol design is in place, and given recent discussion popping up around [Blockspace futures](https://ethresear.ch/t/execution-tickets/17944), we deem it timely to offer a brief description of how it works.
 
 ## The current state of affairs in PBS
 

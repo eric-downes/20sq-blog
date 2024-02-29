@@ -119,7 +119,19 @@ From the Haskell implementation we can see that composing two lenses, parametriz
 
 Mathematically, this amounts to the following compositions:
 - For the `get` part: $P'\times P\times X\xrightarrow{\mathsf{id}\times\mathsf{get}}P'\times Y\xrightarrow{get'} Z$
-- For the `put` part: $P'\times P\times X \times T \xrightarrow{\mathsf{id}\times \Delta_{P}\times \Delta_{X}\times\mathsf{id}} P'\times P\times P\times X \times X \times T \xrightarrow{\mathsf{sym}\times \mathsf{get}\times \mathsf{sym}} P\times P'\times Y \times T \times X \xrightarrow{\mathsf{id}\times \mathsf{put}'\times \mathsf{id}} P\times R\times Q'\times X \xrightarrow{\mathsf{rearrange}} P\times X\times R\times Q' \xrightarrow{\mathsf{put}\times\mathsf{id}} S\times Q\times Q'$ Where $\Delta(x) = (x,x)$, $\mathsf{sym}(x,y)=(y,x)$ and $\mathsf{rearrange}$ is a suitable composition of $\mathsf{sym}$s.
+- For the `put` part: 
+  $$
+  \begin{align*}
+  P'\times P\times X \times T 
+    &\xrightarrow{\mathsf{id}\times \Delta_{P}\times \Delta_{X}\times\mathsf{id}} P'\times P\times P\times X \times X \times T\\
+    &\xrightarrow{\mathsf{sym}\times \mathsf{get}\times \mathsf{sym}} P\times P'\times Y \times T \times X\\
+    &\xrightarrow{\mathsf{id}\times \mathsf{put}'\times \mathsf{id}} P\times R\times Q'\times X\\
+    &\xrightarrow{\mathsf{rearrange}} P\times X\times R\times Q'\\
+    &\xrightarrow{\mathsf{put}\times\mathsf{id}} S\times Q\times Q'
+  \end{align*}
+  $$
+  
+  Where $\Delta(x) = (x,x)$, $\mathsf{sym}(x,y)=(y,x)$ and $\mathsf{rearrange}$ is a suitable composition of $\mathsf{sym}$s.
 
 
 #### Parallel Composition

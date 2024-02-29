@@ -215,7 +215,7 @@ As we will see in later posts, corners are an important component of bimatrix ga
 
 
 ## Final Remarks
-Parametrized lenses are not only useful for reasoning about Open Games, but also serve as the base of [a whole categorical framework](https://arxiv.org/abs/2105.06332) for reasoning about complex multi-agent systems which has also been applied to [gradient-based learning](https://arxiv.org/abs/2103.01931), [dynamic programming](https://arxiv.org/abs/2206.04547), [bayesian inference](https://arxiv.org/abs/2305.06112) and [servers](https://arxiv.org/abs/2203.15633) on top of various flavors of game theory (e.g.[[2105.06763]](https://arxiv.org/abs/2105.06763)).
+Parametrized lenses are not only useful for reasoning about Open Games, but also serve as the base of [a whole categorical framework](https://arxiv.org/abs/2105.06332) for reasoning about complex multi-agent systems which has also been applied to [gradient-based learning](https://arxiv.org/abs/2103.01931), [dynamic programming](https://arxiv.org/abs/2206.04547), [bayesian inference](https://arxiv.org/abs/2305.06112) and [servers](https://arxiv.org/abs/2203.15633) on top of various flavors of game theory (e.g.[[2105.06763]](https://arxiv.org/abs/2105.06763)). Indeed, this categorical framework is so general and promising that we helped spawn an entire [research institute](cybercat.institute) dedicated to it.
 
 Phew! That's all for today. I hope that this introduction to the world of parametrized lenses has left you wanting for more! I'll see you in the next post, were we will explore how to handle spurious parameters with reparametrizations and model players and their agency with selection functions.
 

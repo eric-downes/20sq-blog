@@ -73,17 +73,9 @@ Now, we evaluate this function at 5, obtaining $0.000429060 \dots$. This is the 
 These probabilities are very low, as we expected. But how can we put a price on these values?
 
 
-## Expected values
+### A risk breakdown
 
-Suppose you have a fair coin, that is, a coin that lands heads or tails with an exact 50% probability. Suppose moreover that if you land heads, you win 100\\$. If you flip the coin exactly once, you will either get 100\\$ or 0\\$, depending on the outcome. If you were to repeat this experiment infinite times, you would get *on average* 50\\$. This is what we call the **expected value** of the experiment.
-
-Similarly, if you were to lose 100\\$ every time the coin lands heads, you would lose 50\\$ on average. So, the 'cost' of this experiment can be estimated to be 50\\$. If the experiment is repeated exactly once, this is again not a precise estimate: In reality, you will never lose 50\\$, but either 100\\$ or 0\\$. 
-
-Yet, this kind of reasoning is useful in the following situation: Suppose that I tell you that you have a choice. Either you lose 40\\$ with certainty, or you can run the experiment above, and either lose 0\\$ or 100\\$. If you are **risk-neutral**, which in layman terms means that you do not particularly love or hate gambling, then you should accept to lose 40\\$ with certainty, because it is still a better loss than the 50\\$ loss 'on average' that you would realize otherwise.
-
-### Finally, a risk breakdown
-
-Let's focus on Ethereum for now. We can play the same game with the Ethereum value. Ethereum's current market cap is around 350 billion dollars. Let's suppose that:
+Ethereum's current market cap is around 350 billion dollars. Let's continue our thought experiment by assuming we are assessing risk in terms of expected value (and let's put aside the question whether this is a good thing to do for a possibly catastrophic event). Let's also suppose that:
 
 - This market cap won't vary in the next 30 years. This is a *very* unlikely assumption, but in my opinion a harmless one as long as it leads to a conservative estimate. I think this assumption is harmless because if on one hand it is true that Ethereum price tends to fluctuate over the years, it is also true that its 5-year average went up. Moreover, we are not considering the immense ecosystem of tokens, NFTs, DeFi, rollups, L2s, etc. piggybacking on Ethereum's security. All this will also be obliterated by a fuckening of Ethereum, hence considering only Ether's market cap is a very conservative estimate of what we stand to lose.
 - That in case of a quantum attack the value of the chain goes to 0. This is again probably not exact, but still a reasonable estimate in practice as no one likes hopelessly broken tech.

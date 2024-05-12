@@ -111,7 +111,7 @@ So the price of ETH may very well keep fluctuating, and given the dire situation
 Even worse, if the attack does not happen on Ethereum first, but for example on Bitcoin as we postulated in the beginning, we wouldn't even have an objective reason to freeze the chain, making the crash even worse.
 
 
-## Closing remarks
+## What we should do
 
 As I said in the post opening, I am a bit scared. These are all conservative estimates. We stand to lose a lot and there are decisions that could be made 'right here, right now' that would make our life much easier in the future.
 

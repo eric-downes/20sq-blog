@@ -45,11 +45,7 @@ First of all, we must formalise the concept of state space. Given some mechanism
 
 A simple, idealised representation of the state space is the one below, where the little squares are states, and two states are adjacent if you can go from one to the other via some atomic action. In Ethereum land, points would be the states of the EVM, and two points would be adjacent if there is some EVM trace bringing you from one state to the other:
 
-<div class="figure">
-
 ![A simplistic depiction of the state space.](../assetsPosts/2023-07-26-lagrangian-intent-search-i/stateSpace.png)
-
-</div>
 
 In practice, since we're mainly working with discrete mechanisms such as the EVM, the state space will never be so regular, and the following representation would be more appropriate: Given a mechanism $G$, we can build its [state diagram](https://en.wikipedia.org/wiki/State_diagram) when we see $G$ as some sort of automaton:
 

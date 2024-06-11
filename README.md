@@ -17,6 +17,7 @@
 - [Images](#images)
     - [Referencing](#referencing-2)
 - [Code](#code)
+- [Cross-posting](#cross-posting)
 
 ## Workflow
 
@@ -48,6 +49,9 @@ excerpt: A short summary of your post
 image: assetsPosts/yourPostFolder/imageToBeUsedAsThumbnails.png This is optional, but useful if e.g. you share the post on Twitter.
 usemathjax: true (omit this line if you don't need to typeset math)
 thanks: A short acknowledged message. It will be shown immediately above the content of your post.
+crosspostURL: A link, such as "https://example.com" (omit this line if this isn't a cross-post).
+crosspostName: A name for the link (omit this line if this isn't a cross-post).
+asset_path: /assetsPosts/images-folder/
 ---
 ```
 
@@ -221,6 +225,20 @@ Images are included via standard markdown syntax:
     ![image description](../assetsPosts/yyyy-mm-dd-title/image)
     ```
 
+If the name of the post changes, you should also change the name of the image folder. This will force you to change also the relative paths of all the images links. To avoid this, just specify
+
+```yaml
+asset_path: /assetsPosts/yyyy-mm-dd-title/
+```
+
+in the post preamble, and reference images by giving
+
+```markdown
+![image description]({{page.asset_path}}/image)
+```
+
+In this way, changing `asset_path` will be enough, and you won't have to correct all the image references.
+
 Whenever possible, we recommend the images to be in the format `.png`, and to be `800` pixels in width, with **transparent** backround. Ideally, these should be easily readable on the light gray background of the blog website. You can strive from these guidelines if you have no alternative, but our definition and your definition of 'I had no alternative' may be different, and *we may complain*.
 
 #### Referencing
@@ -258,3 +276,18 @@ Check out the [Jekyll docs][jekyll-docs] for more info on how to get the most ou
 [jekyll-docs]: https://jekyllrb.com/docs/home
 [jekyll-gh]:   https://github.com/jekyll/jekyll
 [jekyll-talk]: https://talk.jekyllrb.com/
+
+## Cross-posting
+
+If you want to cross-post from another blog, just add this to the post preamble:
+
+```yaml
+crosspostURL: "https://example.com"
+crosspostName: "Some text"
+```
+
+This will display the following banner at the very beginning of the post:
+
+<div class="crosspost">
+  This is a cross-post from <a href="{{ page.crosspostURL }}"">some text</a>.
+</div>

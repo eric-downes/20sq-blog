@@ -289,5 +289,5 @@ crosspostName: "Some text"
 This will display the following banner at the very beginning of the post:
 
 <div class="crosspost">
-  This is a cross-post from <a href="{{ page.crosspostURL }}"">some text</a>.
+  This is a cross-post from <a href="https://example.com">some text</a>.
 </div>

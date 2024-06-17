@@ -7,7 +7,7 @@ excerpt: Where we present the XGA project.
 usemathjax: true
 crosspostURL: "https://ethresear.ch/t/preconfirmations-on-splitting-the-block-mev-boost-compatibility-and-relays/19837"
 crosspostName: "ethresear.ch"
-thanks: Thanks to @FabrizioRomanoGenove, @meridian and Philipp Zahn for helpful comments and feedback on this post.
+thanks: Thanks to <a href="https://ethresear.ch/u/fabrizioromanogenove">@FabrizioRomanoGenove</a>, <a href="https://ethresear.ch/u/meridian">@meridian</a> and Philipp Zahn for helpful comments and feedback on this post.
 ---
 
 ## ❓ What is a Preconfirmation?

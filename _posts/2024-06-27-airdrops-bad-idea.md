@@ -5,7 +5,7 @@ author: Fabrizio Genovese
 categories: ["mechanism design", "aidrops", "points"]
 excerpt: Now that many people got fucked once more good and well, it is time to shine some game theoretic light on this matter.
 usemathjax: true
-thanks: TBD
+thanks: "Notice: We'll call this post an 'opinion piece', since it is not based on any formal calculations, but only on a healthy dose of common sense."
 ---
 
 So, it's that time of the year again. ZK sync aidrop [happened](https://claim.zknation.io/) and countless people feel utterly fucked. Blast token launch [happened](https://www.coindesk.com/markets/2024/06/26/blast-token-debuts-at-3b-value-as-17-of-supply-airdropped-to-early-adopters/) and again many people feel utterly fucked, whereas at least equally many people are lucky enough to be able to feel only pre-fucked -- we're still waiting for Phase II airdrop after all!
@@ -19,7 +19,7 @@ You are indeed correct, but fret not! In this post, I'll explain in simple words
 
 ## Good old days
 
-The good old days of aidrops where really nice. You didn't do absolutely anything, you just used a given product sparringly, and got surprised by a massive token gift that sometimes exceeded tens of thousands of dollars. These *early aidrop models* had a few interesting characteristics:
+The good old days of aidrops where really nice. You didn't do absolutely anything, you just used a given product sparingly, and got surprised by a massive token gift that sometimes exceeded tens of thousands of dollars. These *early aidrop models* had a few interesting characteristics:
 
 1. The majority of people weren't expecting any airdrop;
 2. Since people weren't expecting an aidrop, they weren't farming for it. As a consequence, choosing a subset of people to airdrop a token to was easier.

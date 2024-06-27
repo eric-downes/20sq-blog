@@ -105,4 +105,4 @@ I hope this makes it evident how airdrops can fuck you badly, and why they are:
  
 They were great once, but nothing great lasts forever. Now they make people sad, they make issuers sad, they make everyone sad. The only silver lining is that you can blame marketing departments for this, which is always a very nice, morally right thing to do.
 
-That's it. For what it's worth, don't cry because the good old days of aidrops are over. Smile because they happened! 'Till the next time! 
+That's it. For what it's worth, don't cry because the good old days of aidrops are over. Smile because they happened! 'Till the next time!

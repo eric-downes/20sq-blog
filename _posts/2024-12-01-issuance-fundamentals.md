@@ -51,7 +51,7 @@ That is, an increase in staking fraction can be driven by more people
 staking, and/or it can be driven by a reduction of the inflation rate.
 The latter can be acheived by a reduction of issuance relative to the
 base fee "burn rate".  Because of this, there is a mathmatical regime
-in which reducing issuance actually *increases* $$s^*$$, the market
+in which reducing issuance actually *increases* $$s^\star$$, the market
 equilibrium staking ratio.  We argue this regime is likely to be
 realistic, and thus worthy of attention.  So, we urge caution before
 rushing to reduce issuance.
@@ -77,13 +77,14 @@ staking, unstaking, and withdrawal queues.
 ### How Pie is Pushed Around The Plate
 
 This is our model:
-
 $$
-\begin{array}
-\dot{E} &=& I\\
-\dot{S} &=& R+Q_+-Q_-\\
-\dot{A} &=& I-B\\
-\end{array}
+\displaystyle
+\begin{align}
+\dot{E} &= I\\
+\dot{S} &= R+Q_+-Q_-\\
+\dot{A} &= I-B\\
+\end{align}
+$$
 
 Where all quantities are assesed quarterly:
 * $$I$$ -- Total Issuance
@@ -114,18 +115,19 @@ currently lies in the range $$.53\leq r\leq.75$$.
 
 The quarterly flows from the staking and unstaking queues must obey
 $$0\leq Q_+\leq C$$ and $$0\leq q_-\leq S$$, which we use below via
-variable fractions $$q_+=Q_+/C,~q_-=Q_-/S$$.  Finally, we rewrite
-$$\dot{S}$$ the change in total staked ETH, anticipating that we wish
-to understand the relationship to inflation rate $$\dot{A}/A$$:
+variable fractions $$q_+=Q_+/C,~q_-=Q_-/S$$.
 
-$$\dot{S} = r\dot{A} + r(B+F) + Q_+-Q_-$$.
+Finally, we rewrite $$\dot{S}$$ the change in total staked ETH,
+anticipating that we wish to understand the relationship to inflation
+rate $$\dot{A}/A$$, obtaining $$\dot{S} = r\dot{A} + r(B+F) + Q_+-Q_-$$.
 
 The variable of primary interest is the staking fraction $$s=S/A$$;
 recalling the quotient rule $$\dot{S}=\dot{S}/A-s\dot{A}/A$$ and
 $$C=A-s$$, we obtain:
 
-$$\displaystyle
-\dot{s} = \frac{\dot{A}}{A}(r-s)~+~(rf+q_+)(1-s)~-~q_-s
+$$
+\displaystyle
+\dot{s} ~~=~~ \frac{\dot{A}}{A}(r-s)~~+~~(rf+q_+)(1-s)~~-~~q_-s
 $$
 
 The first term captures the effect of inflation/deflation.  Under
@@ -145,45 +147,48 @@ system are however essentially similar to that of the one-dimensional
 system, if all ones cares about is the stability of market equilibria,
 and the response to issuance changes, which we do.
 
-If $$\alpha$$ varies lowly enough $$\alpha\approx\alpha^*$$, a fixed
-point $$s^*$$ where $$\dot{s}=0$$ can obtain:
+If $$\alpha$$ varies lowly enough $$\alpha\approx\alpha^\star$$, a fixed
+point $$s^\star$$ where $$\dot{s}=0$$ can obtain:
 
-$$s^*=\frac{r^*(\alpha^* + f^*) + q_+^*}{\alpha + r^*f^* - q^*_-}$$
+$$
+\displaystyle
+s^\star=\frac{r^\star(\alpha^\star + f^\star) + q_+^\star}{\alpha + r^\starf^\star - q^\star_-}
+$$
 
 Perhaps surprisingly we find that if $\dot{A}=0=\alpha$ (no inflation
 nor deflation) then counter-intuitively, an interor market equilibrium
-$s^*<1$ seems unlikely.  We reason as follows.  In the absence of
-in/de-flation, an interior fixed point $$s^*<1$$ would require a
+$s^\star<1$ seems unlikely.  We reason as follows.  In the absence of
+in/de-flation, an interior fixed point $$s^\star<1$$ would require a
 persistent unstaking/capitulation of existing validators $$q_->0$$.
 This in turn either requires "churn", a persistent supply of new
-validators to take their place $$q_+^*>0$$, or it is only a transient
-and $$q_-^*\approx0$$; recall that reinvestment by existing validators is
+validators to take their place $$q_+^\star>0$$, or it is only a transient
+and $$q_-^\star\approx0$$; recall that reinvestment by existing validators is
 not counted in $$q_+$$.
 
 Net unstaking $$q_->0$$ could only describe a market equilibrium if
 one group of stakers was actively capitulating and withdrawing their
-stake, while another group with a higher $r$ were aggressively
+stake, while another group with a higher $$r$$ were aggressively
 reinvesting in their business, and their reinvestment of fees and MEV
-offset the unstaking, adjusting for inflation.  This cannot maintain:
+offset the unstaking, adjusted for inflation.  This cannot maintain:
 eventually there will be no new Capitulators left, and the fraction of
 stake will grow again as Reinvestors take up more market share.
 Similarly, at some point everyone who wants to stake should have
 staked, and other than influxes due to humanity's issuance of new
 humans etc., further validators count only toward $$r$$, so
-$$q_+^*\approx0$$.
+$$q_+^\star\approx0$$.
 
-Thus, the fixed point $$s^*$$ is likely to be
+Thus, the fixed point $$s^\star$$ is likely to be
 
-$$s^*\approx r\frac{\alpha + f}{\alpha + rf}$$
+$$s^\star\approx r\frac{\alpha + f}{\alpha + rf}$$
 
 A few limits are illustrative under the current regime of positive
 inflation.  If inflation dominates fees, $$\alpha\gg f$$ then
-$$s^*\sim r^*<1$$, while if fees dominate inflaton $$\alpha\ll f$$ and
-$$s^*\to1$$.
+$$s^\star\sim r^\star<1$$, while if fees dominate inflaton $$\alpha\ll f$$ and
+$$s^\star\to1$$.
 
 ### Market Equilibrium
 
-The fixed-point $$x^*$$ represents a market equilibrium just when it
+The fixed-point $$x^\star$$ represents a market equilibrium just when it
 is unqiue and stable.
 
 Non-uniqueness would seem to require a shared and repeated root (the
@@ -193,12 +198,12 @@ It's unclear how this would occur.  For now, lacking any supporting
 data or a mechanism, we move on, assuming uniqueness.
 
 Stability requires that small perturbations shrink;
-$$\frac{\partial\dot{x}}{\partial x}\big|_{x^*}<0$$.  The full
+$$\frac{\partial\dot{x}}{\partial x}\big|_{x^\star}<0$$.  The full
 condition is quite complicated, especially under deflation. Perhaps
 onchain measurements and surveys/metrics of validator preferences will
 allow us to estimate the full extent of the stability basin around
-$$x^*$$.  If however inflation is positive and $$r,\alpha,f$$ are
-relatively nsensitive to small changes in $$x$$ near $$x^*$$, this
+$$x^\star$$.  If however inflation is positive and $$r,\alpha,f$$ are
+relatively nsensitive to small changes in $$x$$ near $$x^\star$$, this
 conditions is satisfied immediately; $$\alpha+rf>0$$.
 
 While we expect dependence on other macroeconomic factors, we find it
@@ -212,7 +217,7 @@ and worthy of consideration.  How does it behave?
 ### Qualitative Behavior
 
 We have argued above that the fixed point
-$$x^*=r(\alpha+f)/(\alpha+rf)$$ is then this behavior is quite distinct
+$$x^\star=r(\alpha+f)/(\alpha+rf)$$ is then this behavior is quite distinct
 from the arguments forwarded by Ethereum researchers, in which
 inflation is held responsible for a 100% ETH Staked scenario.  To be
 clear, vey likely $$x_{now}<r<1$$, but for long times we find that

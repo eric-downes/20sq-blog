@@ -33,13 +33,14 @@ engagement, so dear reader stay vigilant!
 
 ## TLDR
 
-### For the extraordinarily impatient.
+### For the extraordinarily impatient reader.
 
-* Under strong deflation, Ethereum faces an unenviable choice of futures:
+* Roughly speaking, under strong deflation, Ethereum faces an
+  unenviable choice of futures:
   - zero staking, or
   - runaway staking
 
-* Under no growth or weak deflation, runaway staking *must* occur.
+* Under no growth or weak deflation, runaway staking is inevitable.
 
 * Under inflation, runaway staking may still occur.
 
@@ -50,45 +51,87 @@ engagement, so dear reader stay vigilant!
   -- (2) inflation is high enough to numerically dominate the quantity of
      priority fees and MEV reinvested as profit.
 
-* That is, the staking reinvestment ratio is central to understanding
-  the future of Ethereum macroeconomics.  Thankfully, it can be
-  well-estimated with onchain data.
+* Outside of the "low inflation, lower fees" regime, we expect
+  reductions of inflation to backfire, *raising* staking fraction.
 
-### For the merely moderately impatient.
+* Regardless, the staking reinvestment ratio is central to
+  understanding the quantitative future of Ethereum macroeconomics.
+  We believe it can be well-estimated with onchain data.
+
+### For the moderately impatient reader.
 
 In some more detail, a sketch of the reasons behind our conclusions.
 The quantity of most importance to this debate is the staked ETH
-fraction $$s=S/A$$ where $$S$$ is all staked ETH, $$C$$ is
-"circulating" (unstaked, unburnt) ETH, and $$A=S+C$$ is the total
-"accessible" (unburnt) ETH. Differential changes, such as changes in
-time $$\frac{ds}{dt}:=\dot{s}$$ are given by the quotient rule
-$$\dot{s}=\dot{S}/A-s\dot{A}{A}$$.  The quantity $$\dot{A}/A$$ is the
-inflation rate averaged on at-least-quarterly timescales.
+fraction $$s$$, currently roughly .33. Staking fraction is calculated
+$$s=S/A$$ where $$S$$ is all staked ETH, $$C$$ is "circulating"
+(unstaked, unburnt) ETH, and $$A=S+C$$ is the total "accessible"
+(unburnt) ETH. Differential changes, such as changes in time
+$$\frac{ds}{dt}:=\dot{s}$$ are given by the quotient rule
+$$\dot{s}=\dot{S}/A-s\dot{A}{A}$$.  The quantity $$\alpha = \dot{A}/A$$
+is the average on-paper inflation rate (supply expansion APY) averaged
+on at-least-quarterly timescales.
 
 That is, an increase in staking fraction can be driven by more people
 staking, and/or it can be driven by a reduction of the inflation rate.
 The latter can be acheived in principle by a reduction of issuance
 relative to the base fee "burn rate".  Because of this quotient rule
 tradeoff, low-but-positive inflation actually plays a positive
-infrastructural role in moderating staking fraction.  Because of this,
-we find a "high fee + MEV" regime in which reducing issuance actually
-*increases* $$s^\star$$, the market equilibrium staking ratio.
-Clarity on the boundaries of this regime are worthy of attention if we
-want to ensure policy interventions, such as issuance reduction, do
-not backfire.
+infrastructural role in moderating staking fraction.
 
-In contrast, under current market conditions, very low fees and low
-but positive inflation, the long-term equilibrium staking fraction
-approaches the ratio at which validators reinvest their staking
-rewards, which for LSTs is bounded below by the ratio of token yield
-to total yield.  Happily reinvestment ratio is intuitive for each
-staking business to calculate, and measurable in detail with onchain
-data.  So long as the reduction in yield curve does not broadly alter
-the market conditions (inflation, low fees) it will not change the
-character of this fixed point, and reinvestment ratio thus becomes the
-target which a policy intervention *must* target.
+This can be seen in the market equilibrium staking fraction, which we
+derive below:
 
-## 100% Ether Staked
+$$\displaystyle
+s^\star = r\frac{\alpha + f}{\alpha + rf}
+$$
+
+Here $$0\leq r\leq 1$$ is the ratio of profits reinvested quarterly by
+validators, $$0\leq f\leq 1$$ is the fraction of unstaked ETH spent on
+transactions fees (base and priority) quarterly, and as above
+$$\alpha$$ is inflation.  The two extremes are $$\alpha\ll f$$ fees
+dominate and $$\alpha\gg f$$ inflation dominates.  In the former,
+staking fraction is driven closer to 1, while in the latter, staking
+is driven to match reinvestment $$x^*\approx r$$.
+
+Under current market conditions, low inflation and lower fees, the
+long-term equilibrium staking fraction approaches the average ratio
+$$r$$ at which validators reinvest their staking rewards. For LSTs
+$$r$$ is bounded below by the ratio of token yield to total yield, and
+we can use this to roughly estimate some real values.
+
+Approximate present values from YCharts are very roughly
+$$f\approx.001$$/year, $$\alpha\approx.005$$/year, $$r\in(.5,.75)$$.
+So if current market conditions (low inflation, lower fees) were to
+persist at long times, we expect the staking ratio to convergence to
+within +10\% of the the reinvestment ratio.  If issuance is reduced by
+half and fees maintain, $$x^\star$$ is still around $$r$$ plus 15\%.
+
+However, if issuance is reduced too much, such that fees dominate
+inflation, we enter a regime in which reducing issuance *raises*
+equilibrium staking fraction, and becomes insensitive to $$r$$.  This
+could occur by adopting too severe a yield curve, or by validaators
+continuing to chase MEV yield, long after the yield from issuance has
+become irrelevant. 
+
+Under present conditions $$r$$ is the proximate mechanism by which
+inflation must act, in affecting long term staking fraction.  As per
+all the arguments of researchers, a sufficient increase in inflation
+$$\alpha^*\mapsto\alpha^*+\Delta\alpha$$ could well drive an runaway
+increase in reinvestment $$\Delta{r}/\Delta\alpha\gesim 1-r$$.
+
+Thankfully, the reinvestment of profits $$r_i$$ is a microeconomic
+quantity every staking business $$i$$ calculates, even if they do not
+use those words.  The global $$r$$ is then the market-share weighted
+average of all these.  If inflation pressures are indeed the dominant
+consideraton for Ethereum users considering staking, this should
+emerge from microeconomic surveys of validators' reinvestment
+sentiments.
+
+We hope that this work can be built upon to focus inflationary
+pressure arguments into empirically measurable assertions that can be
+tracked as a metric for Ethereum health.
+
+## Modelling Staking
 
 Now the details!
 
@@ -132,11 +175,10 @@ the wihdrwal queue.  Fees obey the inequality $$0\leq F+B\leq C$$.  We
 ae interested in the limit $$C\to0$$ and pull this dependence out by
 defining $$f$$ such that $$fC = F+B$$. The fraction $$f$$ need not be
 a constant, but whatever values it takes, $$f$$ must be a fraction:
-$$0<f<1$$.  In 2023, total transaction fees $$F+B$$ represeted about
-$B2 on a base of circulating ETH $$C$$ of $B160-240, so presently
-$$f$$ lies in the range $$(.01,02)$$, though anecdotally, we can
-attest it is not hard to acheieve estimates as low as .001 or as high
-as .1 by selecting particular periods of time.
+$$0<f<1$$ with units of 1/year.  Looking at YCharts for 2024, an
+average tx fee might be $$3\times10^{-4}$$ ETH (about $1 USD), and
+with $$\approx1.2\times10^6$$ transactions per day on a supply of
+120M, 70\% of which is unstaked, corresponding to an $$f\approx.001$$/year.
 
 En masse, validators withdraw their rewards $$I+F$$ into circulating
 ETH.  They reinvest some amount of rewards $$R$$ into staking more
@@ -146,17 +188,20 @@ Reinvestment is also a part of every LST smart contract; via rebaisng,
 a certain fraction of yield is the value proposition for the
 token-holder; so any model with LSTs must include reinvestment.  Again
 we define a variable fraction $$r:=R/(I+F)$$ which obeys
-$$0\leq{r}\leq1$$.  As of Nov 23, 2024 the stETH token yield is $$\approx$$3\%.
-Over the same period, without MEV-Boost validator yield is
-$$\approx$$4\%, and with MEV-Boost it is $$\approx$$5.7\%.  So
-probably, $$r$$ currently lies in the range $$.53\leq r\leq.75$$.
+$$0\leq{r}\leq1$$.  As of Nov 23, 2024 the stETH token yield is
+$$\approx$$3\%.  Over the same period, without MEV-Boost validator
+yield is $$\approx$$4\%, and with MEV-Boost it is $$\approx$$5.7\%.
+So probably, $$r$$ currently lies in the range $$.5\leq r\leq.75$$.
 
 The quarterly flows from the staking and unstaking queues must obey
 $$0\leq Q_+\leq C$$ and $$0\leq q_-\leq S$$, which we use below via
 variable fractions $$q_+=Q_+/C,~q_-=Q_-/S$$.  Finally, we rewrite
 $$\dot{S}$$ the change in total staked ETH, anticipating that we wish
 to understand the relationship to inflation rate $$\dot{A}/A$$,
-obtaining $$\dot{S} = r\dot{A} + r(B+F) + Q_+-Q_-$$.
+obtaining $$\dot{S} = r\dot{A} + r(B+F) + Q_+-Q_-$$.  For about the
+past 6 months Ethereum supply has been growing pretty linearly,
+corresponding to an inflation rate of about .5\%, or
+$$\alpha=.005$$/year.
 
 The variable of primary interest is the staking fraction $$s=S/A$$;
 recalling the quotient rule $$\dot{S}=\dot{S}/A-s\dot{A}/A$$ and
@@ -197,15 +242,15 @@ s^\star=\frac{r^\star(\alpha^\star + f^\star) + {q^\star}_+}{\alpha +
 r^\star f^\star - {q^\star}_-}
 $$
 
-We find that if $\dot{A}=0=\alpha$ (no inflation
-nor deflation) then an interor market equilibrium
-$$s^\star<1$$ is impossible.  We reason as follows.  In the absence
-of in/de-flation, an interior fixed point $$s^\star<1$$ would require
-a persistent unstaking/capitulation of existing validators $$q_->0$$.
-This in turn either requires "churn", a persistent supply of new
-validators to take their place $$q_+^\star>0$$, or it is only a
-transient and $$q_-^\star\approx0$$; recall that reinvestment by
-existing validators is not counted in $$q_+$$.
+We find that if $\dot{A}=0=\alpha$ (no inflation nor deflation) then
+an interior market equilibrium $$s^\star<1$$ is impossible.  We reason
+as follows.  In the absence of in/de-flation, an interior fixed point
+$$s^\star<1$$ would require a persistent unstaking/capitulation of
+existing validators $$q_->0$$.  This in turn either requires "churn",
+a persistent supply of new validators to take their place
+$$q_+^\star>0$$, or it is only a transient and $$q_-^\star\approx0$$;
+recall that reinvestment by existing validators is not counted in
+$$q_+$$.
 
 Net unstaking $$q_->0$$ could only describe a market equilibrium if
 one group of stakers was actively capitulating and withdrawing their
@@ -225,31 +270,32 @@ $$s^\star\approx r\frac{\alpha + f}{\alpha + rf}$$
 A calculation is illustrative under the current regime of positive
 inflation.  If inflation dominates fees, $$\alpha\gg f$$ then
 $$s^\star\sim r^\star<1$$, while if fees dominate inflaton $$\alpha\ll
-f$$ and $$s^\star\to1$$.  For a numerical comparison, at present
-$$.001\lesssim f\lesssim.02$$ so at inflation of 1-3\%,
-$$f\ll\alpha$$.
+f$$ and $$s^\star\to1$$.  For a numerical comparison, at present $$f
+\approx .001\lessim .005\approx\alpha$$ so to within 10\% error
+$$x^*\approx r$$ over the range of $$r$$ inferred from Lido yield
+rate.
 
 So if these conditions persist at long times, and to be clear there is
 no reason to be certain they will, we should expect $$x^\star\approx
-r\in(.52,.75)$$.  This places the lower range of $$x^\star$$ near the
-50% staking target proposed by Elowsson, which is hopeful, but little
+r\in(.55,.77)$$.  This places the lower range of $$x^\star$$ near the
+50% staking target proposed by Elowsson.  This is hopeful but little
 weight can be attached to such back-of-envelope extrapolations.  To
-make believable projections we need systematic measurement of both the
+make reliable projections we need systematic measurement of both the
 statistics of individual validator reinvestment and metrics or at
-least surveys reflecting validator sentiment and (in)capacity to absorb
-reduced revenue.
+least surveys reflecting validator sentiment and (in)capacity to
+absorb reduced revenue.
 
 ### Market Equilibrium
 
-The fixed-point $$x^\star$$ represents a market equilibrium just when it
+The fixed-point $$x^\star$$ represents the market equilibrium when it
 is unqiue and stable.
 
 Non-uniqueness requires a shared and repeated root (the other
 equilibrium point) among all terms $$\alpha,rf+q_+,q_-$$.  That is,
 each economic flow would have to nearly disappear at a particular
 value of staking fraction.  Lacking any supporting data or a
-mechanism, we cannot analyse such an alternate equilibria, and move
-on, assuming uniqueness.
+mechanism, we cannot really analyse such an alternate equilibria, and
+intuitively it seems unlikely, so we move on, assuming uniqueness.
 
 Stability requires that small perturbations shrink;
 $$\frac{\partial\dot{x}}{\partial x}\big|_{x^\star}<0$$.  The full
@@ -288,7 +334,7 @@ We have argued, hopefully convincingly, that reducing issuance in a
 vacuum decreases inflation, and increases the relative strength of the
 $$rf(1-x)$$ term.  If current conditions affecting $$f$$ etc. persist
 what will be the end effect on inflation $$\alpha$$ and $$x^\star$$?
-Inflation in terms of the above variables:
+Inflation in terms of the above variables is:
 
 $$\alpha = \dot{A}/A = (I - B)/A = ys~~-~~bf(1-s)$$
 
@@ -311,9 +357,9 @@ elevating priority and base fees moderately higher than present, while
 reinvestment is not strongly reduced (perhaps driven by breakthroughs
 in MEV, or an unexpectedly low elasticity in staking demand), such
 that $$\alpha\sim rf$$.  In this hypothetical scenario, reinvestment
-of fees will shrink $$C$$ consderably relative to $$S$$, pushing the
-equilibrium staking fraction higher, requiring no need for more new
-validators.
+of fees will shrink $$C$$ consderably relative to $$S$$, potentially
+leading to runaway staking.  This mechanism requires no need for more
+new validators.
 
 ## In Conclusion
 
@@ -344,3 +390,4 @@ $$r_i$$.  The global $$r$$ is then the market-share weighted averaged
 of all of these.  We hope these calculations will bridge the macro-
 and micro-economics to help the community see a unified and actionable
 big picture on the future of Ethereum staking.
+

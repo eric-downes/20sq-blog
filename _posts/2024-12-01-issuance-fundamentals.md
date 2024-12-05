@@ -1,4 +1,4 @@
-# Will Reducing Issuance Avoid Runaway Staking?
+# Some danger in reducing Issuance to avoid Runaway Staking.
 
 ## Acknowledgements
 
@@ -22,7 +22,7 @@ We use "stock and flow" differential equation models to study Ethereum
 macroeconomics, specifically how changing issuance impacts these
 questions.  We will publish several blog posts on this topic:
 
-0. Basics of applying System Dynamics to Ethereum
+0. Basics of applying Dynamics to Ethereum
 1. (This post) Will reducing issuance avoid Runaway Staking?
 2. Will reducing issuance avoid Governance Centralization?
 3. Other Levers besides Issuance, and a means of evaluating levers.
@@ -50,8 +50,8 @@ questions.  We will publish several blog posts on this topic:
      or runaway staking
   -- Under no growth or weak deflation, runaway staking is inevitable.
 
-* Givn the above, we emphasize that changing the yield curve can
-  backfire, *raising* equilibrium staking fraction.
+* Given the above, we emphasize that changing the yield curve could
+  backfire, *raising* long term staking fraction.
 
 ### For the moderately impatient reader.
 
@@ -81,16 +81,16 @@ $$\displaystyle
 s^\star = r^\star\frac{\alpha^\star + f^\star}{\alpha^\star + r^\star f^\star}
 $$
 
-Here $$r^\star$$ etc. means the varable $$r(s,\ldots)$$ at the
-equilibrium point $$s^\star$$.  Speaking of which, the fraction
-$$0\leq r\leq 1$$ is the ratio of profits reinvested quarterly by
-validators, $$0\leq f\leq 1$$ is the fraction of unstaked ETH spent on
-transaction fees (base and priority) quarterly, and as above
-$$\alpha$$ is inflation.  The two extremes are $$\alpha^\star\ll
-f^\star$$ fees dominate and $$\alpha^\star\gg f^\star$$ inflation
-dominates.  In the former, staking fraction is driven closer to 1,
-while in the latter, staking is driven to match reinvestment
-$$s^\star\approx r^\star$$.
+Here $$r^\star$$ etc. means the function $$r(s,\alpha,\ldots)$$ at the
+equilibrium coordinates $$(s^\star,\alpha^\star,\ldots)$$.  Speaking
+of which, the fraction $$0\leq r\leq 1$$ is the ratio of profits
+reinvested quarterly by validators, $$0\leq f\leq 1$$ is the fraction
+of unstaked ETH spent on transaction fees (base and priority)
+quarterly, and as above $$\alpha$$ is inflation.  The two extremes are
+$$\alpha^\star\ll f^\star$$ fees dominate and $$\alpha^\star\gg
+f^\star$$ inflation dominates.  In the former, staking fraction is
+driven closer to 1, while in the latter, staking is driven to match
+reinvestment $$s^\star\approx r^\star$$.
 
 #### Good Scenario 
 
@@ -125,28 +125,25 @@ macro-economics.
 Consider this "backfire" scenario, though, in which reductions of
 inflation decouple $$s^\star$$ from $$r$$.
 
-Issuance is reduced, as
-per the yield curve $$y(S)=kS^{-1/2}(1+k'S)$$.  The burn rate and
-transaction fees as a fraction of circulating Ether do not change
-appreciably.
-
-LSPs adjust their yields to maintain the current
-proportion $$r$$ of yield from issuance plus fees, and LST-holders
-maintain their balances because they simply wish to passively chase a
-small percentage yield.  Solo validators reinvest at about the same
-rate they have been, in order to chase priority fees and MEV despite
-the reduction in issuance.  So, we are pushed into the higher part of the
-yield curve, keeping issuance negligible
+Issuance is reduced, as per the yield curve $$y(S)=kS^{-1/2}(1+k'S)$$.
+The burn rate and transaction fees as a fraction of circulating Ether
+do not change appreciably.  LSPs adjust their yields to maintain the
+current proportion $$r$$ of the yield from issuance plus fees, and
+LST-holders maintain their balances because they simply wish to
+passively chase a small percentage yield.  Solo validators reinvest at
+about the same rate they have been, in order to chase priority fees
+and MEV despite the reduction in issuance.  So, we are pushed into the
+higher part of the yield curve, forcing inflation below fees
 $$\alpha^\star/f^\star\lesssim10^{-2}$$.  Inflation hawks might even
-consider this a desirable scenario.  After (un)staking queue
-transients die out, staking fraction would equilibrate to
-$$s^\star\in(.97,.99)$$.
+have considered this a desirable scenario before reading this post!
+After (un)staking queue transients die out, staking fraction would
+equilibrate to $$s^\star\in(.97,.99)$$.
 
 Essentially, we really need to be sure of what drives validaor
 behavior.  If enough validators persist in reinvestment beyond where
 we would expect them to, Ethereum could become deflationary, and this
 is dangerous.  We recommend surveys to gauge sentiment and
-calculations of the statistics of $$r_i$$.
+calculations of the distribution of $$r_i$$.
 
 #### Macroeconomics at the Equilibrium Point
 
@@ -331,18 +328,18 @@ inflation.  If inflation dominates fees, $$\alpha\gg f$$ then
 $$s^\star\sim r^\star<1$$, while if fees dominate inflaton $$\alpha\ll
 f$$ and $$s^\star\to1$$.  For a numerical comparison, at present $$f
 \approx .001\lessim .005\approx\alpha$$ so to within 10\% error above,
-$$s^*\approx r$$ over the range of $$r$$ inferred from Lido yield
+$$s^\star\approx r$$ over the range of $$r$$ inferred from Lido yield
 rate.
 
 So if these conditions persist at long times, and to be clear there is
 no reason to be certain they will, we should expect $$s^\star\approx
 r\in(.55,.77)$$.  This places the lower range of $$s^\star$$ near the
-50% staking target proposed by Elowsson.  This is hopeful, but little
-weight can be attached to such back-of-envelope extrapolations.  To
-make reliable projections we need systematic measurement of both the
-statistics of individual validator reinvestment and metrics or at
-least surveys reflecting validator sentiment and (in)capacity to
-absorb reduced revenue.
+50% staking target proposed by Elowsson.  This is hopeful!  However
+ittle weight can be attached to such back-of-envelope extrapolations
+as these.  To make reliable projections we need systematic measurement
+of both the statistics of individual validator reinvestment and
+metrics or at least surveys reflecting validator sentiment and
+(in)capacity to absorb reduced revenue.
 
 ### Market Equilibrium: Stability
 
@@ -391,34 +388,34 @@ all?  But we must emphasize that what instability *really* means is
 that "market externalities take over", rather than supporting any
 specific trajectory due to endogenous dynamics.
 
-Careful empirical data analysis will be necessary to evaluate the
-above stability boundary with accuracy.  We feel it is extremely
-important that policy interventions, such as changes to issuance,
-maintain a stable fixed point -- a fixed point where small changes
-shrink instead of growing.  Otherwise staking fraction is no longer
-influenced by equilibrium arguments and becomes much harder to predict
-or control.  Potential for instability would manifest as large groups
-of validators and other market participants taking very different bets
-on the future of Ethereum.  Which future manifests would probably
-depend on details not observable from macroeconomics alone.  In what
-follows we will assume stability for the sake of discussion, but must
-stress that while we judge it likely under current conditions, this
-matter cannot be settled without further study.
+We feel it is extremely important that policy interventions, such as
+changes to issuance, maintain a stable fixed point -- a fixed point
+where small changes shrink instead of growing.  Otherwise staking
+fraction is no longer influenced by equilibrium arguments and becomes
+much harder to predict or control.  Potential for instability would
+manifest as large groups of validators and other market participants
+taking very different bets on the future of Ethereum.  Which future
+manifests would probably depend on details not observable from
+macroeconomics alone.  In what follows we will assume stability for
+the sake of discussion, but must stress that while we judge it likely
+under current conditions, this matter is not settled without further
+and more careful study.
 
 ### Inflation Concerns
 
 As we have seen, reducing issuance in a vacuum decreases inflation,
 and increases the relative strength of the $$rf(1-s)$$ term.  This
-leads to an increase in staking fraction if $$r$$ etc. do not reduce,
-in response.  Very likely $$x_{now}<r<1$$, so currently the effects of
-both inflation and fee-reinvestment push in the same direction right
-now.  But we are less interested in such temporary effects, than the
-long term behavior of the system.  To study this, we looked at the
-fixed point $$s^\star=r(\alpha+f)/(\alpha+rf)$$, and note it reflects
-a role for inflation more nuanced than usually appreciated.  In fact,
-we want to emphasize that deflation or zero growth could actually be
-quite dangerous; for instance when $$\alpha^*<0,~|\alpha^*|<f$$ we
-have $x^\star>1$$; and there is no interior fixed point.
+leads to an increase in staking fraction if $$r$$ etc. do not reduce
+sufficiently, in response.  Very likely $$x_{now}<r<1$$, so currently
+the effects of both inflation and fee-reinvestment push in the same
+direction right now.  But we are less interested in such temporary
+effects, than the long term behavior of the system.  To study this, we
+looked at the fixed point $$s^\star=r(\alpha+f)/(\alpha+rf)$$, and
+note it reflects a role for inflation more nuanced than has usually
+been communicated.  In fact, we want to emphasize that deflation or
+zero growth could actually be quite dangerous; for instance when
+$$\alpha^*<0,~|\alpha^*|<rf$$ we have $x^\star>1$$; and there is no
+interior fixed point.
 
 Why does this happen, though?  The reinvestment of issuance rewards
 adds to both staked ETH $$S$$ and circulating ETH $$C$$, so the effect
@@ -488,7 +485,7 @@ especially under a regime of lower issuance yield.
 
 It may well, as some have predicted, that fears about runaway
 inflation will turn out to be the dominant factor affecting
-reinvestment.  If so we predict this must emerge from microeconomic
+reinvestment.  If so we expect this will emerge from microeconomic
 surveys of large validators and LSTs.  Each staking business $$i$$
 can, and probably already does, calculate its desired $$r_i$$.  The
 global $$r$$ is then the market-share weighted averaged of all of

@@ -326,7 +326,7 @@ A calculation is illustrative under the current regime of positive
 inflation.  If inflation dominates fees, $$\alpha\gg f$$ then
 $$s^\star\sim r^\star<1$$, while if fees dominate inflaton $$\alpha\ll
 f$$ and $$s^\star\to1$$.  For a numerical comparison, at present $$f
-\approx .001\lessim .005\approx\alpha$$ so to within 10\% error above,
+\approx .001<.005\approx\alpha$$ so to within 10\% error above,
 $$s^\star\approx r$$ over the range of $$r$$ inferred from Lido yield
 rate.
 
@@ -362,9 +362,9 @@ stability condition is
 $$\displaystyle
 1 + \left.\frac{r^\star}{\alpha^\star/f^\star}
 ~~ > ~~
-\frac{\partial\log r}{\partial\log s}\right|^\star +
+\frac{\partial\log\ r}{\partial\log\ s}\right|^\star +
 \left(1 - \frac{r^\star}{s^\star}\right)
-\left.\frac{\partial\log(\alpha/f)}{\partial\log s}\right|^\star
+\left.\frac{\partial\log(\alpha/f)}{\partial\log\ s}\right|^\star
 $$
 
 Where presently, we estimate the dimensionless quantity
@@ -415,7 +415,7 @@ looked at the fixed point $$s^\star=r(\alpha+f)/(\alpha+rf)$$, and
 note it reflects a role for inflation more nuanced than has usually
 been communicated.  In fact, we want to emphasize that deflation or
 zero growth could actually be quite dangerous; for instance when
-$$\alpha^*<0,~|\alpha^*|<rf$$ we have $x^\star>1$$; and there is no
+$$\alpha^\star<0,~|\alpha^\star|<rf$$ we have $x^\star>1$$; and there is no
 interior fixed point.
 
 Why does this happen, though?  The reinvestment of issuance rewards

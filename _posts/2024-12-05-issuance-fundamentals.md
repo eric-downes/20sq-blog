@@ -1,22 +1,25 @@
-# Some danger in reducing Issuance to avoid Runaway Staking.
-
-## Acknowledgements
-
-This is a blog post on Runaway Staking in a series summarizing our
-research funded by EF GRANT INFO.  The author, Eric Downes, is
-grateful for useful discussions with Eric Siu, Andrew Sudbury, and the
-the 20 Squares team; especially Danieli Palombi and Philipp Zahn.
+---
+layout: post
+title: Some danger in reducing Issuance to avoid Runaway Staking.
+author: Eric Downes
+categories: [ethereum, issuance]
+excerpt: This is a blog post on Runaway Staking in a series summarizing our
+research funded by EF GRANT INFO.
+usemathjax: true
+thanks: I am grateful for useful discussions with Eric Siu, Andrew Sudbury, and the the 20 Squares team; especially Danieli Palombi and Philipp Zahn.
+---
 
 ## The Problem
 
 The share of Ether staked by exchanges such as Coinbase and Liquid
 Staking Providers (LSTs) such as Lido ("centralized" staking services)
-continues to grow.  This has provoked concerns, first raised by
-Ethereum researchers, and which we share, that the future of Ethereum
-might involve (1) all of its native asset being staked, such that (2)
-the de facto liquid Ether is controlled by a confederation of
-centralized un-transparent govrnance. In this blog post we address the
-first of these concerns.
+continues to grow.  This has provoked
+[concerns](https://issuance.wtf/), first raised by Ethereum
+researchers, and which we share, that the future of Ethereum might
+involve (1) all of its native asset being staked, such that (2) the de
+facto liquid Ether is controlled by a confederation of centralized
+un-transparent govrnance. In this blog post we address the first of
+these concerns.
 
 We use "stock and flow" differential equation models to study Ethereum
 macroeconomics, specifically how changing issuance impacts these
@@ -125,15 +128,16 @@ macro-economics.
 Consider this "backfire" scenario, though, in which reductions of
 inflation decouple $$s^\star$$ from $$r$$.
 
-Issuance is reduced, as per the yield curve $$y(S)=kS^{-1/2}(1+k'S)$$.
-The burn rate and transaction fees as a fraction of circulating Ether
-do not change appreciably.  LSPs adjust their yields to maintain the
-current proportion $$r$$ of the yield from issuance plus fees, and
-LST-holders maintain their balances because they simply wish to
-passively chase a small percentage yield.  Solo validators reinvest at
-about the same rate they have been, in order to chase priority fees
-and MEV despite the reduction in issuance.  So, we are pushed into the
-higher part of the yield curve, forcing inflation below fees
+Issuance is reduced, as per a new yield curve such as the proposed
+$$y(S)=k\cdot S^{-1/2}\cdot(1+k'S)^{-1}$$.  The burn rate and
+transaction fees as a fraction of circulating Ether do not change
+appreciably.  LSPs adjust their yields to maintain the current
+proportion $$r$$ of the yield from issuance plus fees, and LST-holders
+maintain their balances because they simply wish to passively chase a
+small percentage yield.  Solo validators reinvest at about the same
+rate they have been, in order to chase priority fees and MEV despite
+the reduction in issuance.  So, we are pushed into the higher part of
+the yield curve, forcing inflation below fees
 $$\alpha^\star/f^\star\lesssim10^{-2}$$.  Inflation hawks might even
 have considered this a desirable scenario before reading this post!
 After (un)staking queue transients die out, staking fraction would
@@ -273,7 +277,8 @@ variable.  How dangerous is this?  For a sanity-check, a quick look at
 YCharts since The Merge shows that $$s,\dot{s}$$ vary over a much
 greater range than $$(\ln{A},\alpha)$$.
 
--- FIGURES --
+![The staking fraction from YCharts](../assetsPosts/2024-12-05-issuance-fundamentals/YCharts-x.jpg)
+![The inflation rate from YCharts](../assetsPosts/2024-12-05-issuance-fundamentals/YCharts-alpha.jpg)
 
 At present we judge the lack of empirical data on $$r$$ would obviate
 the added precision of a more sophisticated treatment.  We will

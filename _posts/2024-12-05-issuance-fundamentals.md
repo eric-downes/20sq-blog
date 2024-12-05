@@ -219,7 +219,7 @@ ae interested in the limit $$C\to0$$ and pull this dependence out by
 defining $$f$$ such that $$fC = F+B$$. The fraction $$f$$ need not be
 a constant, but whatever values it takes, $$f$$ must be a fraction:
 $$0<f<1$$ with units of 1/year.  Looking at YCharts for 2024, an
-average tx fee might be $$3\times10^{-4}$$ ETH (about \$1~USD), and
+average tx fee might be $$3\times10^{-4}$$ ETH (about 1~USD), and
 with $$\approx1.2\times10^6$$ transactions per day on a supply of
 120M, 70\% of which is unstaked, corresponding to an $$f\approx.001$$/year.
 

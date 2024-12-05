@@ -162,9 +162,10 @@ for inflation to push the market equilibrium $$s^\star$$ itself into
 runaway staking is (see below for explanation):
 
 $$\displaystyle
-1 < \left.\frac{\partial\log r}{\partial\log\alpha}\right|^\star
-\cdot \frac{1 + \alpha^\star/f^\star}{1 - r^\star} +
-\left.\frac{\partial\log f}{\partial\log\alpha}\right|^\star
+1 ~~ < ~~
+\left.\frac{\partial\log\ r}{\partial\log\ \alpha}\right|^\star
+\cdot \frac{1 + \alpha^\star/f^\star}{1 - r^\star} ~~ + ~~
+\left.\frac{\partial\log\ f}{\partial\log\ \alpha}\right|^\star
 $$
 
 We hope that this work can be built upon to focus inflationary
@@ -176,7 +177,7 @@ reinvestment sentiments.  A semi-empirical measurement of correlations
 between transaction fees and inflation, using our model or similar to
 control for staking queue flows, etc. should also shed light on wether
 the above condition is satisfied or not.
-
+    
 ## Modelling Staking
 
 Now some more details!
@@ -388,7 +389,7 @@ $$\alpha<-f<0$$ fixed point appears interior unstable, predicting
 either runaway staking or a catastrophic loss of staking, depending on
 initial considitions. Our interpretation of the latter behavior is
 that if raw Ether is appreciating in value so quickly, and there has
-been insufficien interest in staking thusfar, then why bother staking at
+been insufficient interest in staking thusfar, then why bother staking at
 all?  But we must emphasize that what instability *really* means is
 that "market externalities take over", rather than supporting any
 specific trajectory due to endogenous dynamics.

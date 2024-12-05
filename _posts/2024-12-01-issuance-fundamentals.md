@@ -159,9 +159,9 @@ for inflation to push the market equilibrium $$s^\star$$ itself into
 runaway staking is (see below for explanation):
 
 $$\displaystyle
-1 < \frac{\partia\ln r}{\partial\ln\alpha}\big|^\star
+1 < \frac{\partial\ln r}{\partial\ln\alpha}\Big|^\star
 \cdot \frac{1 + \alpha^\star/f^\star}{1 - r^\star}+
-\frac{\partial\ln f}{\partial\ln\alpha}\big|^\star
+\frac{\partial\ln f}{\partial\ln\alpha}\Big|^\star
 $$
 
 We hope that this work can be built upon to focus inflationary
@@ -193,9 +193,10 @@ staking, unstaking, and withdrawal queues.
 ### How Pie is Pushed Around The Plate
 
 This is our model:
+
 $$
 \displaystyle
-\begin{array}rcl}
+\begin{array}{rcl}
 \dot{E} &=& I\\
 \dot{S} &=& R+Q_+-Q_-\\
 \dot{A} &=& I-B\\
@@ -215,7 +216,7 @@ ae interested in the limit $$C\to0$$ and pull this dependence out by
 defining $$f$$ such that $$fC = F+B$$. The fraction $$f$$ need not be
 a constant, but whatever values it takes, $$f$$ must be a fraction:
 $$0<f<1$$ with units of 1/year.  Looking at YCharts for 2024, an
-average tx fee might be $$3\times10^{-4}$$ ETH (about $1 USD), and
+average tx fee might be $$3\times10^{-4}$$ ETH (about \$1~USD), and
 with $$\approx1.2\times10^6$$ transactions per day on a supply of
 120M, 70\% of which is unstaked, corresponding to an $$f\approx.001$$/year.
 
@@ -248,7 +249,7 @@ $$C=A-s$$, we obtain:
 
 $$
 \displaystyle
-\dot{s} ~~=~~ \frac{\dot{A}}{A}(r-s)~~+~~(rf+q_+)(1-s)~~-~~q_-s
+\dot{s} ~~ = ~~ \frac{\dot{A}}{A}(r-s) ~~ + ~~ (rf+q_+)(1-s) ~~ - ~~ q_-s
 $$
 
 The first term captures the effect of inflation/deflation.  Under
@@ -287,12 +288,9 @@ Returning from our commercial break, recall we have found a supportive
 role played by inflation in moderating staking fraction.  We now wish
 to study the fixed point $$s^*$$ given by solving
 $$0=\dot{s}=\frac{\dot{A}}{A}(r-s)+(rf+q_+)(1-s)-q_-s$$
-yielding:
-
-$$
-s^\star=\frac{r^\star(\alpha^\star + f^\star) + {q^\star}_+}{\alpha +
-r^\star f^\star - {q^\star}_-}
-$$
+yielding $$
+s^\star = \frac{r^\star(\alpha^\star + f^\star) + q_+^\star}{
+\alpha^\star + r^\star f^\star - q_-^\star}$$
 
 We find that if $\dot{A}=0=\alpha$ (no inflation nor deflation) then
 an interior market equilibrium $$s^\star<1$$ is impossible.  We reason

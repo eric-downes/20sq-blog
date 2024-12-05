@@ -207,10 +207,10 @@ $$
 $$
 
 Where all quantities are assesed quarterly:
-* $$I$$ -- Total Issuance
-* $$R$$ -- Total Reinvestment of Validator Yields
-* $$Q_\pm$$ -- Total (Un)Staking Queue Flows
-* $$B$$ -- Total Base Fee, aka Burn Rate.
+* $$I$$: Total Issuance in a certain quarter
+* $$R$$: Total Reinvestment of Validator Yields, in that quarter
+* $$Q_\pm$$: Total (Un)Staking Queue Flows, in that quarter
+* $$B$$: Total Base Fee (burn) assed, in that quarter.
 
 Transaction fees $$F+B$$ are split into the base fee $$B$$ which is
 burned, and priority fees plus MEV $$F$$ which go to validators via

@@ -64,7 +64,7 @@ $$s=S/A$$ where $$S$$ is all staked ETH, $$C$$ is "circulating"
 (unstaked, unburnt) ETH, and $$A=S+C$$ is the total "accessible"
 (unburnt) ETH. Differential changes, such as changes in time
 $$\frac{ds}{dt}:=\dot{s}$$ are given by the quotient rule
-$$\dot{s}=\dot{S}/A-s\dot{A}{A}$$.  The quantity $$\alpha = \dot{A}/A$$
+$$\dot{s}=\dot{S}/A-s\dot{A}/A$$.  The quantity $$\alpha = \dot{A}/A$$
 is the average on-paper inflation rate (supply expansion APY) averaged
 on at-least-quarterly timescales.
 
@@ -74,37 +74,43 @@ The latter can be acheived in principle by a reduction of issuance
 relative to the base fee "burn rate".  Because of this quotient rule
 tradeoff, low-but-positive inflation actually plays a positive
 infrastructural role in moderating staking fraction.  This can be seen
-in the market equilibrium staking fraction, derived below.
+in the market equilibrium staking fraction $$s^\star$$, shown here and
+derived below.
 
 $$\displaystyle
-s^\star = r\frac{\alpha + f}{\alpha + rf}
+s^\star = r^\star\frac{\alpha^\star + f^\star}{\alpha^\star + r^\star f^\star}
 $$
 
-Here $$0\leq r\leq 1$$ is the ratio of profits reinvested quarterly by
+Here $$r^\star$$ etc. means the varable $$r(s,\ldots)$$ at the
+equilibrium point $$s^\star$$.  Speaking of which, the fraction
+$$0\leq r\leq 1$$ is the ratio of profits reinvested quarterly by
 validators, $$0\leq f\leq 1$$ is the fraction of unstaked ETH spent on
 transaction fees (base and priority) quarterly, and as above
-$$\alpha$$ is inflation.  The two extremes are $$\alpha\ll f$$ fees
-dominate and $$\alpha\gg f$$ inflation dominates.  In the former,
-staking fraction is driven closer to 1, while in the latter, staking
-is driven to match reinvestment $$x^*\approx r$$.  A contour plot of
-$$x^*$$ as a function of dimensionless fractions $$(\alpha/f,r)$$ is
-below.
+$$\alpha$$ is inflation.  The two extremes are $$\alpha^\star\ll
+f^\star$$ fees dominate and $$\alpha^\star\gg f^\star$$ inflation
+dominates.  In the former, staking fraction is driven closer to 1,
+while in the latter, staking is driven to match reinvestment
+$$s^\star\approx r^\star$$.
 
--- FIGURE -- 
+#### Good Scenario 
 
 Under current market conditions, low inflation and lower fees, the
 long-term equilibrium staking fraction approaches the average ratio
-$$r$$ at which validators reinvest their staking rewards. For LSTs
-$$r$$ is bounded below by the ratio of token yield to total yield, and
-we can use this to roughly estimate some real values.
+$$r$$ at which validators reinvest their staking rewards.  When there
+are different types of validators, $$r$$ is the average of $$r_i$$ for
+each validator type $$i$$, weighted by the amount of Ether each
+stakes.  For LSPs $$r_{LST}$$ is bounded below by the ratio of token
+yield to total yield, and we can use this to roughly estimate some
+full $$r$$ values.
 
 Approximate present values from YCharts are very roughly
 $$f\approx.001$$/year, $$\alpha\approx.005$$/year, $$r\in(.5,.75)$$.
 So if current market conditions (low inflation, lower fees) were to
-persist at long times, we expect the staking ratio to convergence to
-no more than +10\% of the the reinvestment ratio.  Good news: if
-inflation is reduced by half, while fees etc. maintain, equilibrium is
-still around $$r$$ + 15\%, so $$x^\star\in(.58,.8)$$.
+persist at long times, we expect the staking ratio converges to no
+more than +10\% of the the reinvestment ratio.  Good news: if issuance
+is reduced such that inflation is reduced by half, while fees
+etc. maintain, equilibrium is still around $$r$$ + 15\%, so
+$$s^\star\in(.58,.8)$$.
 
 Wether this is acceptable, depends on $$r$$.  That is, under current
 market conditions, reinvestment ratio is the proxy by which inflation
@@ -114,44 +120,51 @@ its own profits $$r_i$$.  The global $$r$$ is then the market-share
 weighted average of all these, a bridge between Ethereum micro- and
 macro-economics.
 
-Consider this "backfire" scenario, though, in which reductions of
-inflation decouple $$x^\star$$ from $$r$$.  Issuance is reduced
-further, as per the proposed yield curves.  The burn rate and
-transaction fees as a fraction of circulating Ether do not change
-appreciably, such that inflation becomes negligible
-$$\alpha/f\approx10^{-2}$$.  Inflation hawks might even consider this
-a desirable scenario.  If $$r$$ does not change appreciably, we
-predict that after (un)staking queue transients die out, staking
-fraction would equilibrate to $$x^\star\in(.97,.99)$$; less than 3\%
-of Ether would remain unstaked.
+#### Bad Scenario
 
-How unrealistic is tht last assumption?  Say that LSPs set their
-yields at the current proportion of yield from issuance plus fees, and
-LST-holders maintain their balances because they simply wish to
-passively chase a small percentage yield.  Solo validators reinvest at
-about the same rate they have been, in order to chase priority fees
-and MEV despite the reduction in issuance.  This is all that is needed
-for eventual 100\% ETH Staked; no net influx of stakers is required at
-all.
+Consider this "backfire" scenario, though, in which reductions of
+inflation decouple $$s^\star$$ from $$r$$.
+
+Issuance is reduced, as
+per the yield curve $$y(S)=kS^{-1/2}(1+k'S)$$.  The burn rate and
+transaction fees as a fraction of circulating Ether do not change
+appreciably.
+
+LSPs adjust their yields to maintain the current
+proportion $$r$$ of yield from issuance plus fees, and LST-holders
+maintain their balances because they simply wish to passively chase a
+small percentage yield.  Solo validators reinvest at about the same
+rate they have been, in order to chase priority fees and MEV despite
+the reduction in issuance.  So, we are pushed into the higher part of the
+yield curve, keeping issuance negligible
+$$\alpha^\star/f^\star\lesssim10^{-2}$$.  Inflation hawks might even
+consider this a desirable scenario.  After (un)staking queue
+transients die out, staking fraction would equilibrate to
+$$s^\star\in(.97,.99)$$.
+
+Essentially, we really need to be sure of what drives validaor
+behavior.  If enough validators persist in reinvestment beyond where
+we would expect them to, Ethereum could become deflationary, and this
+is dangerous.  We recommend surveys to gauge sentiment and
+calculations of the statistics of $$r_i$$.
 
 #### Macroeconomics at the Equilibrium Point
 
 Per the arguments of Ethereum researchers, high inflation could lead
-to runaway staking.  This has motivated the drive to reduce issuance,
-thereby reducing inflation.  Our model offers a perspective here as
-well.
+to runaway staking.  This has motivated the drive to reduce issuance
+and thus inflation.  Our model offers a perspective here as well.
 
 In our model the net effect of inflation on staking fraction at
 equilibrium is reflected by taking the derivative
-$$0<\frac{dx^\star}{d\alpha}|_{\alpha^\star}$$ assuming $$r,f$$ are
+$$0<\frac{ds^\star}{d\alpha}\big|_{\alpha^\star}$$ assuming $$r,f$$ are
 implicit functions of $$\alpha$$.  That is, the necessary condition
-for inflation to push the market equilibrium $$x^\star$$ itself into
+for inflation to push the market equilibrium $$s^\star$$ itself into
 runaway staking is (see below for explanation):
 
 $$\displaystyle
 1 < \frac{\partia\ln r}{\partial\ln\alpha}\big|^\star
-\cdot \frac{1 + \alpha^\star/f^\star}{1 - r^\star}
-+ \frac{\partial\ln f}{\partial\ln\alpha}\big|^\star
+\cdot \frac{1 + \alpha^\star/f^\star}{1 - r^\star}+
+\frac{\partial\ln f}{\partial\ln\alpha}\big|^\star
 $$
 
 We hope that this work can be built upon to focus inflationary
@@ -166,7 +179,7 @@ the above condition is satisfied or not.
 
 ## Modelling Staking
 
-Now the details!
+Now some more details!
 
 ### Splitting Up A Growing Pie
 
@@ -174,15 +187,11 @@ Consider the quantity $$E$$ of all Ether in existence.  Let the
 issuance of new Ether as per The Merge be quantified by $$I$$.  Then
 the change in time of total Ether is $$\dot{E}:=dE/dt=I$$.
 
--- FIGURE 1 (see notability) --
-
 Now, let us separate $$E$$ into three smaller boxes;
 $$S+C+\cancel{O}=E$$, representing (S)taked, (C)icrulating, and burnt
 Ether $$\cancel{O}$$, respectively.  By considering each quantity a
 quarterly average we can plausibly ignore the detailed dynamics of the
 staking, unstaking, and withdrawal queues.
-
--- FIGURE 2 (see notability) --
 
 ### How Pie is Pushed Around The Plate
 
@@ -263,20 +272,17 @@ not be altered by considering dynamics of inflation.
 
 Above we treat inflation as a parameter instead of as its own dynamic
 variable.  How dangerous is this?  For a sanity-check, a quick look at
-YCharts since The Merge show that $$s,\dot{s}$$ vary over a much
+YCharts since The Merge shows that $$s,\dot{s}$$ vary over a much
 greater range than $$(\ln{A},\alpha)$$.
 
 -- FIGURES --
 
-We expect the full dynamics to be more relevant for determining exact
-stability criteria under a change of issuance.  At present we judge
-the lack of empiircal data on $$r$$ would obviate the added precision
-of a more sophisticated treatment.
-
-We will proceed assuming $$\dot{\alpha}\approx0$$ and treating
-$$\alpha$$ as a parameter.  Curious or skeptical readers are
-encouraged to study the full $$(\alpha,s,\beta)$$-system using the
-modelling framework we have developed.
+At present we judge the lack of empiircal data on $$r$$ would obviate
+the added precision of a more sophisticated treatment.  We will
+proceed assuming $$\dot{\alpha}\approx0$$ and treating $$\alpha$$ as a
+parameter.  Curious or skeptical readers are encouraged to study the
+full $$(\alpha,s,\beta)$$-system using the modelling framework we have
+developed.
 
 ### Fixed Point
 
@@ -307,8 +313,8 @@ stake, while another group with a higher $$r$$ were aggressively
 reinvesting in their business, and their reinvestment of fees and MEV
 offset the unstaking, adjusted for inflation.  This cannot maintain
 forever: eventually there will be no new Capitulators left, and
-$$x^*$$ must once again grow as required by the Reinvestors' higher
-$$r$$, so $$x^*$$ was not a fixed point at all.  Similarly, at some
+$$s^\star$$ must once again grow as required by the Reinvestors' higher
+$$r$$, so $$s^\star$$ was not a fixed point at all.  Similarly, at some
 point everyone who wants to stake should have staked.  If we judge the
 quarterly fluxes due to the issuance of new humans and the burn rate
 of legacy humans to be small and/or likely to take over existing
@@ -325,12 +331,12 @@ inflation.  If inflation dominates fees, $$\alpha\gg f$$ then
 $$s^\star\sim r^\star<1$$, while if fees dominate inflaton $$\alpha\ll
 f$$ and $$s^\star\to1$$.  For a numerical comparison, at present $$f
 \approx .001\lessim .005\approx\alpha$$ so to within 10\% error above,
-$$x^*\approx r$$ over the range of $$r$$ inferred from Lido yield
+$$s^*\approx r$$ over the range of $$r$$ inferred from Lido yield
 rate.
 
 So if these conditions persist at long times, and to be clear there is
-no reason to be certain they will, we should expect $$x^\star\approx
-r\in(.55,.77)$$.  This places the lower range of $$x^\star$$ near the
+no reason to be certain they will, we should expect $$s^\star\approx
+r\in(.55,.77)$$.  This places the lower range of $$s^\star$$ near the
 50% staking target proposed by Elowsson.  This is hopeful, but little
 weight can be attached to such back-of-envelope extrapolations.  To
 make reliable projections we need systematic measurement of both the
@@ -338,7 +344,7 @@ statistics of individual validator reinvestment and metrics or at
 least surveys reflecting validator sentiment and (in)capacity to
 absorb reduced revenue.
 
-### Market Equilibrium
+### Market Equilibrium: Stability
 
 The fixed-point $$x^\star$$ represents "the" market equilibrium when it
 is both unqiue and stable.
@@ -348,93 +354,102 @@ shared and repeated root among all terms $$\alpha,rf+q_+,q_-$$.  That
 is, each economic flow would have to nearly disappear at a particular
 value of staking fraction.  Lacking any supporting data or a mechanism
 for this, we cannot really analyse such an alternate equilibria, but
-intuitively it seems unlikely, so we move on, assuming uniqueness.
+intuitively it seems unlikely, so for now we move on, assuming
+uniqueness.
 
 Stability requires that small perturbations shrink;
 $$\frac{\partial\dot{x}}{\partial x}\big|^<0$$, where
 $$\frac{d}{d\xi}|^\star$$ denotes a derivative with respect to $$\xi$$
-at the fixed point $$\xi^\star$$.
+at the fixed point $$\xi^\star$$.  The full stability condition is
 
+$$\displaystyle
+1 + \frac{r^\star}{\alpha^\star/f^\star} >
+\frac{d\ln{r}}{d\ln s}\big|^\star +
+(1 - \frac{r^\star}{s^\star})
+\frac{d\ln(\alpha/f)}{d\ln s}\big|^\star
+$$
 
+Where presently, we estimate the dimensionless quantity
+$$\alpha/f\approx5$$ while its derivative depends on the slope of the
+yield curve $$y$$ via $$\alpha/f=ys/f-b(1-s)=[I/(F+B)-b](1-s)$$.
 
+*If* the derivatives are all small in comparison (and there is no a
+priori gaurantee of this), then we can say something useful.
+Stability is automatic under inflation so long as
+$$\alpha^\star+r^\star f^\star>0$$.  If again derivatives are all
+small but $$\alpha<0,~rf<|\alpha|<f$$, then the fixed point is
+negative $$x^\star<0$$ and unstable, so runaway staking is inevitable;
+here deflation and tx fees shrink circulating Ether $$C$$ so quickly
+that no amount of profit-taking by validators short of en masse
+unstaking is sufficient to preserve $$C>0$$.  The strong deflation
+$$\alpha<-f<0$$ fixed point appears interior unstable, predicting
+either runaway staking or a catastrophic loss of staking, depending on
+initial considitions. Our interpretation of the latter behavior is
+that if raw Ether is appreciating in value so quickly, and there has
+been insufficien interest in staking thusfar, then why bother staking at
+all?  But we must emphasize that what instability *really* means is
+that "market externalities take over", rather than supporting any
+specific trajectory due to endogenous dynamics.
 
-The full
-condition is quite complicated, especially under deflation.
-If however inflation is positive and $$r,\alpha,f$$ are
-relatively insensitive to small changes in $$x$$ near $$x^\star$$, this
-condition is satisfied immediately; $$\alpha+rf>0$$.
+Careful empirical data analysis will be necessary to evaluate the
+above stability boundary with accuracy.  We feel it is extremely
+important that policy interventions, such as changes to issuance,
+maintain a stable fixed point -- a fixed point where small changes
+shrink instead of growing.  Otherwise staking fraction is no longer
+influenced by equilibrium arguments and becomes much harder to predict
+or control.  Potential for instability would manifest as large groups
+of validators and other market participants taking very different bets
+on the future of Ethereum.  Which future manifests would probably
+depend on details not observable from macroeconomics alone.  In what
+follows we will assume stability for the sake of discussion, but must
+stress that while we judge it likely under current conditions, this
+matter cannot be settled without further study.
 
-This stable equilibrium seems plausible, and worthy of consideration.
-How does it behave?
+### Inflation Concerns
 
-### Qualitative Behavior
+As we have seen, reducing issuance in a vacuum decreases inflation,
+and increases the relative strength of the $$rf(1-s)$$ term.  This
+leads to an increase in staking fraction if $$r$$ etc. do not reduce,
+in response.  Very likely $$x_{now}<r<1$$, so currently the effects of
+both inflation and fee-reinvestment push in the same direction right
+now.  But we are less interested in such temporary effects, than the
+long term behavior of the system.  To study this, we looked at the
+fixed point $$s^\star=r(\alpha+f)/(\alpha+rf)$$, and note it reflects
+a role for inflation more nuanced than usually appreciated.  In fact,
+we want to emphasize that deflation or zero growth could actually be
+quite dangerous; for instance when $$\alpha^*<0,~|\alpha^*|<f$$ we
+have $x^\star>1$$; and there is no interior fixed point.
 
-The fixed point $$x^\star=r(\alpha+f)/(\alpha+rf)$$ represents
-behavior distinct in flavor from the arguments forwarded by Ethereum
-researchers, in which concerns over inflation would drive the network
-to a 100% ETH Staked scenario.  To be clear, very likely
-$$x_{now}<r<1$$, so currently the effects of both inflation and
-fee-reinvestment push in the same direction.  But we are less
-interested in such temporary effects, than the longe term behavior of
-the system.
+Why does this happen, though?  The reinvestment of issuance rewards
+adds to both staked ETH $$S$$ and circulating ETH $$C$$, so the effect
+on staking fraction depends on the relative size of these two.
+However, the reinvestment of priority fees plus MEV is simply a net
+value transfer from $$C$$ to $$S$$, which can only ever increase
+staking fraction.
 
-We agree with issuane hawks that there must be *some* $$(x,\alpha)$$
-past which fears of runaway inflation will drive $$r\to1$$ and
-therefore $$x^*\to1$$.  However, we encourage nuance in discussion of
-inflation; system dynamics reflect a picture in which inflation
-directly moderates the effect of fee reinvestment, which in contrast
-can only increase $$x$$.  In fact, we want to emphasize for this
-reason that deflation or zero growth could actually be quite
-dangerous; when $$\alpha^*<0,~|\alpha^*|<f$$
+Some good news is that under current conditions, we have some leeway.
+A moderate reduction of inflation to half or even a third of its
+present value would still result in a comfortably positive inflation
+rate, $$\alpha>f$$ and maintain the dominance of reinvestment in the
+long term $$s^\star\to r^\star$$.
 
-We have argued, hopefully convincingly, that reducing issuance in a
-vacuum decreases inflation, and increases the relative strength of the
-$$rf(1-x)$$ term.  This leads to an increase in staking fraction if
-$$r$$ etc. do not reduce, in response.  Why does this happen,
-intuitively, though?  The reinvestment of issuance rewards adds to
-both staked ETH $$S$$ and circulating ETH $$C$$, so the effect on
-staking fraction depends on the relative size of these two.  However,
-the reinvestment of priority fees plus MEV is simply a net value
-transfer from $$C$$ to $$S$$, which can only ever increase staking
-fraction.
+The effect of $$\alpha$$ on $$r$$ then becomes quite salient, and this
+is where previous market equilibrium arguemnts come into play.  We
+agree with issuane hawks that there must be *some* $$(s,\alpha)$$ past
+which fears of runaway inflation will drive $$r\to1$$ and therefore
+$$s^\star\to1$$.  How does our model account for such effects?
 
-If current conditions affecting $$f$$ etc. persist what will be the
-end effect on inflation $$\alpha$$ and $$x^\star$$?
-
-
-Under current
-conditions, any moderate reduction of issuance to half or a third of
-its present value would still result in a comfortably positive
-inflation rate.  We assume, admittedly without any strong evidence,
-that transaction fees are driven by trading volume, etc. which should
-persist wether inflation is .5\% or 3\%, so $$f\ll\alpha$$ and
-$$x^\star\approx r$$ could plausibly maintain.
-
-The most dangerous likely scenario is one in which the issuance curve
-is reduced, followed at some point by a sustained bull market
-elevating priority and base fees moderately higher than present, while
-reinvestment is not strongly reduced (perhaps driven by breakthroughs
-in MEV, or an unexpectedly low elasticity in staking demand), such
-that $$\alpha\lessim rf$$.  In this hypothetical scenario, reinvestment
-of fees will shrink $$C$$ consderably relative to $$S$$, potentially
-leading to runaway staking.  This mechanism requires no need for more
-new validators.
-
-
-
-What the fixed point equation $$s^*=r(\alpha+f)/(\alpha+rf)$$ does not
-explicitly show are the effects of inflation on reinvestment ratio,
-itself.  The derivative of staking fraction by inflation near
-equilibrium $$\frac{\partial x^*}{\partial\alpha}\big|^*$$ shows the
-response to small endogenous changes, but not to a market crash, or
-protocol hardfork.  The condition that gently rising inflation causes
-an increase in staking is that this derivative should be positive.
+The derivative of staking fraction by inflation near equilibrium
+$$\frac{\partial x^\star}{\partial\alpha}\big|^\star$$ shows the response to
+small endogenous changes, but not to a market crash, or protocol
+hardfork.  The condition that gently rising inflation causes an
+*increase* in staking is that this derivative should be positive.
 Assuming $$r,f$$ are (unknown) implicit funcions of $$\alpha$$ the
 positive derivative condition becomes after some manipulation
 
 $$\displaystyle
-1 < \frac{\partia\ln r}{\partial\ln\alpha}\big|^*\cdot\frac{1+\alpha^*/f^*}{1-r^*}
-+ \frac{\partial\ln f}{\partial\ln\alpha}\big|^*
+1 < \frac{\partia\ln r}{\partial\ln\alpha}\big|^\star\cdot\frac{1+\alpha^\star/f^\star}{1-r^\star}
++ \frac{\partial\ln f}{\partial\ln\alpha}\big|^\star
 $$
 
 This gives us a condition expressing how the macroeconomic effects of
@@ -448,58 +463,36 @@ this conditions.
 
 ## In Conclusion
 
-We find a nuetral and even positive role for inflation in maintaining
-moderate staking levels under various scenarios.  We do not contest
-the logic that runaway inflation could drive staking fraction
-unreasonably high, but the picture emerging from our model appears far
-more nuanced.
+We find a potentially nuetral and even positive role for inflation in
+maintaining moderate staking levels under various scenarios.  We do
+not contest the logic that runaway inflation *could* drive staking
+fraction unreasonably high.  If so, it must act through reinvestment,
+and we emphasize that zero-growth or deflationary conditions would
+only make matters worse.
 
 We find that the reinvestment of staking rewards plays a critical role
 in staking dynamics.  This is especially true under present market
-conditions post-EIP-1557, where inflation dominates reinvested fees,
-and we expect the equilibrium staking fraction to approach the
-reinvestment rate $$r$$.
+conditions post-EIP-1557, where inflation dominates fees, and we
+expect the equilibrium staking fraction to approach the reinvestment
+rate $$r$$.  The formulas for the staking fixed point, stability
+criteria, and criteria for inflation to contribute on net to runaway
+staking, appear new and we hope they will likewise prove useful to the
+community.  In principle, all of these could be tracked.
 
-We propose that $$r$$ be added to the list of macroeconomic indicators
-routinely tracked for Ethereum, and that the economic forces, and
-internal variability affecting $$r$$ be modelled and measured.
-Specifically, policy advisors need to know how and indeed if solo
-validators and LSTs will alter their reinvestment strategies,
+We propose at least that $$r$$ be added to the list of macroeconomic
+indicators routinely tracked for Ethereum, and that the economic
+forces, and internal variability affecting $$r$$ be modelled and
+measured.  Specifically, policy advisors need to know how and indeed
+if solo validators and LSTs will alter their reinvestment strategies,
 especially under a regime of lower issuance yield.
 
-It may well be that fears about runaway inflation will turn out to be
-the dominant factor affecting reinvestment.  If so this should emerge
-from microeconomic surveys of large validators and LSTs.  Each staking
-business $$i$$ can, and probably already does, calculate its desired
-$$r_i$$.  The global $$r$$ is then the market-share weighted averaged
-of all of these.  We hope these calculations will bridge the macro-
-and micro-economics to help the community see a unified and actionable
-big picture on the future of Ethereum staking.
-
-
-
-# Unused Notes
-
-## $$\dot{\alpha}$$
-
-Let's derive an expression for $$\dot{\alpha}=\frac{d}{dt}[(I-B)/A]$$.
-$$S$$ is proportional to the number of validators, so we may write
-$$I=yS$$ for a scaled yield curve $$y$$.  Observe that $$y(S)=y(As) and $$
-and let $$y':=dy/dS$$ such that $$dy=. So in terms of the previous intensive variables
-$$\alpha = ys-bf(1-s)$$, and we use $$\beta:=bf$$ to obtain
-$$\dot{\alpha}(1-sy'A) = (y+\beta+y'/A)\dot{s}-(1-s)\dot{\beta}$$.
-
-Observe that for yield curves without derivative singularities, such
-as all under serious discussion, $$sy'\ll A$$.  Dividing by
-$$1-sy'/A$$ obtains
-
-$$\dot{\alpha}=h(s,\beta,A)\dot{s}-\frac{1-s}{1-sy'/A}\dot{\beta}$$.
-
-We are interested in fixed points $$s^*$$ given by $$\dot{s}=0$$.
-Thus $$s^*$$ is also a fixed point of $$\dot{\alpha}$$ when
-$$\dot{\beta}=0$$ or $$s^*=1$$.  That is, a market-equilibrium of
-$$\dot{s}$$ is unaltered by considering inflation dyanmics due to
-non-zero $$\dot{\alpha}=\frac{d^2\ln{A}}{dt^2}$$.  Where one *may* wish
-to return to studying a non-zero $$\dot{\alpha}$$, is to study the
-full stability conditions of the $$(s,\alpha,\beta)$$-system.
+It may well, as some have predicted, that fears about runaway
+inflation will turn out to be the dominant factor affecting
+reinvestment.  If so we predict this must emerge from microeconomic
+surveys of large validators and LSTs.  Each staking business $$i$$
+can, and probably already does, calculate its desired $$r_i$$.  The
+global $$r$$ is then the market-share weighted averaged of all of
+these.  We hope these calculations will bridge the macro- and
+micro-economics to help the community see a unified and actionable big
+picture on the future of Ethereum staking.
 

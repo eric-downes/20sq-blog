@@ -159,9 +159,9 @@ for inflation to push the market equilibrium $$s^\star$$ itself into
 runaway staking is (see below for explanation):
 
 $$\displaystyle
-1 < \frac{\partial\ln r}{\partial\ln\alpha}\Big|^\star
-\cdot \frac{1 + \alpha^\star/f^\star}{1 - r^\star}+
-\frac{\partial\ln f}{\partial\ln\alpha}\Big|^\star
+1 < \left.\frac{\partial\ln r}{\partial\ln\alpha}\right|^\star
+\cdot \frac{1 + \alpha^\star/f^\star}{1 - r^\star} +
+\left.\frac{\partial\ln f}{\partial\ln\alpha}\right|^\star
 $$
 
 We hope that this work can be built upon to focus inflationary
@@ -229,8 +229,8 @@ a certain fraction of yield is the value proposition for the
 token-holder; so any model with LSTs must include reinvestment.  Again
 we define a variable fraction $$r:=R/(I+F)$$ which obeys
 $$0\leq{r}\leq1$$.  As of Nov 23, 2024 the stETH token yield is
-$$\approx$$3\%.  Over the same period, without MEV-Boost validator
-yield is $$\approx$$4\%, and with MEV-Boost it is $$\approx$$5.7\%.
+$$\approx3$$\%.  Over the same period, without MEV-Boost validator
+yield is $$\approx4$$\%, and with MEV-Boost it is $$\approx5.7$$\%.
 So probably, $$r$$ currently lies in the range $$.5\leq r\leq.75$$.
 
 The quarterly flows from the staking and unstaking queues must obey
@@ -240,8 +240,8 @@ $$\dot{S}$$ the change in total staked ETH, anticipating that we wish
 to understand the relationship to inflation rate $$\dot{A}/A$$,
 obtaining $$\dot{S} = r\dot{A} + r(B+F) + Q_+-Q_-$$.  For about the
 past 6 months Ethereum supply has been growing pretty linearly,
-corresponding to an inflation rate of about .5\%, or
-$$\alpha=.005$$/year.
+corresponding to an inflation rate of about .5\%, that is
+$$\alpha\approx.005$$/year.
 
 The variable of primary interest is the staking fraction $$s=S/A$$;
 recalling the quotient rule $$\dot{S}=\dot{S}/A-s\dot{A}/A$$ and
@@ -308,15 +308,15 @@ stake, while another group with a higher $$r$$ were aggressively
 reinvesting in their business, and their reinvestment of fees and MEV
 offset the unstaking, adjusted for inflation.  This cannot maintain
 forever: eventually there will be no new Capitulators left, and
-$$s^\star$$ must once again grow as required by the Reinvestors' higher
-$$r$$, so $$s^\star$$ was not a fixed point at all.  Similarly, at some
-point everyone who wants to stake should have staked.  If we judge the
-quarterly fluxes due to the issuance of new humans and the burn rate
-of legacy humans to be small and/or likely to take over existing
-businesses, additional validators count overwhelmingly toward $$r$$,
-so $$q_+^\star\approx0$$.
+$$s^\star$$ must once again grow as required by the Reinvestors'
+higher $$r$$, so $$s^\star$$ was not a fixed point at all.  Similarly,
+at some point everyone who wants to stake should have staked.  If we
+judge the quarterly fluxes due to the issuance of new humans and the
+burn rate of legacy humans to be small and/or likely to take over
+existing businesses, additional validators count overwhelmingly toward
+$$r$$, so $$q_+^\star\approx0$$.  Thus, the fixed point $$s^\star$$
+simplifies to
 
-Thus, the fixed point $$s^\star$$ simplifies to
 $$\displaystyle
 s^\star = r\frac{\alpha + f}{\alpha + rf}
 $$
@@ -353,15 +353,17 @@ intuitively it seems unlikely, so for now we move on, assuming
 uniqueness.
 
 Stability requires that small perturbations shrink;
-$$\frac{\partial\dot{x}}{\partial x}\big|^<0$$, where
-$$\frac{d}{d\xi}|^\star$$ denotes a derivative with respect to $$\xi$$
-at the fixed point $$\xi^\star$$.  The full stability condition is
+$$\left.\frac{\partial\dot{x}}{\partial x}\right|^\star<0$$, where
+$$\left.\frac{d}{d\xi}\right|^\star$$ denotes a derivative with
+respect to $$\xi$$ at the fixed point $$\xi^\star$$.  The full
+stability condition is
 
 $$\displaystyle
-1 + \frac{r^\star}{\alpha^\star/f^\star} >
-\frac{d\ln{r}}{d\ln s}\big|^\star +
-(1 - \frac{r^\star}{s^\star})
-\frac{d\ln(\alpha/f)}{d\ln s}\big|^\star
+1 + \left.\frac{r^\star}{\alpha^\star/f^\star}
+~~ > ~~
+\frac{\partial\,\log r}{\partial,\log s}\right|^\star +
+\left.(1 - \frac{r^\star}{s^\star})
+\frac{\partial\,\log(\alpha/f)}{\partial\,\log s}\right|^\star
 $$
 
 Where presently, we estimate the dimensionless quantity
@@ -443,8 +445,9 @@ Assuming $$r,f$$ are (unknown) implicit funcions of $$\alpha$$ the
 positive derivative condition becomes after some manipulation
 
 $$\displaystyle
-1 < \frac{\partia\ln r}{\partial\ln\alpha}\big|^\star\cdot\frac{1+\alpha^\star/f^\star}{1-r^\star}
-+ \frac{\partial\ln f}{\partial\ln\alpha}\big|^\star
+1 ~~ < ~~ \left.\frac{\partial\,\log r}{\partial\,\log\alpha}\right|^\star
+\cdot\frac{1+\alpha^\star/f^\star}{1-r^\star}
++ \left.\frac{\partial\,\log f}{\partial\,\log\alpha}\right|^\star
 $$
 
 This gives us a condition expressing how the macroeconomic effects of

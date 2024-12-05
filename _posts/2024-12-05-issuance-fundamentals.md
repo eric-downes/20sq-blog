@@ -5,7 +5,7 @@ author: Eric Downes
 categories: [ethereum, issuance]
 excerpt: This is a blog post on Runaway Staking in a series summarizing our research funded by EF GRANT INFO.
 usemathjax: true
-thanks: I am grateful for useful discussions with Eric Siu, Andrew Sudbury, and the the 20 Squares team; especially Danieli Palombi and Philipp Zahn.
+thanks: I am grateful for useful discussions with Eric Siu, Andrew Sudbury, and the the 20 Squares team; especially Daniele Palombi and Philipp Zahn.
 ---
 
 ## The Problem

@@ -452,7 +452,8 @@ positive derivative condition becomes after some manipulation
 $$
 \displaystyle
 1 ~~ < ~~ \left.\frac{\partial\log\ r}{\partial\log\ \alpha}\right|^\star
-\cdot\frac{1+\alpha^\star/f^\star}{1-r^\star} +
+\cdot\frac{1+\alpha^\star/f^\star}{1-r^\star}
+~~ + ~~
 \left.\frac{\partial\log\ f}{\partial\log\ \alpha}\right|^\star
 $$
 

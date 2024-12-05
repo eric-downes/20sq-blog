@@ -3,8 +3,7 @@ layout: post
 title: Some danger in reducing Issuance to avoid Runaway Staking.
 author: Eric Downes
 categories: [ethereum, issuance]
-excerpt: This is a blog post on Runaway Staking in a series summarizing our
-research funded by EF GRANT INFO.
+excerpt: This is a blog post on Runaway Staking in a series summarizing our research funded by EF GRANT INFO.
 usemathjax: true
 thanks: I am grateful for useful discussions with Eric Siu, Andrew Sudbury, and the the 20 Squares team; especially Danieli Palombi and Philipp Zahn.
 ---

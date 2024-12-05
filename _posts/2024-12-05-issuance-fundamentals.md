@@ -219,9 +219,9 @@ ae interested in the limit $$C\to0$$ and pull this dependence out by
 defining $$f$$ such that $$fC = F+B$$. The fraction $$f$$ need not be
 a constant, but whatever values it takes, $$f$$ must be a fraction:
 $$0<f<1$$ with units of 1/year.  Looking at YCharts for 2024, an
-average tx fee might be $$3\times10^{-4}$$ ETH (about 1~USD), and
-with $$\approx1.2\times10^6$$ transactions per day on a supply of
-120M, 70\% of which is unstaked, corresponding to an $$f\approx.001$$/year.
+average tx fee might be $$3\times10^{-4}$$ ETH, and with
+$$\approx1.2\times10^6$$ transactions per day on a supply of 120M,
+70\% of which is unstaked, corresponding to an $$f\approx.001$$/year.
 
 En masse, validators withdraw their rewards $$I+F$$ into circulating
 ETH.  They reinvest some amount of rewards $$R$$ into staking more
@@ -451,9 +451,9 @@ positive derivative condition becomes after some manipulation
 
 $$
 \displaystyle
-1 ~~ < ~~ \left.\frac{\partial\,\log r}{\partial\,\log\alpha}\right|^\star
+1 ~~ < ~~ \left.\frac{\partial\log\ r}{\partial\log\ \alpha}\right|^\star
 \cdot\frac{1+\alpha^\star/f^\star}{1-r^\star} +
-\left.\frac{\partial\,\log f}{\partial\,\log\alpha}\right|^\star
+\left.\frac{\partial\log\ f}{\partial\log\ \alpha}\right|^\star
 $$
 
 This gives us a condition expressing how the macroeconomic effects of
@@ -464,6 +464,11 @@ respond only weakly, then reinvestment must increase with inflation.
 The smaller reinvestment has been and the more inflation dominates
 fees, the weaker the increase of reinvestment needs to be to satisfy
 this conditions.
+
+Note that $$x^\star/r^\star-1=(1-r^\star)/(1+\alpha^\star/f^\star)$$
+the same quantity that appears in the stability condition, suggesting
+a link between the boundary of the stable manifold and the conditions
+for inflation-led runaway-staking.
 
 ## In Conclusion
 

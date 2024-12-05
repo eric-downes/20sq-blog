@@ -437,17 +437,18 @@ which fears of runaway inflation will drive $$r\to1$$ and therefore
 $$s^\star\to1$$.  How does our model account for such effects?
 
 The derivative of staking fraction by inflation near equilibrium
-$$\frac{\partial x^\star}{\partial\alpha}\big|^\star$$ shows the response to
+$$\left.\frac{\partial x^\star}{\partial\alpha}\right|^\star$$ shows the response to
 small endogenous changes, but not to a market crash, or protocol
 hardfork.  The condition that gently rising inflation causes an
 *increase* in staking is that this derivative should be positive.
 Assuming $$r,f$$ are (unknown) implicit funcions of $$\alpha$$ the
 positive derivative condition becomes after some manipulation
 
-$$\displaystyle
+$$
+\displaystyle
 1 ~~ < ~~ \left.\frac{\partial\,\log r}{\partial\,\log\alpha}\right|^\star
-\cdot\frac{1+\alpha^\star/f^\star}{1-r^\star}
-+ \left.\frac{\partial\,\log f}{\partial\,\log\alpha}\right|^\star
+\cdot\frac{1+\alpha^\star/f^\star}{1-r^\star} +
+\left.\frac{\partial\,\log f}{\partial\,\log\alpha}\right|^\star
 $$
 
 This gives us a condition expressing how the macroeconomic effects of

@@ -153,15 +153,15 @@ and thus inflation.  Our model offers a perspective here as well.
 
 In our model the net effect of inflation on staking fraction at
 equilibrium is reflected by taking the derivative
-$$0<\frac{ds^\star}{d\alpha}\big|_{\alpha^\star}$$ assuming $$r,f$$ are
+$$0<\left.\frac{ds^\star}{d\alpha}\right|^\star$$ assuming $$r,f$$ are
 implicit functions of $$\alpha$$.  That is, the necessary condition
 for inflation to push the market equilibrium $$s^\star$$ itself into
 runaway staking is (see below for explanation):
 
 $$\displaystyle
-1 < \left.\frac{\partial\ln r}{\partial\ln\alpha}\right|^\star
+1 < \left.\frac{\partial\log r}{\partial\log\alpha}\right|^\star
 \cdot \frac{1 + \alpha^\star/f^\star}{1 - r^\star} +
-\left.\frac{\partial\ln f}{\partial\ln\alpha}\right|^\star
+\left.\frac{\partial\log f}{\partial\log\alpha}\right|^\star
 $$
 
 We hope that this work can be built upon to focus inflationary
@@ -275,7 +275,7 @@ greater range than $$(\ln{A},\alpha)$$.
 
 -- FIGURES --
 
-At present we judge the lack of empiircal data on $$r$$ would obviate
+At present we judge the lack of empirical data on $$r$$ would obviate
 the added precision of a more sophisticated treatment.  We will
 proceed assuming $$\dot{\alpha}\approx0$$ and treating $$\alpha$$ as a
 parameter.  Curious or skeptical readers are encouraged to study the
@@ -288,9 +288,9 @@ Returning from our commercial break, recall we have found a supportive
 role played by inflation in moderating staking fraction.  We now wish
 to study the fixed point $$s^*$$ given by solving
 $$0=\dot{s}=\frac{\dot{A}}{A}(r-s)+(rf+q_+)(1-s)-q_-s$$
-yielding $$
-s^\star = \frac{r^\star(\alpha^\star + f^\star) + q_+^\star}{
-\alpha^\star + r^\star f^\star - q_-^\star}$$
+yielding
+$$s^\star = \frac{r^\star (\alpha^\star + f^\star) + {q_+}^\star}{
+\alpha^\star + r^\star f^\star - {q_-}^\star}$$
 
 We find that if $\dot{A}=0=\alpha$ (no inflation nor deflation) then
 an interior market equilibrium $$s^\star<1$$ is impossible.  We reason
@@ -318,7 +318,8 @@ $$r$$, so $$q_+^\star\approx0$$.  Thus, the fixed point $$s^\star$$
 simplifies to
 
 $$\displaystyle
-s^\star = r\frac{\alpha + f}{\alpha + rf}
+s^\star ~~ = ~~ r^\star ~
+\frac{\alpha^\star + f^\star}{\alpha^\star + r^\star f^\star}
 $$
 
 A calculation is illustrative under the current regime of positive
@@ -361,9 +362,9 @@ stability condition is
 $$\displaystyle
 1 + \left.\frac{r^\star}{\alpha^\star/f^\star}
 ~~ > ~~
-\frac{\partial\,\log r}{\partial,\log s}\right|^\star +
-\left.(1 - \frac{r^\star}{s^\star})
-\frac{\partial\,\log(\alpha/f)}{\partial\,\log s}\right|^\star
+\frac{\partial\log r}{\partial\log s}\right|^\star +
+\left(1 - \frac{r^\star}{s^\star}\right)
+\left.\frac{\partial\log(\alpha/f)}{\partial\log s}\right|^\star
 $$
 
 Where presently, we estimate the dimensionless quantity

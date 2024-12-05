@@ -368,7 +368,7 @@ $$
 
 Where presently, we estimate the dimensionless quantity
 $$\alpha/f\approx5$$ while its derivative depends on the slope of the
-yield curve $$y$$ via $$\alpha/f=ys/f-b(1-s)=[I/(F+B)-b](1-s)$$.
+yield curve $$y$$ via $$\alpha/f=ys/f-b(1-s)=\left(I/(F+B)-b\right)(1-s)$$.
 
 *If* the derivatives are all small in comparison (and there is no a
 priori gaurantee of this), then we can say something useful.

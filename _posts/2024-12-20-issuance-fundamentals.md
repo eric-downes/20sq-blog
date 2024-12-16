@@ -3,9 +3,9 @@ layout: post
 title: Some danger in reducing Issuance to avoid Runaway Staking.
 author: Eric Downes
 categories: [ethereum, issuance]
-excerpt: This is a blog post on Runaway Staking in a series summarizing our research funded by EF GRANT INFO.
+excerpt: This is a blog post on Runaway Staking in a series summarizing our issuance research for the Ethereum Foundation.
 usemathjax: true
-thanks: I am grateful for useful discussions with Eric Siu, Andrew Sudbury, and the the 20 Squares team; especially Daniele Palombi and Philipp Zahn.
+thanks: I am grateful for useful discussions with Eric Siu, Andrew Sudbury, and the the 20 Squares team; especially Daniele Palombi and Philipp Zahn.  We are grateful to the EF for funding this research.
 ---
 
 ## The Problem
@@ -16,8 +16,8 @@ continues to grow.  This has provoked
 [concerns](https://issuance.wtf/), first raised by Ethereum
 researchers, and which we share, that the future of Ethereum might
 involve (1) all of its native asset being staked, such that (2) the de
-facto liquid Ether is controlled by a confederation of centralized
-un-transparent govrnance. In this blog post we address the first of
+facto liquid Ether is controlled by a confederation of centralized entities wiith 
+less transparent govrnance. In this blog post we address the first of
 these concerns.
 
 We use "stock and flow" differential equation models to study Ethereum
@@ -28,32 +28,55 @@ questions.  We will publish several blog posts on this topic:
 1. (This post) Will reducing issuance avoid Runaway Staking?
 2. Will reducing issuance avoid Governance Centralization?
 3. Other Levers besides Issuance, and a means of evaluating levers.
-4. Some tools to help the community study and resolve policy debates.
+4. Tools to study and resolve policy debates.
+
+Even if runaway staking does not directly concern you, this post is
+essential to understand our view of the interaction between inflation
+and staking, which is in tension with other research
+
 
 ## TLDR
 
-### For the extraordinarily impatient reader.
+### For the extraordinarily impatient reader, our conclusions.
 
-* The staking reinvestment ratio is central to understanding the
-  quantitative future of Ethereum macroeconomics.  We believe it can
-  be well-estimated with onchain data.
+* We identify a "low inflation; even lower fees" regime (LI;ELF) in
+  which there the amount of Ether staked is stable and (potentially)
+  less than 100%; $$s^\star<1$$.
 
-* Under weak inflation, runaway staking may occur.  If it does *not*,
+* Staking rewards do *not* simply enter circulation. So long as LSTs
+  exist some fraction of these are necessarily "reinvested" in
+  staking at a non-zero ratio $$r$$.
+  -- When LI;ELF persists, the fraction of Ether staked approaches the
+     reinvestment ratio from above $$s\to s^\star= r^\star +\epsilon$$.
+  -- Reinvestment can be estimated with onchain data, and its
+     sensitivity to inflation measured with
+     validator surveys.
+
+* Outside of LI;ELF, convergence to a reasonable staking future is not
+  possible.
+  -- Under high deflation, Ethereum faces a choice between zero staking
+     $$s^\star\to0$$ or runaway staking $$s^\star\to1$$.
+  -- Under no growth or low deflation, runaway staking *is inevitable*.
+
+* Within LI;ELF, runaway staking may still occur. If it does *not*,
   this is because
   -- (1) inflation is low enough, that concerns over inflation
-     do not dominate the reinvestment of profits by staking businesses,
-     but simultaneously
-  -- (2) inflation is high enough to numerically dominate priority fees
-     and MEV, as a fraction of circulating Ether.
+     do not dominate the reinvestment of profits by staking businesses
+     at equilibrium, $$d_\alpha{r}|^\star\leq0$$, but simultaneously
+  -- (2) inflation is high enough at equilibrium to numerically
+     dominate priority fees and MEV, as a fraction of circulating
+     Ether; $$\alpha^\star\gg f^\star$$.
 
-* Outside of the "low inflation, lower fees" regime, convergence to a
-  reasonable staking future is not possible.
-  -- Under strong deflation, Ethereum faces a choice between zero staking
-     or runaway staking
-  -- Under no growth or weak deflation, runaway staking is inevitable.
+* The medium term future of ethereum we see is one in which inflation
+  $$\alpha$$, while higher than that prefered by inflation hawks,
+  plays a *positive* role to mediate staking fraction and
+  centralization.  In long $$t\to\infty$$ term, $$\alpha\to0$$ forcing
+  $$s\to1$$.  We will revisit the consequences of this for Ethereum in
+  a future blog post.
 
-* Given the above, we emphasize that changing the yield curve could
-  backfire, *raising* long term staking fraction.
+* Given all the above, we advise caution.  Intervening to change the
+  yield curve seems dangerously capable of exaccerbating the very
+  problems we seek to avoid.
 
 ### For the moderately impatient reader.
 
@@ -74,45 +97,119 @@ That is, an increase in staking fraction can be driven by more people
 staking, and/or it can be driven by a reduction of the inflation rate.
 The latter can be acheived in principle by a reduction of issuance
 relative to the base fee "burn rate".  Because of this quotient rule
-tradeoff, low-but-positive inflation actually plays a positive
-infrastructural role in moderating staking fraction.  This can be seen
-in the market equilibrium staking fraction $$s^\star$$, shown here and
-derived below.
+tradeoff, low-but-positive inflation actually plays a positive almost
+"infrastructure" role in moderating staking fraction.
+
+This positive role for inflation can be seen in the contours of the
+market equilibrium staking fraction $$s^\star$$ corresponding to
+$$\dot{s}=0$$, shown in [figure
+1](../assetsPosts/2024-12-05-issuance-fundamentals/staking-fixpoint.png).
+The equation graphed is as follows:
 
 $$\displaystyle
 s^\star = r^\star\frac{\alpha^\star + f^\star}{\alpha^\star + r^\star f^\star}
 $$
 
-Here $$r^\star$$ etc. means the function $$r(s,\alpha,\ldots)$$ at the
-equilibrium coordinates $$(s^\star,\alpha^\star,\ldots)$$.  Speaking
-of which, the fraction $$0\leq r\leq 1$$ is the ratio of profits
-reinvested quarterly by validators, $$0\leq f\leq 1$$ is the fraction
-of unstaked ETH spent on transaction fees (base and priority)
-quarterly, and as above $$\alpha$$ is inflation.  The two extremes are
-$$\alpha^\star\ll f^\star$$ fees dominate and $$\alpha^\star\gg
-f^\star$$ inflation dominates.  In the former, staking fraction is
-driven closer to 1, while in the latter, staking is driven to match
-reinvestment $$s^\star\approx r^\star$$.
+The fraction $$0\leq r\leq 1$$ is the ratio of profits reinvested
+quarterly by validators, $$0\leq f\leq 1$$ is the fraction of unstaked
+ETH spent on transaction fees (base and priority) quarterly, and as
+above $$\alpha$$ is inflation.  Here $$r^\star$$ etc. means the
+function $$r(s,\alpha,\ldots)$$ at the equilibrium coordinates
+$$(s^\star,\alpha^\star,\ldots)$$.  To find the equilibrium values
+$$(\alpha^\star/f^\star,\,r^\star)$$ necessary to acheive a desired
+staking fraction $$x^\star$$, simply pick a colored contour in the
+figure: these are the values of constant $$x^\star$$.  For every point
+on this curve, the equilibrium inflation:fee ratio
+$$\alpha^\star/f^\star$$ is the x-coordinate, and the equilibrium
+reinvestment ratio $$r^\star$$ is the y-value.
 
-#### Good Scenario 
-
-Under current market conditions, low inflation and lower fees, the
-long-term equilibrium staking fraction approaches the average ratio
-$$r$$ at which validators reinvest their staking rewards.  When there
-are different types of validators, $$r$$ is the average of $$r_i$$ for
-each validator type $$i$$, weighted by the amount of Ether each
-stakes.  For LSPs $$r_{LST}$$ is bounded below by the ratio of token
-yield to total yield, and we can use this to roughly estimate some
-full $$r$$ values.
+The two extremes are $$\alpha^\star\ll f^\star$$ fees dominate and
+$$\alpha^\star\gg f^\star$$ inflation dominates.  In the former,
+staking fraction becomes insensitive to reinvestment, raising
+$$x^\star$$.  Equivalntly, for any value of positive inflation,
+$$r^\star$$ is a lower bound for the equilibrium staking fraction we
+should expect.
 
 Approximate present values from YCharts are very roughly
 $$f\approx.001$$/year, $$\alpha\approx.005$$/year, $$r\in(.5,.75)$$.
-So if current market conditions (low inflation, lower fees) were to
-persist at long times, we expect the staking ratio converges to no
-more than +10\% of the the reinvestment ratio.  Good news: if issuance
-is reduced such that inflation is reduced by half, while fees
-etc. maintain, equilibrium is still around $$r$$ + 15\%, so
-$$s^\star\in(.58,.8)$$.
+How these transient values $$(\alpha/f,\,r)$$ relate to their
+equilibrium values $$(\alpha^\star/f^\star,\,r^\star)$$ depends on
+some considerations.
+
+#### Long term staking ratio dominated by LSTs.
+
+We will return to reinvestment in a future post; here is a sketch.
+When there are different types of validators, $$r$$ is the average of
+$$r_i$$ for each validator type $$i$$, weighted by the amount of Ether
+each stakes.  For LSPs $$r_{LST}$$ is bounded below by the ratio of
+token yield to total yield, and we can use this to roughly estimate
+some full $$r$$ values.  Should conditions persist $$r_{now}\leq
+r_{stETH}\leq r^\star$$; at long times, the stakers who reinvest more
+of their revenue in their staking business will acheieve a larger
+share.  Essentially at long times, $$r^\star$$ should approach the
+highest sustainable reinvestment ratio that the market can bear, which
+likely corresponds to the highest sustainable LST yield.
+
+#### Long term inflation looks plausibly stable under this yield curve
+
+Quarterly Inflation is related to issuance by $$\alpha = ys-B/A$$,
+where $$B$$ is the amount of Ether burned in a quarter, and $$y$$ is
+the total issuance in the same quarter.  More work will be required to
+determine how we should expect qaurterly burn to evolve.  However so
+long as $$\dot{B}/A>-\alpha^2$$, inflation at long times decays slowly
+according to the current yield curve $$0\leq \alpha^\star\leq
+y(S)/2$$.
+
+So long as the quarterly burn
+does not respond to supply changes more intensely than the inflation
+rate $$|\dot{B}/A|\lessim\alpha^2$$ and 
+
+
+$$|dB/dA|\lessim\alpha
+$$\left|\frac{\dot{B}}{A}\right|\lessim \alpha^2$$, a slowly decaying
+$$\alpha^\star$$ obtains and $$\alpha^\star=.
+
+leads to an slowly decreasing
+inflation rate depending on $$\gamma:=y(1+\frac{d\log\ y}{d\log\ S}$$,
+which is $$y^\star/2$$ under the curent curve.
+
+$$\displaystyle
+0=-\alpha^\star+\gamma^\star\alpha^\star-\frac{\dot{B}}{A}
+$$
+
+
+
+
+If for instance $$dB/dA$$ is constant, 
+
+How does this quantity behave in
+the long term?  Suppose that the ratio $$B/A$$ were a constant, then
+
+after some calculus (see below), this leads to a stable
+value $$\alpha^\star$$
+
+
+Maintaining LI;ELF while changing Issuance
+
+Under current market conditions, low inflation and even lower fees
+(LI;ELF), the long-term equilibrium staking fraction approaches the
+average ratio $$r$$ at which validators reinvest their staking
+rewards.  This makes staking fraction responsive to economic
+interventions that affect the reinvestment decisions of participants.
+
+So if LI;ELF conditions persist at long times, we expect the staking
+ratio converges to no more than +10\% of the the equilibrium
+reinvestment ratio.  Good news: if issuance is reduced such that
+inflation is reduced by half, while fees etc. maintain, equilibrium is
+still around $$r$$ + 15\%, so $$s^\star\in(.58,.8)$$, at present values.
+
+If the yield curve is reduced from $$y_0=\frac{k}{\sqrt{S}}$$ to
+$$y'=\frac{y_0}{1+k'S}$$ as proposed in ----------, what is likely to
+happen?
+
+
+
+
 
 Wether this is acceptable, depends on $$r$$.  That is, under current
 market conditions, reinvestment ratio is the proxy by which inflation

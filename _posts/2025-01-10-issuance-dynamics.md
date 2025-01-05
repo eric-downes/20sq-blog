@@ -2,25 +2,45 @@
 
 This is the first of two posts on Ethereum macroeconomics.
 
-The share of Ether staked by exchanges such as Coinbase and Liquid
-Staking Providers (LSTs) such as Lido ("centralized" staking services)
-[is considerable](https://dune.com/queries/2394100/3928083) and continues
+Ethereum has grown into a [major economic
+force](https://www.grayscale.com/research/reports/the-battle-for-value-in-smart-contract-platforms);
+between its native asset Ether (ETH), the smart contract ecosystem
+this supports, and the Layer-2 blockchains, a conservative valuation
+might be half a trillion dollars.  At the core of Ethereum's "brand",
+distinguishing it from other smart contract platforms, is the promise
+of decentralized governance: via its [consensus layer]() no centtral
+authority can censor a transaction, freeze the native asset of a user,
+etc.  This depends in turn on a sufficient diversity of validators
+staking ETH to participate in consensus.
+
+The share of Ether staked by "centralized" staking services, such as
+exchanges and Liquid Staking Providers (LSTs) [is
+considerable](https://dune.com/queries/2394100/3928083), and continues
 to grow.  This has provoked [concerns](https://issuance.wtf/), among
-Ethereum researchers, and which we share, that the future of Ethereum
-might involve (1) all of its native asset being staked, such that (2)
-the de facto currency will be controlled by a confederation of
-centralized entities wiith less transparent govrnance.
+Ethereum researchers that the future of Ethereum might involve (1)
+nearly all Ether staked, such that (2) the de facto currencies used by
+most users are controlled by a confederation of centralized services
+with much less transparent govrnance, and no practical alternative.
 
 ## Lookahead
 
-In this blog post we address runaway staking $s\to1$, the first of
-these concerns using a "stock and flow" macroecnomics model built with
-guidance from dynamical system theory.  We find inflation plays a
-positive but temporary role in moderating runaway staking.  In the
-second post, we look more closely at governance centralization and
-discuss a means for evaluating macroeconomic interventions inspred by
-bifurcation theory.  Briefly, we are not optimstic that reducing
-issuance will prevent governance centralization.
+First, a warning!  In an act of hubris, but not without
+reasons[^reasons], we have chosen $S$ to refer to Staked ETH, while
+others have at times used $S$ for "circulating (S)upply", which we
+call instead accessible ETH supply $A$, so $s=S/A$.  [Here]() is a
+python script for converting between our variables and those most
+commonly used on [issuance.wtf](https://issuance.wtf).
+
+In this blog post we address the first of these concerns "runaway
+staking" using a "stock and flow" macroecnomics model built with
+guidance from dynamical system theory.  In contrast with other
+research we find inflation playing a positive but temporary role in
+moderating runaway staking, but most likely $$s\to1$ eventually,
+regardless of what we do.  In the second post, we look more closely at
+governance centralization and discuss a means for evaluating
+macroeconomic interventions inspred by bifurcation theory.  Briefly,
+we are not optimstic that reducing issuance will prevent governance
+centralization, either.
 
 In both posts, we provide a few code examples using `ethode` a thin
 units-aware wrapper we built around `scipy.odeint` to streamline model
@@ -29,13 +49,6 @@ technical mathematical points not covered here, run their own
 simulations, or learn some dynamical systems are recommended to look
 at our ethode [guide](), and references therein.  It is certainly a
 work in progress, but should have enough to get you going.
-
-Finally, a warning!  In an act of hubris, but not without
-reasons[^reasons], we have chosen $S$ to refer to Staked ETH, while
-others have at times used $S$ for "circulating (S)upply", which we
-call instead accessible ETH supply $A$, so $s=S/A$.  [Here]() is a
-python script for converting between our variables and those most
-commonly used on [issuance.wtf](https://issuance.wtf).
 
 ## For The Impatient!
 
@@ -60,7 +73,7 @@ fraction of unstaked Ether; $$\alpha^\star\gg f^\star$$.
 The bad news for opponents of runaway staking is that long
 $$t\to\infty$$ term, $$\alpha^\star$$ approaches zero, suggesting
 $$s^\star\to1$$ anyway. Ethereum would undergo cycles of
-inflation/deflation or obtain the "L2 future" that is sometimes
+inflation/deflation or obtain an "L2 future" that is sometimes
 described where most Ether is staked, with the majority used for
 settlement of L2 rollups.
 
@@ -70,7 +83,8 @@ very problems we seek to avoid.
 
 ## Modeling an Open Zeppelin[^humor]
 
-![Ethereum as a balloon with compartments.](../assetsPosts/2024-12-30-issuance-dynamics/eth-balloon.jpg)
+![Ethereum as a balloon with compartments.](
+    ../assetsPosts/2024-12-30-issuance-dynamics/eth-balloon.jpg)
 
 ### Stocks
 
@@ -92,7 +106,7 @@ equilibrated $\dot{V}\approx0$ etc.  This gives rise to $Q_\pm,R$ below.
 
 Stocks grow or shrink based on flows which add to or subtract from
 their derivatives.  Here all flows are positive real numbers with
-units ETH/yr.  Flows have a domain (where its coming from) and a
+units \[ETH/yr\].  Flows have a domain (where its coming from) and a
 codomain (where is going to).[^cats]  They also obey (in)equalities, usually as
 a fraction of the source, but sometimes as a fraction of other
 flows.[^flowfrac]
@@ -105,17 +119,16 @@ the [asymptotic behavior]() in the limit of interest $S\to A$; see below.
 
 ### Flows and Equations
 
-These intensives are not generally constant, we are supressing their
-dependence for readability. Instead the intensives are assumed to be a
+We are not assuming these intensive parameters are constant, rather we
+are supressing their dependence for readability. Except in cases (like
+$y$) where the dependence is known, the intensives are assumed to be a
 function of the dynamical variables and time, so the burn:
-$b(A,S,t)=B/F$.  We can often use the dependence on $t$ to smuggle in
-any forces, like market panics, etc. that we neglected to include as
-dynamical variables.  If not, we must add a dynamical variable.
+$b(A,S,t)=B/F$.[^time]
 
 | Name  | Symbol | Source$\to$Target(s) | Constraint | Intensive | Range \[Units\] |
 | :--   | :--    | :-:                  | :--        | :--       | :--             |
 | Tx Fees  | $F$ | $U\to\cancel{O},SS$ | $B+P=F$  | $f:=F/U$ | $f\in(\varepsilon_b,1)$ [1/yr] |
-| Base Fees[^aves] | $B$ | $U\to\cancel{O}$ | ..  | $b:=B/F$ | $b\in[\varepsilon_b,1) \[1\] |
+| Base Fees[^aves] | $B$ | $U\to\cancel{O}$ | .. | $b:=B/F$ | $b\in[\varepsilon_b,1) \[1\] |
 | Priority Fees   | $P$ | $U\to S$     | ..       | $1-b=P/F | $1-b\in(0,1)$ \[1\] |
 | Issuance[^aves] | $I$ | $\cdot\to V$ | $yS\leq I$ | $\imath:=I/S= y-\kappa$ | $y\in(0,1)$\[1/yr\] |
 | Slashing | $J$ | $S\to\cancel{O}$    | $J\leq S$ | $j:=J/S$ | $j\in(0,1)$ \[1/yr\] |
@@ -139,7 +152,7 @@ $$
 Into one that is defined in its own dynamical and intensve variables,
 a *dynamical system*.
 
-$$\dislaystyle
+$$\displaystyle
 \begn{array}{rcrlcrl}
 \dot{S} &=& (ry-\jmath-q_-) & S & + & \left(q_++r(1-b)f\right) & U\\
 \dot{U} &=& \left((1-r)y+q_-\right) & S & - & \left(rf+(1-r)bf+q_+\right) & U\\
@@ -553,6 +566,11 @@ wants to stake is indeed staking.
 trajectories are bounded surrounding a fixed point with at least one
 eigenvalue with positive real part.  We won't rule it out, but look
 first for stable fixed points.
+
+[^time]: We can often use the dependence on $t$ to smuggle in
+any forces, like market panics, etc. that we neglected to include as
+dynamical variables.  If not, we must add a dynamical variable.
+
 
 
 # Open Questions

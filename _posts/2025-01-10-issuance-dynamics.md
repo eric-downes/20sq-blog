@@ -1,26 +1,28 @@
 # Ethereum Macroeconomics
 
-This is the first of two posts on Ethereum macroeconomics.
-
 The share of Ether staked by exchanges such as Coinbase and Liquid
 Staking Providers (LSTs) such as Lido ("centralized" staking services)
-[is considerable](https://dune.com/queries/2394100/3928083) and continues
-to grow.  This has provoked [concerns](https://issuance.wtf/), among
-Ethereum researchers, and which we share, that the future of Ethereum
-might involve (1) all of its native asset being staked, such that (2)
-the de facto currency will be controlled by a confederation of
-centralized entities wiith less transparent govrnance.
+[is considerable](https://dune.com/queries/2394100/3928083) and
+continues to grow.  This has provoked
+[concerns](https://issuance.wtf/) among Ethereum researchers that the
+future of Ethereum might involve (1) all of its native asset being
+staked, such that (2) the de facto currency will be controlled by a
+confederation of centralized entities wiith less transparent
+governance.  This is the first of two posts on Ethereum
+macroeconomics, in which we view these issues through the lens of
+dynamical systems theory.
 
 ## Lookahead
 
-In this blog post we address runaway staking $s\to1$, the first of
-these concerns using a "stock and flow" macroecnomics model built with
-guidance from dynamical system theory.  We find inflation plays a
-positive but temporary role in moderating runaway staking.  In the
-second post, we look more closely at governance centralization and
-discuss a means for evaluating macroeconomic interventions inspred by
-bifurcation theory.  Briefly, we are not optimstic that reducing
-issuance will prevent governance centralization.
+In this blog post we address runaway staking, the first of these
+concerns, using a "stock and flow" macroecnomics model.  In contrast
+to conventional wisdom We find inflation plays a positive but alas
+temporary role in moderating runaway staking.  In the second post, we
+look more closely at governance centralization and discuss a means for
+evaluating macroeconomic interventions inspred by bifurcation theory.
+Briefly, while we do not dispute that governance centralization is a
+problem, we are not optimstic that reducing issuance will prevent
+governance centralization.
 
 In both posts, we provide a few code examples using `ethode` a thin
 units-aware wrapper we built around `scipy.odeint` to streamline model
@@ -41,25 +43,25 @@ commonly used on [issuance.wtf](https://issuance.wtf).
 
 We use our macroeconmics model to identify a "low inflation; even
 lower fees" regime (LI;ELF).  Outside of LI;ELF convergence to a
-desirable staking future without runaway staking is not possible; high
+desirable future with moderate staking fraction is not possible; high
 deflation pushes staking toward 0 or 100\%, while under zero or low
 deflation, the tendency toward runaway staking can only be moderated
 by very high churn.
 
 In contrast within LI;ELF staked ETH fraction approaches near the
-reinvestment ratio.  Thus, runaway staking can be avoided only while
-inflation is held
+reinvestment ratio of staking rewards.  Thus, runaway staking can be
+avoided only while inflation is held
 
 1. low enough, that concerns over inflation do not dominate the
 reinvestment of profits by staking businesses at equilibrium,
-$$\frac{dr}{d\alpha}|^\star\leq0$$ (no news here) but simultaneously
+$$\frac{dr}{d\alpha}|^\star\leq0$$ (so, no news here) but simultaneously
 
-1. high enough to numerically dominate priority fees and MEV, as a
+1. high enough to numerically dominate priority fees and MEV as a
 fraction of unstaked Ether; $$\alpha^\star\gg f^\star$$.
 
 The bad news for opponents of runaway staking is that long
 $$t\to\infty$$ term, $$\alpha^\star$$ approaches zero, suggesting
-$$s^\star\to1$$ anyway. Ethereum would undergo cycles of
+$$s^\star\to1$$ anyway. Ethereum could undergo cycles of
 inflation/deflation or obtain the "L2 future" that is sometimes
 described where most Ether is staked, with the majority used for
 settlement of L2 rollups.
@@ -68,9 +70,10 @@ Given all the above, we advise caution.  Intervening to reduce the
 issuance yield curve seems quite capable of exaccerbating the
 very problems we seek to avoid.
 
-## Modeling an Open Zeppelin[^humor]
+## An Open Zeppelin[^humor]
 
-![Ethereum as a balloon with compartments.](../assetsPosts/2024-12-30-issuance-dynamics/eth-balloon.jpg)
+![Ethereum as a balloon with compartments.](
+    ../assetsPosts/2025-01-15-issuance-dynamics/eth-balloon.jpg)
 
 ### Stocks
 
@@ -99,34 +102,30 @@ flows.[^flowfrac]
 
 We convert these inequalities; for each uppercase *extensive* flow
 $J,F,R\ldots$ we define a lowercase *intensive variable* $j,f,r$: the
-fractions \[1\] and fractional rates \[1/yr\].  In forming these,
-the ideal is to apply the tightest available bounds that still capture
-the [asymptotic behavior]() in the limit of interest $S\to A$; see below.
+fractions \[1\] and fractional rates \[1/yr\].  In forming these, the
+ideal is to apply the tightest available bounds capturing the
+[asymptotic behavior]() in the limit of interest: $S\to A$.
 
 ### Flows and Equations
 
 These intensives are not generally constant, we are supressing their
 dependence for readability. Instead the intensives are assumed to be a
-function of the dynamical variables and time, so the burn:
-$b(A,S,t)=B/F$.  We can often use the dependence on $t$ to smuggle in
-any forces, like market panics, etc. that we neglected to include as
-dynamical variables.  If not, we must add a dynamical variable.
+function of the dynamical variables and time[^time]; example the burn:
+$b(A,S,t)=B/F$.
 
 | Name  | Symbol | Source$\to$Target(s) | Constraint | Intensive | Range \[Units\] |
 | :--   | :--    | :-:                  | :--        | :--       | :--             |
-| Tx Fees  | $F$ | $U\to\cancel{O},SS$ | $B+P=F$  | $f:=F/U$ | $f\in(\varepsilon_b,1)$ [1/yr] |
-| Base Fees[^aves] | $B$ | $U\to\cancel{O}$ | ..  | $b:=B/F$ | $b\in[\varepsilon_b,1) \[1\] |
-| Priority Fees   | $P$ | $U\to S$     | ..       | $1-b=P/F | $1-b\in(0,1)$ \[1\] |
-| Issuance[^aves] | $I$ | $\cdot\to V$ | $yS\leq I$ | $\imath:=I/S= y-\kappa$ | $y\in(0,1)$\[1/yr\] |
-| Slashing | $J$ | $S\to\cancel{O}$    | $J\leq S$ | $j:=J/S$ | $j\in(0,1)$ \[1/yr\] |
-| Reinvestment[^whencer] | $R$ | $V\to S$ | $R+K\approx I+P$ | $r:=R/(I+P)$ \[1\] | $r\in(0,1)$ \[1\] |
-| Costs & Profit  | $K$ | $V\to U$     | ..        | $1-r=K/(I+P)$ | $1-r\in(0,1)$ \[1\] |
-| New Staking | $Q_+$ | $U\to S$       | $Q_+\leq U-V$ | $q_+:=Q_+/U | $q_+\in(0,1)$ \[1/yr\] |
-| Unstaking | $Q_-$ | $S\to U$       | $Q_-\leq S$ | $q_-:=Q_-/S | $q_-\in(0,1)$ \[1/yr\] |
+| Tx Fees  | $F$ | $U\to\cancel{O},SS$ | $B+P=F$  | $f:=F/U$ | $f\in(0,1)$ [1/yr] |
+| Base Fees[^aves] | $B$ | $U\to\cancel{O}$ | ..  | $b:=B/F$ | $b\in(0,1) \[1\] |
+| Priority Fees   | $P$ | $U\to S$  | ..       | $1-b=P/F | $1-b\in(0,1)$ \[1\] |
+| Issuance[^aves] | $I$ | $\to V$ | $yS\leq I$ | $I/S\approx y$ | $y\in(0,1)$ \[1/yr\] |
+| Slashing | $J$ | $S\to\cancel{O}$ | $J\leq S$ | $j:=J/S$ | $j\in(0,1)$ \[1/yr\] |
+| Reinvestment[^whyr] | $R$ | $V\to S$ | $R+K=I+P$ | $r:=R/(I+P)$ \[1\] | $r\in(0,1)$ \[1\] |
+| Costs & Profit  | $K$ | $V\to U$  | ..        | $1-r=K/(I+P)$ | $1-r\in(0,1)$ \[1\] |
+| New Staking | $Q_+$ | $U\to S$  | $Q_+\leq U-V$ | $q_+:=Q_+/U | $q_+\in(0,1)$ \[1/yr\] |
+| Unstaking | $Q_-$ | $S\to U$    | $Q_-\leq S$ | $q_-:=Q_-/S | $q_-\in(0,1)$ \[1/yr\] |
 
-The result of all these decisions, about which you can read more in
-our [modeling guide](), is to create and transform this conceptual
-model
+The data in the left half of the above table is interlinked as follows.
 
 $$\dislaystyle
 \begn{array}{rcl}
@@ -134,10 +133,50 @@ $$\dislaystyle
 \dot{S} &=& R + \Delta{Q}_\pm - J\\
 \dot{V} &=& I + P - R - K
 \dot{U} - \dot{V} &=& K - F - \Delta{Q}_\pm
+\end{array}
 $$
 
-Into one that is defined in its own dynamical and intensve variables,
-a *dynamical system*.
+The result of all the observations and choices in the right half of
+the table, about which you can read more in our [modeling guide](), is
+to create and transform this conceptual model into a model whose
+parameters are defined, a least implicitly, in terms of its own
+dynamical variables: a *dynamical system*.
+
+First, let us emphasize what distinguishes our model from the work of
+ohers.
+
+### Reinvestment; Only F@%$ Up the limits when it doesn't matter!
+
+When forming intensve variables it is very important that the
+modeler's choices reflect the correct asymptotic behavior in the
+limits of relevance, in his case $U\to 0$.
+
+If for instance, instead of assuming $R\leq I+P$, we had assumed $R$
+is bounded by unstaked ETH $U$ (which is necessary but not
+sufficient), and so defined $r_{bad}=R/U$ we get a *very* different
+model, but this is wrong in a way that matters.  It is wrong because
+validator rewards $I+P$ can go to zero *independently* of the size of
+$U$.  It matters because reinvestment
+$S\overset{+}{\rightsquigarrow}S$ is quite evidently related to the
+positive-feedback loop between staking and issuance that people are so
+worried about.  Other examples exist.[^elowex]
+
+Concerns over staking-issuance feedback are in fact exactly why we
+have split staking into new investment $Q_+$ and reinvestment $R$.
+The quantity $r=R/(I+P)$ is one of the distinguishing feature of our model, and
+important for staking fraction under "low inflation; even lower fee"
+conditions, see below.
+
+1. Modelling $r$ is necessary to model LSTs,[^rlst] and
+2. we want to separate the transient external forcing $Q_+$ from the
+long-term feedback $R$,[^rdyn] and.
+3. $r$ should be measurable with onchain data.
+
+## The $(S,U)$ Model
+
+The right half of the table, along with the assumption that
+reinvestment occurs within a quarter $\dot{V}\approx0$, allows us to
+obtain a two-dimensional dynamical system.
 
 $$\dislaystyle
 \begn{array}{rcrlcrl}
@@ -146,12 +185,12 @@ $$\dislaystyle
 \end{array}
 $$
 
-#### Simulating the $(S,U)$ Model
+### Simulations
 
 You can explore some behaviors of this model using a simulation; see
-[guide]().  Here is an unrealistically simplified example where all
-coefficients are held constant that still extracts some broad
-features.
+[guide]().  Here is an oversimplified example where all coefficients
+are held constant, but which still extracts some broad features.  Such
+models are useful for gaining intuition quickly.
 
 ```python
 from ethode import *
@@ -173,10 +212,10 @@ Toy(-1, 1, 1, 1).sim()
 Specifically, so long as $ry>\jmath+q_-$ staked ETH $S$ just continues
 growing and growing, while $U$ cannot get too big, before its own loss
 term $-\left(rf+(1-r)bf+q_+\right)\cdot U$ dominates.  At some point
-$S$ becomes big enough that $ry<\jmath+q_-$ and the system is capable
-of oscillation, depending on a zoo of partial derivatves.  Here is a
-less trivial code example where all intensves other than issuance yield are
-held constant.
+however, $S$ becomes big enough that $ry<\jmath+q_-$ and the system is
+capable of oscillation, depending on a zoo of partial derivatves.
+Here is a less trivial code example where all intensves other than
+issuance yield are held constant.
 
 ```python
 from math import sqrt
@@ -193,36 +232,37 @@ class SUconst(ODESim):
     def y(self, S:ETH, *args) -> ETH/Yr:
         return self.y1 * sqrt(self.S1 / S)
     @staticmethod
-    def func(v:UnitTuple(ETH,2), t:Yr, p:Params) -> UnitTuple(EPY, 2):
-        x = {'S': (S = v[0]),
-	     'U': (U = v[1])}
+    def func(v:UnitTuple(ETH,2), t:Yr, p:Params) -> UnitTuple(ETH/Yr, 2):
+        x = {'S': (S = v[0]),  'U': (U = v[1])}
 	y = p.y(**x)
 	beta = p.b * p.f
 	rf = p.r * p.f
-	dS = (p.r * y - p.j - p.qu) * S   +   (rf * (1 - p.b) + p.qs) * U
-	dU = ((1 - p.r) * y + p.qu) * S   -   (rf + (1 - p.r) * beta + p.qs) * U
+	dS = (p.r * y - p.j - p.qu) * S  +  (rf * (1 - p.b) + p.qs) * U
+	dU = ((1 - p.r) * y + p.qu) * S  -  (rf + (1 - p.r) * beta + p.qs) * U
 	return dS, dU
-su = SUConst.sim(y1 = 166.3 / Yr, f = .002 / Yr, \
-                 b = .8, r = .5, \
-		 qu = 1e-4 / Yr, qs = 1e-2 / Yr, j = 1e-6 / Yr)
+su = SUConst.sim(y1 = 166.3/Yr, f = .002/Yr, b = .8, r = .5, \
+		 qu = 1e-4/Yr, qs = 1e-2/Yr, j = 1e-6/Yr)
 su.verify()
 su.sim()
 ```
 
-If you have an opinion about how, for instance $r$ should depend on
+If you have an opinion about how, for instance reinvestment ratio $r$ should depend on
 $(S,U)$, you can define, instead of `r: NoDim` your own function
-within the class declaration.
+within the class declaration, and alter `func` accordingly.
 
 ```python
+    ...
     def rnvst(self, S:ETH, U:ETH, *args) -> NoDim:
-        return S * U / (S + U) ** 2 / 2
+        return S * U / (S + U) ** 2
+    ...
 ```
 
-Of course the variables we really care about are inflaion and staking
-fraction.  You can designate these as outputs of the model withn
-the class declaration.
+Of course the variables we really care about are inflation
+$\alpha=\dot{A}/A$ and staking fraction $s=S/A$.  You can designate
+these as outputs of the model withn the class declaration.
 
 ```python
+    ...
     @output
     def alpha(self, S:ETH, U:ETH, *args) -> 1/Yr:
         return p.y(S) * S - p.b * p.f * U - p.j * S
@@ -230,59 +270,66 @@ the class declaration.
     def sfrac(self, S:ETH, U:ETH, *args) -> 1/Yr:
         return S / (S + U)
     ...
-su.sim(graph_outputs = ('alpha', 'sfrac'))
+su.sim(graph_x = 'alpha', graph_y = 'sfrac'))
 ```
 
-Below we transform from staked/unstaked variables $(S,U)$ into
+Especially as the number of parameters grows, models can be difficult
+to understand.  Simulation is aided by a geometrical approach, which
+we now discuss.
+
+### Fixed Points and Market Equilibria
+
+#### One Dimension
+
+Consider for this section a protocol change whereby staking fraction
+$s$ is held constant at a chosen value.  Setting aside *how* this is
+done, how does all Ether supply grow or shrink under the existing
+yield curve?
+
+Let's look for maximum or minimum inflation
+
+- graph of maximum alpha
+
+How can we tell this is a maximum?  Maybe its an equilibrium?
+
+- sketch of stability
+
+- graph of the time it takes to reach maximum alpha
+
+#### Two Deimensions
+
+Now, keeping the equation for A let us hold $\alpha$ constant
+
+
+#### In General
+
+## Inflation and Staking Fraction
+
+Now we transform from staked/unstaked variables $(S,U)$ into
 modeling directly accessible supply, inflation, and staking $(A,\alpha,s)$.
 But first we need to emphasize what, in our view, makes our model
 different from others.
 
-#### Reinvestment; Only F@%$ Up the limits when it doesn't matter!
-
-When forming intensve variables it is *critical* that the modeler's
-choices reflect the correct asymptotic behavior in the limits of
-concern, in his case $U\to 0$.
-
-If for instance, instead of assuming $R\leq I+P$, we had assumed $R$
-is bounded by unstaked ETH $U$ (which is necessary but not
-sufficient), and so defined $r_{bad}=R/U$ we get a *very* different
-model, but this is wrong in a way that matters.  It is wrong because
-validator rewards $I+P$ can go to zero *independently* of the size of
-$U$.  It matters because reinvestment
-$S\overset{+}{\rightsquigarrow}S$ is quite evidently related to the
-positive-feedback loop between staking and issuance that people are so
-worried about.  Other examples abound.[^elowex]
-
-Concerns over staking-issuance feedback are in fact exactly why we
-have split staking into new investment $Q_+$ and reinvestment $R$.
-The quantity $r=R/(I+P)$ is one of the distinguishing feature of our model, and
-important for staking fraction under "low inflation; even lower fee"
-conditions, see below.
-
-1. Modelling $r$ is necessary to model LSTs,[^rlst] and
-2. we want to separate the transient external forcing $Q_+$ from the
-long-term feedback $R$,[^rdyn] and.
-3. $r$ should be measurable with onchain data.
-
-## Infation and Staking Fraction
-
 Inflation is used to refer to many things, but here we mean
 specifically the quarterly fractional change in accessible
-Ether. Let's express inflation $\alpha:=\frac{d\log~A}{dt}$ in
+Ether. Let's express inflation $\alpha:=\frac{d\log~A}{dt}=\dot{A}/A$ in
 terms of $s$ and the intensives
 
 $$\displaystyle
-\alpha = (I-B-J)/A \approx y(sA)s - bf(1-s) - js
+\alpha = \dot{A}/A = (I-B-J)/A \approx y(sA)s - bf(1-s) - js
 $$
+
+Where we have approximated qyarterly averaged issuance per quarterly
+averaged staked ETH using te yield curve; $I/S\approx y(S)$.[^aves]
 
 ### Positive Inflation cannot maintain
 
-A key feature of $\dot{A} concerns discouragement [Buterin](), which
+A key feature of $\alpha$ concerns discouragement [Buterin](), which
 requires sublinear issuance $I\lesssim S$ to avoid instability to
-certain attacks.  Because of this, the positive term continues to get
-smaller as Accessible ETH supply grows; consistent with the
-$(S,U)$-model above, eventually average inflation tends to zero.
+certain attacks.  Because of this, the positive term in $\alpha$
+continues to get smaller as Accessible ETH supply grows; consistent
+with the $(S,U)$-model above, eventually average inflation tends to
+zero.
 
 In contrast, while slashing can go to zero, so long as blocks are
 produced, these is some minimal burn. $A$ could get quite large; for
@@ -320,7 +367,7 @@ $$\displaystyle
 \begin{array}{rcl}
 \dot{A} &=& \alpha A\\
 \dot{\alpha} &=& \zeta\dot{s}-\gamma\alpha s + X\\
-\dot{s} &=& \alpha\cdot(r-s)~+~(rf+q_+)\cdot(1-s)~-~\eft(q_-+(1-r)j\right)\cdot s\\
+\dot{s} &=& \alpha(r-s)~+~(rf+q_+)(1-s)~-~\eft(q_-+(1-r)j\right)s\\
 \end{array}
 $$
 
@@ -336,8 +383,10 @@ For a sanity-check, a quick look at
 YCharts since The Merge shows that $$s,\dot{s}$$ vary over a much
 greater range than $$(\ln{A},\alpha)$$.
 
-![The staking fraction from YCharts](../assetsPosts/2024-12-05-issuance-fundamentals/YCharts-x.jpg)
-![The inflation rate from YCharts](../assetsPosts/2024-12-05-issuance-fundamentals/YCharts-alpha.jpg)
+![The staking fraction from YCharts](
+    ../assetsPosts/2025-01-15-issuance-fundamentals/YCharts-x.jpg)
+![The inflation rate from YCharts](
+    ../assetsPosts/2025-01-15-issuance-fundamentals/YCharts-alpha.jpg)
 
 At present we judge the lack of empirical data on $$r$$ would obviate
 the added precision of a more sophisticated treatment.  We will
@@ -386,8 +435,8 @@ rate.
 
 This positive role for inflation can be seen in the contours of the
 market equilibrium staking fraction $$s^\star$$ corresponding to
-$$\dot{s}=0$$, shown in [figure
-1](../assetsPosts/2024-12-05-issuance-fundamentals/staking-fixpoint.png).
+$$\dot{s}=0$$, shown in [this graph of the fixed point](
+    ../assetsPosts/2025-01-15-issuance-fundamentals/staking-fixpoint.png).
 The equation graphed is as follows:
 
 $$\displaystyle
@@ -415,9 +464,9 @@ $$r^\star$$ is a lower bound for the equilibrium staking fraction we
 should expect.
 
 Approximate present values from YCharts are very roughly
-$$f\approx.001$$/year, $$\alpha\approx.005$$/year, $$r\in(.5,.75)$$.
-How these transient values $$(\alpha/f,\,r)$$ relate to their
-equilibrium values $$(\alpha^\star/f^\star,\,r^\star)$$ depends on
+$f\approx.001$/year, $\alpha\approx.005$/year, $$r\in(.5,.75)$$.
+How these transient values $(\alpha/f,\,r)$ relate to their
+equilibrium values $(\alpha^\star/f^\star,\,r^\star)$ depends on
 some considerations.
 
 
@@ -472,12 +521,21 @@ $\kappa=\int_{t-\tau}^t(y^\bullet-y)(S^\bullet-S)dt'<0$.  See the
 within the markdown source to (our esimatimate of) terminology more
 common at [issuance.wtf](https://issuance.wtf)
 
+```python
+re.sub(r'(\$.*?)f(.*?\$)', r'\1\\phi\2', text)
+```
+
+[^time]: We can often use the dependence of a variable on $t$ to smuggle in
+any forces, like market prices, etc. that we neglected to include as
+dynamical variables.  If not, we must add a dynamical variable.
+
 [^partial]: Sometimes $\dot{x}$ is used e.g. for the partial
 derivative $\frac{\partial x}{\partial t}$, *but not here*.  For a model
 in which you assume dynamical variables $(x,y,z)$, these derivatives
 are thus related
 
-$$\displaystyle \frac{dx}{dt} := \dot{x} =
+$$\displaystyle
+\frac{dx}{dt} := \dot{x} =
 \frac{\partial x}{\partial t} +
 \frac{\partial x}{\partial y}\dot{y} +
 \frac{\partial x}{\partial z}\dot{z}
@@ -522,7 +580,7 @@ More importantly $S$ is a *dynamical variable*, so $b=B(A-S)$ is more
 appropriate here.  The function $B$ might do all kinds of complicated
 nonsense, but it can never go negative and it can never exceed $U$.
 
-[^whencer]: Intensives expressed as fractions of flows such as $R/(I+P)$), instead
+[^whyr]: Intensives expressed as fractions of flows such as $R/(I+P)$), instead
 of fractional rates of sources (like $J/S$ or $Q_-/S$) occur when the
 source dynamical variable, here $V$, is assumed to equilibrate
 $\dot{V}\approx0$.  Then the outging flows $R+K$ must equal the

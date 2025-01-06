@@ -8,7 +8,7 @@ between its native asset Ether (ETH), the smart contract ecosystem
 this supports, and the Layer-2 blockchains, a conservative valuation
 might be half a trillion dollars.  At the core of Ethereum's "brand",
 distinguishing it from other smart contract platforms, is the promise
-of decentralized governance: via its [consensus layer]() no centtral
+of decentralized governance: via its [consensus mechanism]() no centtral
 authority can censor a transaction, freeze the native asset of a user,
 etc.  This depends in turn on a sufficient diversity of validators
 staking ETH to participate in consensus.
@@ -20,7 +20,7 @@ to grow.  This has provoked [concerns](https://issuance.wtf/), among
 Ethereum researchers that the future of Ethereum might involve (1)
 nearly all Ether staked, such that (2) the de facto currencies used by
 most users are controlled by a confederation of centralized services
-with much less transparent govrnance, and no practical alternative.
+with much less transparent governance, and no practical alternative.
 
 ## Lookahead
 
@@ -36,10 +36,10 @@ staking" using a "stock and flow" macroecnomics model built with
 guidance from dynamical system theory.  In contrast with other
 research we find inflation playing a positive but temporary role in
 moderating runaway staking, but most likely $$s\to1$ eventually,
-regardless of what we do.  In the second post, we look more closely at
-governance centralization and discuss a means for evaluating
-macroeconomic interventions inspred by bifurcation theory.  Briefly,
-we are not optimstic that reducing issuance will prevent governance
+regardless.  In the second post, we look more closely at governance
+centralization and discuss a means for evaluating macroeconomic
+interventions inspred by bifurcation theory.  Briefly, we are not
+optimstic that reducing issuance will prevent governance
 centralization, either.
 
 In both posts, we provide a few code examples using `ethode` a thin
@@ -47,8 +47,8 @@ units-aware wrapper we built around `scipy.odeint` to streamline model
 evaluation.  Readers desiring to follow our derivations, dive into
 technical mathematical points not covered here, run their own
 simulations, or learn some dynamical systems are recommended to look
-at our ethode [guide](), and references therein.  It is certainly a
-work in progress, but should have enough to get you going.
+at our ethode [guide](), and references therein.  It is certainly
+incomplete, but should have enough to get you going.
 
 ## For The Impatient!
 
@@ -78,52 +78,115 @@ described where most Ether is staked, with the majority used for
 settlement of L2 rollups.
 
 Given all the above, we advise caution.  Intervening to reduce the
-issuance yield curve seems quite capable of exaccerbating the
-very problems we seek to avoid.
+issuance yield curve seems quite capable of exaccerbating the very
+problems we seek to avoid, or causing even worse problems; if you
+think 100\% staking is bad, have you considered 0\%?
 
 ## Modeling an Open Zeppelin[^humor]
 
 ![Ethereum as a balloon with compartments.](
     ../assetsPosts/2024-12-30-issuance-dynamics/eth-balloon.jpg)
 
-### Stocks
-
-Consider a balloon with variable internal compartments.  The averaged
+Consider a balloon with variable internal compartments.  The average
 size of each is measured by *stocks*
 
 - ($S$)taked Ether (participating in [consensus]()) is a compartment, as is
 - ($U$)nstaked unburnt Ether,
-  - containing the ($V$)alidator reward queue, while
-- ($\cancel{O}$) is all irrecoverable (burned, lost, etc.) Ether, and call
+  - containing the ($V$)alidator reward queue.
+- ($\cancel{O}$) is all irrecoverable (burned, lost, etc.) Ether, and
 - ($A$)ccessible Ether, $A=S+U\approx120.4\times10^6$ in Dec 2024.
+- $\mathcal{Q}_\pm$ the Ether in the staking ($+$) and unstaking $-$) queues
 
 The net change in time of a stock is written using a dot, such as
 $\frac{dA}{dt}:=\dot{A}$[^partial], the net change in accessible
-Ether.  The staking $\mathcal{Q}_+$, unstaking $\nathcal{Q}_-$, and
-reward $V$ queues could also have been treated as stocks.  By
-quarterly averaging[^aves] we *approximate* these queues as
-equilibrated $\dot{V}\approx0$ etc.  This gives rise to $Q_\pm,R$ below.
+Ether.  Stocks grow or shrink based on flows which add to or subtract
+from their derivatives.  Here all flows are positive real numbers with
+units \[ETH/yr\].  By averaging over "long" timescales (at least
+quarterly)[^aves] we approximate the staking and unstaking queues as
+equilibrated; $\mathcal{Q}_+\approx0\approx\mathcal{Q}_-$
 
-Stocks grow or shrink based on flows which add to or subtract from
-their derivatives.  Here all flows are positive real numbers with
-units \[ETH/yr\].  Flows have a domain (where its coming from) and a
-codomain (where is going to).[^cats]  They also obey (in)equalities, usually as
-a fraction of the source, but sometimes as a fraction of other
-flows.[^flowfrac]
+So, our conceptual model:
 
-We convert these inequalities; for each uppercase *extensive* flow
-$J,F,R\ldots$ we define a lowercase *intensive variable* $j,f,r$: the
-fractions \[1\] and fractional rates \[1/yr\].  In forming these,
-the ideal is to apply the tightest available bounds that still capture
-the [asymptotic behavior]() in the limit of interest $S\to A$; see below.
+$$\dislaystyle
+\begn{array}{rcl}
+\dot{A} &=& I - B - J\\
+\dot{V} &=& I + P - R - K
+\dot{U} - \dot{V} &=& K + Q_- - Q_+ - F\\
+\dot{S} &=& R + Q_+ - Q_- - J\\
+$$
 
-### Flows and Equations
+| Flow Name        | Symbol | Domain$\to$Codomain[^cats] | Constraint |
+| :--              | :--    | :-:                        | :--        |
+| Tx Fees          | $F$    | $U\to\cancel{O},SS$        | $B+P=F$  |
+| Base Fees[^aves] | $B$    | $U\to\cancel{O}$           | .. |
+| Priority Fees    | $P$    | $U\to S$                   | ..       |
+| Issuance[^aves]  | $I$    | $\cdot\to V$               | $yS\leq I$ |
+| Slashing         | $J$    | $S\to\cancel{O}$           | $J+Q_-\leq S$ |
+| Unstaking        | $Q_-$  | $S\to U$                   | .. |
+| New Staking      | $Q_+$  | $U-V\to S$                 | $Q_++R\leq U$ |
+| Reinvestment[^whyr] | $R$ | $V\to S$                   | $R+K+\dot{V}=I+P$ |
+| Costs & Profits  | $K$    | $V\to U$                   | ..        |
 
-We are not assuming these intensive parameters are constant, rather we
-are supressing their dependence for readability. Except in cases (like
-$y$) where the dependence is known, the intensives are assumed to be a
-function of the dynamical variables and time, so the burn:
-$b(A,S,t)=B/F$.[^time]
+Flows $(B,J,Q_-,\ldots)$ have a "domain" $(U,S,S,\ldots)$, where its
+coming from, and a "codomain" $(\cancel{O},\cancel{O},U,\ldots)$, where
+its going to.[^cats] Flows obey constraints, often expressed as
+(in)equalities relating a flow to its source.  A few deserve further
+comment: $I$ and $(R,Q_+,K)$.
+
+### Bounding Issuance $I$
+
+All of these stocks and flows, $(I,S,\ldots)$, are moving
+time-averages over *spot values* $(I^\bullet,S^\bullet,\ldots)$
+defined at a given block; $S:=\tau^{-1}\int_{t-\tau}^t
+S^\bullet(t')dt'$, etc.  In the case of issuance, we
+can express spot issuance as a known function of the yield curve
+$I^\bullet = y^\bullet S^\bullet$.  We'll assume that
+
+1. Issuance is sublinear $\boxed{I\approx yS\ll S}$,[^asym]
+sufficient for [discouragement](), and that
+2. the large-stake scaling exponent is not substantially altered by time averaging
+$\frac{\partial{d\log~y}}{\partial{d\log~S}}\approx
+\frac{\partial{d\log~y^\bullet}}{\partial{d\log~S^\bullet}}$.
+
+The first is almost certainly an overestimate,[^ycov]
+which we deem the correct direction to err in light of our results
+concerning (the lack of) runaway inflation.
+
+### Bounding Reinvestment $R$
+
+Staking reward reinvestment is a feedback loop
+$S\overset{+}{\rightsquigarrow}S$ quite evidently related to the
+potential positive-feedback loop between staking and inflation that
+people are so concerned about.  To express this concept succinctly in
+one flow variable, we require that the averaging timescale $\tau$ be
+adjusted upward until most validators claim and reinvest the bulk of
+their staking rewards within.  That is $\dot{V}=0$, so $R+K=1+P$ so
+$R\leq I+P$.  The quantity $r=R/(I+P)$ is one of the distinguishing
+feature of our model, and also why we have split the staking queue
+flow $R+Q_+$.  These are our motivations:
+
+1. Modelling $r$ is necessary to model LSTs.[^rlst]
+2. We want to separate the *transient* externally-driven dynamics $Q_+$ from the
+long-term endogenous feedback $R$,[^rdyn] and
+3. $r$ should be measurable with onchain data.
+
+If the $\tau$ required to acheive $r=R/(I+P)<1$ in practice becomes
+too large, one might revisit the approximations used to model
+issuance, or use data to better model $\dot{V}$.  In neither case do we expect
+this to make a huge qualitative difference, but please, prove us wrong!
+
+## Intensive Flows yield Dynamical Systems
+
+Flows obey inequalities, usually as a fraction of the source, but
+sometimes as a fraction of other flows.[^flowfrac]  We convert these
+inequalities; for each uppercase *extensive* flow $(J,F,B,\ldots)$ we
+define a lowercase *intensive variable* $(j,f,b,\ldots)$: the fractions \[1\]
+and fractional rates \[1/yr\].  In forming these, the ideal is to
+apply the tightest available bounds that still capture the [asymptotic
+behavior]() in the limit of interest $S\to A$.  We do not assume the
+intensive parameters are constant, but suppress their dependence for
+readability. Unless otherwise stated, the intensives are functions of
+the dynamical variables and time, so the burn: $b(A,S,t)=B/F$.[^time]
 
 | Name  | Symbol | Source$\to$Target(s) | Constraint | Intensive | Range \[Units\] |
 | :--   | :--    | :-:                  | :--        | :--       | :--             |
@@ -132,25 +195,38 @@ $b(A,S,t)=B/F$.[^time]
 | Priority Fees   | $P$ | $U\to S$     | ..       | $1-b=P/F | $1-b\in(0,1)$ \[1\] |
 | Issuance[^aves] | $I$ | $\cdot\to V$ | $yS\leq I$ | $\imath:=I/S= y-\kappa$ | $y\in(0,1)$\[1/yr\] |
 | Slashing | $J$ | $S\to\cancel{O}$    | $J\leq S$ | $j:=J/S$ | $j\in(0,1)$ \[1/yr\] |
-| Reinvestment[^whencer] | $R$ | $V\to S$ | $R+K\approx I+P$ | $r:=R/(I+P)$ \[1\] | $r\in(0,1)$ \[1\] |
+| Reinvestment[^whyr] | $R$ | $V\to S$ | $R+K\approx I+P$ | $r:=R/(I+P)$ \[1\] | $r\in(0,1)$ \[1\] |
 | Costs & Profit  | $K$ | $V\to U$     | ..        | $1-r=K/(I+P)$ | $1-r\in(0,1)$ \[1\] |
 | New Staking | $Q_+$ | $U\to S$       | $Q_+\leq U-V$ | $q_+:=Q_+/U | $q_+\in(0,1)$ \[1/yr\] |
 | Unstaking | $Q_-$ | $S\to U$       | $Q_-\leq S$ | $q_-:=Q_-/S | $q_-\in(0,1)$ \[1/yr\] |
 
-The result of all these decisions, about which you can read more in
-our [modeling guide](), is to create and transform this conceptual
-model
+The use of intensive variable parameters and the apoproximation
+$\dot{V}\approx0$ allows us to reshape our conceptual model into one
+that is defined in its own dynamical and intensve variables, a
+*dynamical system*.  We'll build these up in several stages of complexity in what follows
 
-$$\dislaystyle
-\begn{array}{rcl}
-\dot{A} &=& I - B - J\\
-\dot{S} &=& R + \Delta{Q}_\pm - J\\
-\dot{V} &=& I + P - R - K
-\dot{U} - \dot{V} &=& K - F - \Delta{Q}_\pm
-$$
+### One-Dimensional
 
-Into one that is defined in its own dynamical and intensve variables,
-a *dynamical system*.
+#### Staking Fraction
+
+use the eq without alpha -- same behavior
+
+### Two Dimensional
+
+#### Supply growth, Crudely
+
+use Adot holding s const.
+
+#### As system
+
+### General
+
+#### Aas system
+
+### Reflexivity and Inflation-Response
+
+the conceptual source of potential oscillations can be considered by
+modelling the SU system:
 
 $$\displaystyle
 \begn{array}{rcrlcrl}
@@ -158,6 +234,34 @@ $$\displaystyle
 \dot{U} &=& \left((1-r)y+q_-\right) & S & - & \left(rf+(1-r)bf+q_+\right) & U\\
 \end{array}
 $$
+
+
+- we have not emphasized the oscillation because we expect market
+participants can profit from it without having to coordinate their
+behavior; oscillations in supply will die down if they are big enough
+to arbitrage: buy toward the end of an inflationary phase, sell toward
+the end of a deflationary phase.
+
+- contrast this to runaway staking... there's no obvious mechanism to
+  profit from an increase in staking fraction, other than by joining
+  in.  So this is a challenge: can you, the reader, design a
+  cryptoeconomic mechanism by which runaway staking is moderated, in a
+  way that allows individuals to profit?  Can you prove that is impossible?
+
+- we have not explicitly modelled this kind of reflexivity; it is swept into
+  the partial derivatives.  
+
+Could these same partial derivatives be large enough to magnify
+inflation-concerns into runaway staking even at intermediate
+timescales?  This is absolutely possible, and would require the following:
+
+
+
+
+
+
+
+
 
 #### Simulating the $(S,U)$ Model
 
@@ -251,32 +355,29 @@ modeling directly accessible supply, inflation, and staking $(A,\alpha,s)$.
 But first we need to emphasize what, in our view, makes our model
 different from others.
 
-#### Reinvestment; Only F@%$ Up the limits when it doesn't matter!
 
-When forming intensve variables it is *critical* that the modeler's
-choices reflect the correct asymptotic behavior in the limits of
-concern, in his case $U\to 0$.
 
-If for instance, instead of assuming $R\leq I+P$, we had assumed $R$
-is bounded by unstaked ETH $U$ (which is necessary but not
-sufficient), and so defined $r_{bad}=R/U$ we get a *very* different
-model, but this is wrong in a way that matters.  It is wrong because
-validator rewards $I+P$ can go to zero *independently* of the size of
-$U$.  It matters because reinvestment
-$S\overset{+}{\rightsquigarrow}S$ is quite evidently related to the
-positive-feedback loop between staking and issuance that people are so
-worried about.  Other examples abound.[^elowex]
+; Only F@%$ Up the limits when it doesn't matter!
 
-Concerns over staking-issuance feedback are in fact exactly why we
-have split staking into new investment $Q_+$ and reinvestment $R$.
-The quantity $r=R/(I+P)$ is one of the distinguishing feature of our model, and
-important for staking fraction under "low inflation; even lower fee"
-conditions, see below.
+When forming intensve variables it is critical that our choices as
+model-builders reflect the correct asymptotic behavior in the limits
+of concern, in his case $U\to 0$.  If for instance, instead of
+assuming $R\leq I+P$, we had assumed reinvestment $R$ is bounded by
+unstaked ETH $R\leq U$ we would get a qualitatively different model.
+But this is wrong in a way that matters!  It is wrong because
+validator rewards $I+P$ can vary or in principal go to zero
+independently $U$.  It matters because the reinvestment of rewards
+represents a sustainable feedback loop.
 
-1. Modelling $r$ is necessary to model LSTs,[^rlst] and
-2. we want to separate the transient external forcing $Q_+$ from the
-long-term feedback $R$,[^rdyn] and.
-3. $r$ should be measurable with onchain data.
+both an
+exceedingly large supply and dangerously low staking could shrink
+$I+P$ to the same value, yet $U$ looks very different in those cases.
+
+
+
+Other examples abound.[^elowex]
+
+
 
 ## Infation and Staking Fraction
 
@@ -436,9 +537,126 @@ some considerations.
 
 
 
+
 # Conclusions
 
-Why does this happen, though?  The reinvestment of issuance rewards
+Why does this happen, though?
+
+* Short $Q_+$ vs. Long Term $R$ Investment
+* The Quotient Rule $\dot{S}=\dot{S}/A-s\dot{A}/A$
+
+Short Term vs. Long Term.  Novel investment in staking $Q_+$ is driven
+largely by speculation, and new users encountering Ethereum.  $Q_+$
+acts to increase staking fraction, as seen above, and indeed the glut
+in $Q_+$ since the Merge may have been the source for all of the alarm
+that prompted this study. Novel speculative investment must eventually dry up,
+and be replaced by long-term investmemnt $R$, because (1) everyone
+with money who wants to stake eventually will, so will be counted in
+$R$ not $Q_+$, and any business that wants to stay in business cannot
+consistently reinvest more than its revenue $R\leq I+P$.  Of the long
+term signal $R$, only the issuance portion of reinvestment, that is
+the part that contributes to inflation, can moderate $s$, which brings
+us to...
+
+The Quotient Rule $\dot{s}=\frac{\dot{S}}{A}-s\frac{\dot{A}}{A}.  What
+increases $s$ is any increase in staked Ether $S$, but also any net
+decrease in $A=S+U$. Inflation $\alpha$ increases
+*both* $U$ and $S$, because some of that increase is used to meet
+costs and take profit $(1-r)\alpha$, which increases $U$ relative to
+$S$.  In contrast, the reinvestment of transaction fees can only ever
+increase $S$ at the expense of $U$.  Thus transaction fees always act
+to increase staked fraction, while the effect of inflation depends on
+the relative values of reinvestment ratio and staking fraction.
+
+So, while we could certainly model reinvestment differently, and there
+are lags we are blithely integrating over, we think that these market
+forces will still act as described above in a different model.  It is
+possible that even during sustained inflation, these effects will be
+unable to prevent the upward creep in $s$, because $r$ is too large,
+or the sensitivity of $r$ to inflation at equilibrium is too great, a
+condition which we mathematized above.  In fact we expect that every
+argument about inflation effects driving increased staking, overpaying
+for security, etc. could (perhaps should) be rephrased in terms of
+reinvestment of staking rewards.
+
+Regarding the possible effects of reflexivity.  We have not emphasized
+the potential for oscillations very much, even thoughh a dynamical
+systems person who looks at the $(S,U)$-model is likely to find this
+its most striking potential.  The reason is reflexivity.
+Specifically, if the oscillations in inflation are sufficient to not
+be drowned out by the externalities and sources of noise, then market
+participants will try to profit off of them.  The simplest strategy,
+to buy toward the end of an inflationary phase, and sell toward the
+end of a deflationary phase, should over time reduce any oscillations
+that do arise.  Notably though, we only expect this to happen because
+it does not require the coordination of market participants: each
+individual blindnly pursuing their own utility should help en masse
+control these oscillations, or they were never very great to begin
+with.
+
+Could there be a similar effect with staking fraction or inflation?
+In short we have no idea, but put it as a challenge to the reader.
+Can you devise a cryptoeconomic protocol or trading strategy that
+forestalls the seemingly inevitable $s^\star\to1$?  If not, can you
+prove this is impossible?  Regardless, planning for a low-inflation
+high staked-fraction future is highly reommended.
+
+So, finally... should the Ethereum community reduce issuance?
+
+* Glib answer:
+
+Nope.
+
+* Short answer:
+
+If you don't like the medium term future of inflation or you want to
+slow down the transition to high staking, please consider and study
+downward adjusting the constants in EIP 7153, adopted during the Deneb
+upgrade.  EIP 7153 already directly limits $R+Q_+$, but was very
+nicely designed to not interfere with existing staking flows.  EIP
+7153 does not solve, and does not claim to solve, the long term
+problems, but we have been forced to conclude that reducing issuance
+doesn't solve them either!
+
+* Long answer:
+
+Ask the users, especially the validators, especially the LSTs.  Model
+user preferences so that the demand curve becomes semi-empirical
+instead of theorized.  Near-100\% staking seems to be baked-in long
+term pretty much no matter what we do, and high inflation cannot
+sustain under an issuance yield curve designed to avoid
+discouragement.  So the question becomes essentially "How bad will it
+get in the meantime?"  This is actually a question about user
+preferences.  Austrian School devotees may be so inflation-averse that
+they are already staking all their previously-liquid ETH at
+$\alpha\approx0.5$\%/yr.  In contrast users who were content to grow up
+with fiat currencies during periods of $\approx$3\% inflation or even
+worse might not care, or would just stake in Compound or buy stETH.
+
+For users seeking to passively preserve wealth, staking in Compound
+(or Aave, or whatever) is ideal in terms of raw Ether demand, of
+course.  Staking in LSTs, though concerning from a governance angle,
+may present less of an issue than some have feared.  LSTs must share
+some yield with users to be in business, but if they want to profit
+themselves must maintain $r<1$.
+
+So how high can $r_{LST}$ go before LSTs find the loss of gross
+profits unacceptable?  Great question.  We will see next time that as
+many have recognized, the entity/group that can maintain the highest
+$r$ wins the race eventually.  It's worth noting however that if you
+apply price uncertainty via a risk-discounting rate of, well anything
+really, you will see that the "maximize $r$" strategy is far from the
+most profitable, risk-adjusted.  Of course, a speculative investor
+seeking to profit from our analysis would find our study woefully
+short of details.  So, since you have insisted on reading the "long
+answer", we will end with the classic and cowardly refrain of
+academics and academic-adjacents everywhere "it requires more
+research!"
+
+
+
+
+The reinvestment of issuance rewards
 adds to both staked ETH $$S$$ and circulating ETH $$C$$, so the effect
 on staking fraction depends on the relative size of these two.
 However, the reinvestment of priority fees plus MEV is simply a net
@@ -535,7 +753,7 @@ More importantly $S$ is a *dynamical variable*, so $b=B(A-S)$ is more
 appropriate here.  The function $B$ might do all kinds of complicated
 nonsense, but it can never go negative and it can never exceed $U$.
 
-[^whencer]: Intensives expressed as fractions of flows such as $R/(I+P)$), instead
+[^whyr]: Intensives expressed as fractions of flows such as $R/(I+P)$), instead
 of fractional rates of sources (like $J/S$ or $Q_-/S$) occur when the
 source dynamical variable, here $V$, is assumed to equilibrate
 $\dot{V}\approx0$.  Then the outging flows $R+K$ must equal the
@@ -570,6 +788,27 @@ first for stable fixed points.
 [^time]: We can often use the dependence on $t$ to smuggle in
 any forces, like market panics, etc. that we neglected to include as
 dynamical variables.  If not, we must add a dynamical variable.
+
+[^asym]: Specifically $I\ll S$ means that \lim_{S\to\infty}(I/S)=0,
+which according to Buterin's [annotated spec]() is satisfied even
+without the limit; see [guide]().
+
+[^ycov]: The relation between quarterly averaged issuance and
+the yield curve $y^\bullet$ is:
+$$\displaystyle
+I:=\int_{t-\tau}^t y^\bullet(S^\bullet)S^\bullet(t')dt'\approx yS-|COV(y^\bullet,S^\bullet)|
+$$
+where we approximate $y,S$ as constant on the interval $(t-\tau,t)$
+and the covariance is negative
+$0>COV(y^\bullet,S^\bullet)=\tau^{-2}\int_{t-\tau}^t(y^\bullet -
+y)(S^\bullet-S)dt'$.  The use of covariance here may seem a bit silly;
+$y^\bullet(S^\bullet)$ is a deterministic relationship!
+We do this because the community is discussing changing the yield curve, and we want to discuss
+generic features of Ethereum.
+So we have used approximations that we felt err in a conservative direction without explicit
+depenedence on the present-day yield curve $y^\bullet_0(S^\bullet)=y_0(1)\sqrt{S_1/S}$ where
+$y_0(1)\approx166.3$/yr and $S_1=1$ETH.
+
 
 
 

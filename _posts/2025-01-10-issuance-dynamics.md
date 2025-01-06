@@ -7,11 +7,12 @@ force](https://www.grayscale.com/research/reports/the-battle-for-value-in-smart-
 between its native asset Ether (ETH), the smart contract ecosystem
 this supports, and the Layer-2 blockchains, a conservative valuation
 might be half a trillion dollars.  At the core of Ethereum's "brand",
-distinguishing it from other smart contract platforms, is the promise
-of decentralized governance: via its [consensus mechanism]() no centtral
-authority can censor a transaction, freeze the native asset of a user,
-etc.  This depends in turn on a sufficient diversity of validators
-staking ETH to participate in consensus.
+distinguishing it from other smart contract platforms, is the
+consistent effort put into decentralized governance.  Via its
+[consensus mechanism]() no centtral authority can censor a
+transaction, freeze the native asset of a user, etc.  This depends in
+turn on a sufficient diversity of validators staking ETH to
+participate in consensus.
 
 The share of Ether staked by "centralized" staking services, such as
 exchanges and Liquid Staking Providers (LSTs) [is
@@ -35,8 +36,8 @@ In this blog post we address the first of these concerns "runaway
 staking" using a "stock and flow" macroecnomics model built with
 guidance from dynamical system theory.  In contrast with other
 research we find inflation playing a positive but temporary role in
-moderating runaway staking, but most likely $$s\to1$ eventually,
-regardless.  In the second post, we look more closely at governance
+moderating runaway staking, though most likely $$s\to1$ eventually.
+In the second post, we look more closely at governance
 centralization and discuss a means for evaluating macroeconomic
 interventions inspred by bifurcation theory.  Briefly, we are not
 optimstic that reducing issuance will prevent governance
@@ -54,10 +55,11 @@ incomplete, but should have enough to get you going.
 
 We use our macroeconmics model to identify a "low inflation; even
 lower fees" regime (LI;ELF).  Outside of LI;ELF convergence to a
-desirable staking future without runaway staking is not possible; high
-deflation pushes staking toward 0 or 100\%, while under zero or low
-deflation, the tendency toward runaway staking can only be moderated
-by very high churn.
+desirable staking future without runaway staking is not possible.
+Strong deflation likely corresponds to unstable dynamics, where it is
+difficult to predict wether staking fraction approaches 0 or 100\%.
+Under zero or low deflation, the tendency toward runaway staking can
+only be moderated by very high churn and/or slashing.
 
 In contrast within LI;ELF staked ETH fraction approaches near the
 reinvestment ratio.  Thus, runaway staking can be avoided only while
@@ -71,30 +73,30 @@ $$\frac{dr}{d\alpha}|^\star\leq0$$ (no news here) but simultaneously
 fraction of unstaked Ether; $$\alpha^\star\gg f^\star$$.
 
 The bad news for opponents of runaway staking is that long
-$$t\to\infty$$ term, $$\alpha^\star$$ approaches zero, suggesting
-$$s^\star\to1$$ anyway. Ethereum would undergo cycles of
-inflation/deflation or obtain an "L2 future" that is sometimes
-described where most Ether is staked, with the majority used for
-settlement of L2 rollups.
+$$t\to\infty$$ term, $$\alpha^\star$$ approaches zero, so
+$$s^\star\to1$$. Ethereum would undergo cycles of inflation/deflation
+which we expect to die down, until an "L2 future" is reached.  This is
+the scenario, recognized by many others where most Ether is staked,
+with the majority used for settlement of L2 rollups.
 
 Given all the above, we advise caution.  Intervening to reduce the
 issuance yield curve seems quite capable of exaccerbating the very
 problems we seek to avoid, or causing even worse problems; if you
-think 100\% staking is bad, have you considered 0\%?
+think Near-100\% staking is bad, have you tried Near-0\%?
 
 ## Modeling an Open Zeppelin[^humor]
 
 ![Ethereum as a balloon with compartments.](
     ../assetsPosts/2024-12-30-issuance-dynamics/eth-balloon.jpg)
 
-Consider a balloon with variable internal compartments.  The average
+Consider a "balloon" with variable internal compartments.  The average
 size of each is measured by *stocks*
 
 - ($S$)taked Ether (participating in [consensus]()) is a compartment, as is
 - ($U$)nstaked unburnt Ether,
-  - containing the ($V$)alidator reward queue.
+  -- containing the ($V$)alidator reward queue.
 - ($\cancel{O}$) is all irrecoverable (burned, lost, etc.) Ether, and
-- ($A$)ccessible Ether, $A=S+U\approx120.4\times10^6$ in Dec 2024.
+- ($A$)ccessible Ether supply, $A=S+U\approx120.4\times10^6$ in Dec 2024.
 - $\mathcal{Q}_\pm$ the Ether in the staking ($+$) and unstaking $-$) queues
 
 The net change in time of a stock is written using a dot, such as
@@ -103,9 +105,8 @@ Ether.  Stocks grow or shrink based on flows which add to or subtract
 from their derivatives.  Here all flows are positive real numbers with
 units \[ETH/yr\].  By averaging over "long" timescales (at least
 quarterly)[^aves] we approximate the staking and unstaking queues as
-equilibrated; $\mathcal{Q}_+\approx0\approx\mathcal{Q}_-$
-
-So, our conceptual model:
+equilibrated; $\mathcal{Q}_+\approx0\approx\mathcal{Q}_-$.  So, our
+conceptual model:
 
 $$\dislaystyle
 \begn{array}{rcl}
@@ -127,11 +128,12 @@ $$
 | Reinvestment[^whyr] | $R$ | $V\to S$                   | $R+K+\dot{V}=I+P$ |
 | Costs & Profits  | $K$    | $V\to U$                   | ..        |
 
-Flows $(B,J,Q_-,\ldots)$ have a "domain" $(U,S,S,\ldots)$, where its
-coming from, and a "codomain" $(\cancel{O},\cancel{O},U,\ldots)$, where
-its going to.[^cats] Flows obey constraints, often expressed as
-(in)equalities relating a flow to its source.  A few deserve further
-comment: $I$ and $(R,Q_+,K)$.
+Flows $(B,J,Q_-,\ldots)$ have a "domain" $(U,S,S,\ldots)$, where the
+flow is coming from, and a "codomain"
+$(\cancel{O},\cancel{O},U,\ldots)$, where the flow is going to.[^cats]
+Flows obey constraints, often expressed as (in)equalities relating a
+flow to its source.  A few deserve further comment: $I$ and
+$(R,Q_+,K)$.
 
 ### Bounding Issuance $I$
 
@@ -161,9 +163,10 @@ people are so concerned about.  To express this concept succinctly in
 one flow variable, we require that the averaging timescale $\tau$ be
 adjusted upward until most validators claim and reinvest the bulk of
 their staking rewards within.  That is $\dot{V}=0$, so $R+K=1+P$ so
-$R\leq I+P$.  The quantity $r=R/(I+P)$ is one of the distinguishing
-feature of our model, and also why we have split the staking queue
-flow $R+Q_+$.  These are our motivations:
+$R\leq I+P$.  The quantity $r=R/(I+P)$, the ratio of staking rewards
+reinvestment over issuance and priority fees is one of the
+distinguishing features of our model, and also why we have split the
+staking queue flow $R+Q_+$.  These are our motivations:
 
 1. Modelling $r$ is necessary to model LSTs.[^rlst]
 2. We want to separate the *transient* externally-driven dynamics $Q_+$ from the
@@ -175,18 +178,20 @@ too large, one might revisit the approximations used to model
 issuance, or use data to better model $\dot{V}$.  In neither case do we expect
 this to make a huge qualitative difference, but please, prove us wrong!
 
-## Intensive Flows yield Dynamical Systems
+## Intensive Flows give Dynamical Systems
 
-Flows obey inequalities, usually as a fraction of the source, but
-sometimes as a fraction of other flows.[^flowfrac]  We convert these
-inequalities; for each uppercase *extensive* flow $(J,F,B,\ldots)$ we
-define a lowercase *intensive variable* $(j,f,b,\ldots)$: the fractions \[1\]
-and fractional rates \[1/yr\].  In forming these, the ideal is to
-apply the tightest available bounds that still capture the [asymptotic
-behavior]() in the limit of interest $S\to A$.  We do not assume the
-intensive parameters are constant, but suppress their dependence for
-readability. Unless otherwise stated, the intensives are functions of
-the dynamical variables and time, so the burn: $b(A,S,t)=B/F$.[^time]
+Flows obey inequalities, usually as a fraction of the
+source.[^flowfrac] We convert these inequalities; for each uppercase
+*extensive* flow $(J,F,B,\ldots)$ we define a lowercase *intensive
+variable* $(j,f,b,\ldots)$: the fractions \[1\] and fractional rates
+\[1/yr\].  In forming these, the ideal is to apply the tightest
+available bounds that still capture the [asymptotic behavior]() in the
+limit of interest $S\to A$.  We do not assume the intensive parameters
+are constant, but suppress their dependence for readability. Unless
+otherwise stated, the intensives are functions of the dynamical
+variables and time, so the burn: $b(A,S,t)=B/F$.[^time]
+
+### Table of Flows
 
 | Name  | Symbol | Source$\to$Target(s) | Constraint | Intensive | Range \[Units\] |
 | :--   | :--    | :-:                  | :--        | :--       | :--             |
@@ -200,26 +205,77 @@ the dynamical variables and time, so the burn: $b(A,S,t)=B/F$.[^time]
 | New Staking | $Q_+$ | $U\to S$       | $Q_+\leq U-V$ | $q_+:=Q_+/U | $q_+\in(0,1)$ \[1/yr\] |
 | Unstaking | $Q_-$ | $S\to U$       | $Q_-\leq S$ | $q_-:=Q_-/S | $q_-\in(0,1)$ \[1/yr\] |
 
-The use of intensive variable parameters and the apoproximation
+The use of intensive variable parameters and the approximation
 $\dot{V}\approx0$ allows us to reshape our conceptual model into one
 that is defined in its own dynamical and intensve variables, a
-*dynamical system*.  We'll build these up in several stages of complexity in what follows
+*dynamical system*.  We'll build this up one step at a time.
 
-### One-Dimensional
+### Supply growth, Crudely in One Dimension
 
-#### Staking Fraction
+Consider $\dot{A}=I-B-J$ in light of the [above
+table](#table-of-flows), $\dot{A} = y(S)S - bf(A-S) - jS$.  To
+understand the dynamics of circulating supply, we need to understand
+that of staked ETH.  As a crude approximation, lets temporaruly hold
+staking fraction $s=S/A$ constant.
 
-use the eq without alpha -- same behavior
+$$\displaystyle
+\dot{A}=\left(y(sA)-bf(1-s)-js\right)A=y_0(1)\sqrt{sA}-[bf(1-s)+js]A
+$$
 
-### Two Dimensional
+ETHODE
 
-#### Supply growth, Crudely
+Pretending $s=s^\star$ constant, we obtain the *fixed point* $A^\star$
+at which $\dot{A}=0$.  The trivial fixed point $A=0$ is unstable, and
+the non-trivial fixed point is
 
-use Adot holding s const.
+$$\displaystyle
+A^\star = \left(
+\frac{y(1)}{b^\star f^\star(1-s^\star)+j^\star s^\star}
+\right)^2 s^\star
+$$
 
-#### As system
+Where $f^\star=f(A^\star,s^\star,\ldots)$ represents tx fee fractional
+rate $f$ evaluated at the fixed point.  A fixed point represents a
+market equilibrium when it is stable. A fixed point is locally stable
+just when small changes (*perturbations*) shrink.  This is governed by
+linearizing about the fixed point, and evaluating the sign of
+$$\left.\frac{\partial\dot{A}}{\partial A}\right|^\star$, visualized below
 
-### General
+![1D Stability Conditions](../assetsPosts/1d-stab.png)
+
+This reduces after some calculus and algebra to a sufficient condition
+on the loss term:
+
+$$\displaystyle
+\left.\frac{\partial\log~B}{\partial\log~A}\right|^\star,~
+\left.\frac{\partial\log~J}{\partial\log~A}\right|^\star~~>~~\frac{1}{2}.
+$$
+
+If either is satisfied, the fixed point is stable, and $A^\star$
+represents the equilibrium supply value.  Note that constant $bf,j$
+correspond to scaling exponent $1$, so satisfy.  Essentially some
+component of the loss term must increase faster than $\sqrt{A}$ around
+the fixed point.
+
+If we think of the burn as a representation of economic activity on
+Ethereum, this raises a disturbing possibility, in which supply $A$
+keeps growing but economic activity does not scale at least as fast as
+$\sqrt{A}$.  That is inflation, not just in the sense of supply
+expansion, but the demand not growing at pace with the supply.  This
+is similar to the concern raised by [Elowsson 2020]().
+
+However, we have held $s$ consant; this is not *really* a one
+dimensional flow.  To really understand the dynamics we need to model
+both $A,s$ as dynamical variables.
+
+### Two Dimensional $(A,s)$ System
+
+After an algebraic massage, we can obtain for staking fraction
+
+$$\displaystyle
+\dot{s} = 
+
+### General $(A,\alpha,s)$ System
 
 #### Aas system
 

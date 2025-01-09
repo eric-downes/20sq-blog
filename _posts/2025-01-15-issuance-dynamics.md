@@ -9,7 +9,7 @@ this supports, and the Layer-2 blockchains, a conservative valuation
 might be half a trillion dollars.  At the core of Ethereum's "brand",
 distinguishing it from other smart contract platforms, is the
 consistent effort put into decentralized governance.  Via its
-[consensus mechanism]() no centtral authority can censor a
+[consensus mechanism]() no central authority can censor a
 transaction, freeze the native asset of a user, etc.  This depends in
 turn on a sufficient diversity of validators staking ETH to
 participate in consensus.
@@ -33,17 +33,16 @@ python script for converting between our variables and those most
 commonly used on [issuance.wtf](https://issuance.wtf).
 
 In this blog post we address the first of these concerns "runaway
-staking" using a "stock and flow" macroecnomics model built with
-guidance from dynamical system theory.  In contrast with other
-research we find inflation playing a positive but temporary role in
-moderating runaway staking, though most likely $$s\to1$ eventually.
-In the second post, we look more closely at governance
-centralization and discuss a means for evaluating macroeconomic
-interventions inspred by bifurcation theory.  Briefly, we are not
-optimstic that reducing issuance will prevent governance
-centralization, either.
+(near 100\%) staking" using a "stock and flow" macroecnomics model
+built with guidance from dynamical system theory.  In contrast with
+other research we find inflation playing a positive but temporary role
+in moderating runaway staking, though most likely $$s\to1$ eventually.
+In the second post, we look more closely at governance centralization
+and discuss a means for evaluating macroeconomic interventions inspred
+by bifurcation theory.  Briefly, we are not optimstic that reducing
+issuance will prevent governance centralization, either.
 
-In both posts, we provide a few code examples using `ethode` a thin
+In both posts, we provide a few code examples using [ethode]() a thin
 units-aware wrapper we built around `scipy.odeint` to streamline model
 evaluation.  Readers desiring to follow our derivations, dive into
 technical mathematical points not covered here, run their own
@@ -73,16 +72,16 @@ $$\frac{dr}{d\alpha}|^\star\leq0$$ (no news here) but simultaneously
 fraction of unstaked Ether; $$\alpha^\star\gg f^\star$$.
 
 The bad news for opponents of runaway staking is that long
-$$t\to\infty$$ term, $$\alpha^\star$$ approaches zero, so
-$$s^\star\to1$$. Ethereum would undergo cycles of inflation/deflation
-which we expect to die down, until an "L2 future" is reached.  This is
-the scenario, recognized by many others where most Ether is staked,
-with the majority used for settlement of L2 rollups.
+$$t\to\infty$$ term, the inflation fixed point $$\alpha^\star$$
+approaches zero, so $$s^\star\to1$$. Ethereum would undergo cycles of
+inflation/deflation which we expect to die down, until an "L2 future"
+is reached.  This is the scenario, recognized by many others where
+most Ether is staked, with the majority used for settlement of L2
+rollups.
 
 Given all the above, we advise caution.  Intervening to reduce the
 issuance yield curve seems quite capable of exaccerbating the very
-problems we seek to avoid, or causing even worse problems; if you
-think Near-100\% staking is bad, have you tried Near-0\%?
+problems we seek to avoid, or causing even worse problems.
 
 ## Modeling an Open Zeppelin[^humor]
 
@@ -144,9 +143,10 @@ S^\bullet(t')dt'$, etc.  In the case of issuance, we
 can express spot issuance as a known function of the yield curve
 $I^\bullet = y^\bullet S^\bullet$.  We'll assume that
 
-1. Issuance is sublinear $\boxed{I\approx yS\ll S}$,[^asym]
-sufficient for [discouragement](), and that
-2. the large-stake scaling exponent is not substantially altered by time averaging
+1. Issuance is sublinear $\boxed{I\approx yS\ll S}$[^asym] for
+[discouragement](), and that
+2. the large-stake scaling of yield (like, on a log-log plot) is not
+substantially altered by time averaging
 $\frac{\partial{d\log~y}}{\partial{d\log~S}}\approx
 \frac{\partial{d\log~y^\bullet}}{\partial{d\log~S^\bullet}}$.
 
@@ -206,9 +206,13 @@ variables and time, so the burn: $b(A,S,t)=B/F$.[^time]
 | Unstaking | $Q_-$ | $S\to U$       | $Q_-\leq S$ | $q_-:=Q_-/S | $q_-\in(0,1)$ \[1/yr\] |
 
 The use of intensive variable parameters and the approximation
-$\dot{V}\approx0$ allows us to reshape our conceptual model into one
+$\dot{V}\approx0$[^flowfrac] allows us to reshape our conceptual model into one
 that is defined in its own dynamical and intensve variables, a
 *dynamical system*.  We'll build this up one step at a time.
+
+
+
+## Infation and Staking Fraction
 
 ### Supply growth, Crudely in One Dimension
 
@@ -219,223 +223,83 @@ that of staked ETH.  As a crude approximation, lets temporaruly hold
 staking fraction $s=S/A$ constant.
 
 $$\displaystyle
-\dot{A}=\left(y(sA)-bf(1-s)-js\right)A=y_0(1)\sqrt{sA}-[bf(1-s)+js]A
+\dot{A}=\left(y(sA)-\beta(1-s)-js\right)A=y_0(1)\sqrt{sA}-[bf(1-s)+js]A
 $$
 
-ETHODE
+You can explore this system using the following code.
 
-Pretending $s=s^\star$ constant, we obtain the *fixed point* $A^\star$
-at which $\dot{A}=0$.  The trivial fixed point $A=0$ is unstable, and
-the non-trivial fixed point is
+```python
+class Acrude(ODESim):
+    beta: One/Yr
+    j: One/Yr
+    y1: One/Yr = 166.3 / Yr
+    def yield(S:ETH, *args) -> 1/Yr: return y1 / math.sqrt(S)
+    @staticmethod
+    def func(A:ETH, t:Yr, p:Params) -> ETH/Yr:
+    	gain = yield(p.s * A)
+	loss = p.beta * (1 - p.s) + p.j * p.s
+        return yield(p.s * A) * v - p.beta *
+ETHODE
+```
+
+If you have an opinion about $j,\beta$ you can replace the parameter entries
+with functions, like what we did for `yield`.
+
+```python
+```
+
+$A$ grows when the right hand side (RHS) is positive, and shrinks
+otherwise.  A *fixed point* is a point at which $\dot{A}=0$.
+
+Pretending $s=s^\star$ constant, we obtain the *fixed points* $A^\star$
+at which $\dot{A}=0$.
+
+Because $0<\beta,j<1$ these variable parameters cannot contribute
+fixed points themselves, only influence where they occur[^params] Let
+$\beta^\star=f(A^\star,s^\star,\ldots)$ represent the burn fractional
+rate $B/U$ evaluated at the fixed point.  There are two trivial fixed
+points, trivial $A^\circ=0$, and a non-trivial fixed point
 
 $$\displaystyle
 A^\star = \left(
-\frac{y(1)}{b^\star f^\star(1-s^\star)+j^\star s^\star}
+\frac{y(1)}{\beta^\star(1-s^\star)+j^\star s^\star}
 \right)^2 s^\star
 $$
 
-Where $f^\star=f(A^\star,s^\star,\ldots)$ represents tx fee fractional
-rate $f$ evaluated at the fixed point.  A fixed point represents a
-market equilibrium when it is stable. A fixed point is locally stable
-just when small changes (*perturbations*) shrink.  This is governed by
-linearizing about the fixed point, and evaluating the sign of
-$$\left.\frac{\partial\dot{A}}{\partial A}\right|^\star$, visualized below
+In general the *stability* of a fixed point for a one-dimensional flow is
+determined by the derivative of the RHS at the fixed point: if its
+negative, then small perturbations shrink and the fixed point is
+stable.  Otherwise, it is unstable.[^centers]
 
 ![1D Stability Conditions](../assetsPosts/1d-stab.png)
 
-This reduces after some calculus and algebra to a sufficient condition
-on the loss term:
+Specifically, the sign of $\left.\frac{\partial\dot{A}}{\partial
+A}\right|^\star$ determines wether $A^\star$ is (un)stable.  After
+simne manipulations, a *sufficient*[^if-vs-iff] condition is
 
 $$\displaystyle
-\left.\frac{\partial\log~B}{\partial\log~A}\right|^\star,~
-\left.\frac{\partial\log~J}{\partial\log~A}\right|^\star~~>~~\frac{1}{2}.
+\left.\frac{\partial\log~B}{\partial\log~A}\right|^\star~~\mathrm{or}~~
+\left.\frac{\partial\log~J}{\partial\log~A}\right|^\star~~~>~~~\frac{1}{2}.
 $$
 
 If either is satisfied, the fixed point is stable, and $A^\star$
-represents the equilibrium supply value.  Note that constant $bf,j$
-correspond to scaling exponent $1$, so satisfy.  Essentially some
-component of the loss term must increase faster than $\sqrt{A}$ around
-the fixed point.
+represents the equilibrium supply value, at which Ether acheives
+zero-inflation.  Note that constant $\beta,j$ correspond to scaling
+exponent $1$, so satisfy.
 
-If we think of the burn as a representation of economic activity on
-Ethereum, this raises a disturbing possibility, in which supply $A$
-keeps growing but economic activity does not scale at least as fast as
-$\sqrt{A}$.  That is inflation, not just in the sense of supply
-expansion, but the demand not growing at pace with the supply.  This
-is similar to the concern raised by [Elowsson 2020]().
+Essentially the leading component of the loss term must increase
+faster than $\sqrt{A}$ near the fixed point.  Assuming negligible
+slashing, there must be sufficient economic activity so that the burn
+scales at least as the square-root of supply, or else $A^\star$ is
+unbounded.  That is true inflation, not just in the sense of supply
+expansion, but the *demand not growing sufficiently with the supply*.
+This is different but similar to the concern raised by [Elowsson
+2020]().  We address such concerns here.
 
-However, we have held $s$ consant; this is not *really* a one
-dimensional flow.  To really understand the dynamics we need to model
-both $A,s$ as dynamical variables.
+### Positive Inflation cannot maintain
 
-### Two Dimensional $(A,s)$ System
-
-After an algebraic massage, we can obtain for staking fraction
-
-$$\displaystyle
-\dot{s} = 
-
-### General $(A,\alpha,s)$ System
-
-#### Aas system
-
-### Reflexivity and Inflation-Response
-
-the conceptual source of potential oscillations can be considered by
-modelling the SU system:
-
-$$\displaystyle
-\begn{array}{rcrlcrl}
-\dot{S} &=& (ry-\jmath-q_-) & S & + & \left(q_++r(1-b)f\right) & U\\
-\dot{U} &=& \left((1-r)y+q_-\right) & S & - & \left(rf+(1-r)bf+q_+\right) & U\\
-\end{array}
-$$
-
-
-- we have not emphasized the oscillation because we expect market
-participants can profit from it without having to coordinate their
-behavior; oscillations in supply will die down if they are big enough
-to arbitrage: buy toward the end of an inflationary phase, sell toward
-the end of a deflationary phase.
-
-- contrast this to runaway staking... there's no obvious mechanism to
-  profit from an increase in staking fraction, other than by joining
-  in.  So this is a challenge: can you, the reader, design a
-  cryptoeconomic mechanism by which runaway staking is moderated, in a
-  way that allows individuals to profit?  Can you prove that is impossible?
-
-- we have not explicitly modelled this kind of reflexivity; it is swept into
-  the partial derivatives.  
-
-Could these same partial derivatives be large enough to magnify
-inflation-concerns into runaway staking even at intermediate
-timescales?  This is absolutely possible, and would require the following:
-
-
-
-
-
-
-
-
-
-#### Simulating the $(S,U)$ Model
-
-You can explore some behaviors of this model using a simulation; see
-[guide]().  Here is an unrealistically simplified example where all
-coefficients are held constant that still extracts some broad
-features.
-
-```python
-from ethode import *
-class Toy(ODESim):
-    cSS: 1/Yr
-    cSU: 1/Yr & Pos
-    cUS: 1/Yr & Pos
-    cSS: 1/Yr & Pos
-    @staticmethod
-    def func(v:UnitTuple(ETH, 2), t:Yr, p:Params) -> UnitTuple(ETH/Yr, 2):
-        S, U = v
-	dS = p.cSS * S + p.cSU * U
-	dU = p.cUS * S - p.cUU * U
-	return dS, dU
-Toy(1, 1, 1, 1).sim()
-Toy(-1, 1, 1, 1).sim()
-```
-
-Specifically, so long as $ry>\jmath+q_-$ staked ETH $S$ just continues
-growing and growing, while $U$ cannot get too big, before its own loss
-term $-\left(rf+(1-r)bf+q_+\right)\cdot U$ dominates.  At some point
-$S$ becomes big enough that $ry<\jmath+q_-$ and the system is capable
-of oscillation, depending on a zoo of partial derivatves.  Here is a
-less trivial code example where all intensves other than issuance yield are
-held constant.
-
-```python
-from math import sqrt
-from ethode import *
-class SUconst(ODESim):
-    y1: 1/Yr & Pos
-    f: 1/Yr & PosFrac
-    b: NoDim & PosFrac
-    r: NoDim & PosFrac
-    qu: 1/Yr & PosFrac
-    qs: 1/Yr & PosFrac
-    j: 1/Yr & PosFrac
-    S1: ETH = 1 * ETH
-    def y(self, S:ETH, *args) -> ETH/Yr:
-        return self.y1 * sqrt(self.S1 / S)
-    @staticmethod
-    def func(v:UnitTuple(ETH,2), t:Yr, p:Params) -> UnitTuple(EPY, 2):
-        x = {'S': (S = v[0]),
-	     'U': (U = v[1])}
-	y = p.y(**x)
-	beta = p.b * p.f
-	rf = p.r * p.f
-	dS = (p.r * y - p.j - p.qu) * S   +   (rf * (1 - p.b) + p.qs) * U
-	dU = ((1 - p.r) * y + p.qu) * S   -   (rf + (1 - p.r) * beta + p.qs) * U
-	return dS, dU
-su = SUConst.sim(y1 = 166.3 / Yr, f = .002 / Yr, \
-                 b = .8, r = .5, \
-		 qu = 1e-4 / Yr, qs = 1e-2 / Yr, j = 1e-6 / Yr)
-su.verify()
-su.sim()
-```
-
-If you have an opinion about how, for instance $r$ should depend on
-$(S,U)$, you can define, instead of `r: NoDim` your own function
-within the class declaration.
-
-```python
-    def rnvst(self, S:ETH, U:ETH, *args) -> NoDim:
-        return S * U / (S + U) ** 2 / 2
-```
-
-Of course the variables we really care about are inflaion and staking
-fraction.  You can designate these as outputs of the model withn
-the class declaration.
-
-```python
-    @output
-    def alpha(self, S:ETH, U:ETH, *args) -> 1/Yr:
-        return p.y(S) * S - p.b * p.f * U - p.j * S
-    @output
-    def sfrac(self, S:ETH, U:ETH, *args) -> 1/Yr:
-        return S / (S + U)
-    ...
-su.sim(graph_outputs = ('alpha', 'sfrac'))
-```
-
-Below we transform from staked/unstaked variables $(S,U)$ into
-modeling directly accessible supply, inflation, and staking $(A,\alpha,s)$.
-But first we need to emphasize what, in our view, makes our model
-different from others.
-
-
-
-; Only F@%$ Up the limits when it doesn't matter!
-
-When forming intensve variables it is critical that our choices as
-model-builders reflect the correct asymptotic behavior in the limits
-of concern, in his case $U\to 0$.  If for instance, instead of
-assuming $R\leq I+P$, we had assumed reinvestment $R$ is bounded by
-unstaked ETH $R\leq U$ we would get a qualitatively different model.
-But this is wrong in a way that matters!  It is wrong because
-validator rewards $I+P$ can vary or in principal go to zero
-independently $U$.  It matters because the reinvestment of rewards
-represents a sustainable feedback loop.
-
-both an
-exceedingly large supply and dangerously low staking could shrink
-$I+P$ to the same value, yet $U$ looks very different in those cases.
-
-
-
-Other examples abound.[^elowex]
-
-
-
-## Infation and Staking Fraction
+What happens to equilibrium supply $A^\star$ then, if $s\to1$, slashing
+is negligible $A^\star\to\infty$?
 
 Inflation is used to refer to many things, but here we mean
 specifically the quarterly fractional change in accessible
@@ -443,10 +307,12 @@ Ether. Let's express inflation $\alpha:=\frac{d\log~A}{dt}$ in
 terms of $s$ and the intensives
 
 $$\displaystyle
-\alpha = (I-B-J)/A \approx y(sA)s - bf(1-s) - js
+\begin{array}{rcl}
+\dot{A} &=& \alpha A\\
+\alpha &=& (I-B-J)/A \approx y(sA)s - bf(1-s) - js
 $$
 
-### Positive Inflation cannot maintain
+
 
 A key feature of $\dot{A} concerns discouragement [Buterin](), which
 requires sublinear issuance $I\lesssim S$ to avoid instability to
@@ -460,6 +326,73 @@ $s=1-\epsilon$ and the current yield curve we have $A^\star\sim
 (y(1)/b^\star f^\star)^2\epsilon^{-2}$; as $\epsilon$ is very small
 $\epsilon^{-2}$ is very large.  Nonetheless, we should expect
 $\alpha^\star=0$ to be the inflation fixed point as $t\to\infty$.
+
+- tighten alpha -> 0 argument: y(A * s) >= alpha(A,s) forall A,s
+  So A(t) is bounded above by Y = int( y(A,s) ): otherwise they must cross
+  at which point A(t), s(t) must equal the surface Y(t,s), and
+  the derivative of Adot must be greater at whatever instantaneous value
+  of s is reached, which contradicts y(A * s) >= alpha(A,s)
+  if Ydot is to sustain a positive inflation rate its leading
+  term must be at least constant (exponential growth), and it is not,
+  so A(t,s) does not cross, is bounded above by a subexponential function
+  for all time.
+
+In such models noise generally causes the value to bounce around near
+the fixed point.[^goldenfeld]
+
+
+
+
+
+### Two Dimensional $(A,s)$ System
+
+So far this is a purely *mathematical* exercise.  We know well that
+$s$ is *not constant*.  We already have equations for
+$\dot{A},\dot{S}$, what about $\dot{s}=d(S/A)/dt$?  Using the quotient
+rule $\dot{s}=\frac{\dot{S}}{A}-s\frac{\dot{A}}{A}$, and after an
+algebraic massage, we obtain for staking fraction
+
+$$\displaystyle
+\begin{array}{rcl}
+\dot{s} &=& y(sA)\cdot(r-s) + \\
+ && \left[q_++f(1-s)\left(bs +(1-b)r\right)\right]\cdot(1-s) + \\
+ && \left[j(1-s+r)+q_-\right]\cdot(0-s).
+\end{array}
+$$
+
+The coefficients of $(r-s),~(1-s),~(0-s)$ are variable but *positive*.
+Recalling how $s$ increases just when $\dot{s}>0$, these terms draw
+$s$ toward respective points $r,1,0$.  We emphasize that the action of
+yield $y$ is $x\to r$, *not* $x\to1$, unless $r\geq1$.
+
+This is quite a complicated equation, but we finally have a dynamical
+system.
+
+You can simulate it!  You can simulate it, adding inflation
+as an output as follows:
+
+```python
+```
+
+### General $(A,\alpha,s)$ System
+
+If we know $alpha=\dot{A}/A$ and a starting value, we know $A$.  There
+are many reasons, especially in the context of the world economy, to
+care about total circulating supply $A$.  Recent discussions however
+have focused on inflation.  It also turns out that modeling
+inflation $\alpha$ directly simplifies our analysis considerably.
+
+$$\displaystyle
+\begin{array}{rcl}
+\dot{A} &=& \alpha A\\
+\dot{s} &=& \alpha(r-s) + (rf+q_+)(1-s) + (q_-+(1-r)j)(0-s)
+\dot{\alpha} &=& \pm\xi\dot{s} - \gamma\alpha s + \chi
+\end{array}
+$$
+
+xi --
+gamma --
+chi -- 
 
 ### Changing Variables
 
@@ -497,8 +430,10 @@ $$
 * $X= ...$ represents externallities to the $(A,\alpha,s)$ system
 * $\zeta = ... $
 
-At intremediate times we believe inflation can be treated as a parameter instead of as its own dynamic
-variable
+#### Separation of Timescales
+
+For short periods at intremediate times we believe inflation can be
+treated as a parameter instead of as its own dynamic variable
 
 $\dot{s}\ll\dot{\alpha}$
 
@@ -514,7 +449,9 @@ the added precision of a more sophisticated treatment.  We will
 proceed assuming $$\dot{\alpha}\approx0$$ and treating $$\alpha$$ as a
 parameter.
 
-So, let us examine the fixed point $x^\star$
+#### s^\star
+
+So, let us examine the fixed point $s^\star$
 
 We find that if $\dot{A}=0=\alpha$ (no inflation nor deflation) then
 an interior market equilibrium $$s^\star<1$$ requires ver high slashing.  We reason
@@ -589,6 +526,48 @@ $$f\approx.001$$/year, $$\alpha\approx.005$$/year, $$r\in(.5,.75)$$.
 How these transient values $$(\alpha/f,\,r)$$ relate to their
 equilibrium values $$(\alpha^\star/f^\star,\,r^\star)$$ depends on
 some considerations.
+
+### Reflexivity and Inflation-Response
+
+the conceptual source of potential oscillations can be considered by
+modelling the SU system:
+
+$$\displaystyle
+\begn{array}{rcrlcrl}
+\dot{S} &=& (ry-\jmath-q_-) & S & + & \left(q_++r(1-b)f\right) & U\\
+\dot{U} &=& \left((1-r)y+q_-\right) & S & - & \left(rf+(1-r)bf+q_+\right) & U\\
+\end{array}
+$$
+
+
+- we have not emphasized the oscillation because we expect market
+participants can profit from it without having to coordinate their
+behavior; oscillations in supply will die down if they are big enough
+to arbitrage: buy toward the end of an inflationary phase, sell toward
+the end of a deflationary phase.
+
+- contrast this to runaway staking... there's no obvious mechanism to
+  profit from an increase in staking fraction, other than by joining
+  in.  So this is a challenge: can you, the reader, design a
+  cryptoeconomic mechanism by which runaway staking is moderated, in a
+  way that allows individuals to profit?  Can you prove that is impossible?
+
+- we have not explicitly modelled this kind of reflexivity; it is swept into
+  the partial derivatives.  
+
+
+Could these same partial derivatives be large enough to magnify
+inflation-concerns into runaway staking even at intermediate
+timescales?  This is absolutely possible, and would require the following:
+
+
+
+
+
+
+
+
+
 
 
 
@@ -864,6 +843,12 @@ generic features of Ethereum.
 So we have used approximations that we felt err in a conservative direction without explicit
 depenedence on the present-day yield curve $y^\bullet_0(S^\bullet)=y_0(1)\sqrt{S_1/S}$ where
 $y_0(1)\approx166.3$/yr and $S_1=1$ETH.
+
+[^params]: Variable parameters that are positive fractions cannot
+contribute fixed-points themselves, but they can strongly influence
+*where* a fixed point is. Example: as $s\to1$, if the leading terms
+were $\beta\sim(1-s),j\sim(1-s)^2$ this gives increasingly larger
+$A^\star$ as $s\to1$.
 
 
 

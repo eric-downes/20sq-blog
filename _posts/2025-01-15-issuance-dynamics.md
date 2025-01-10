@@ -42,12 +42,12 @@ and discuss a means for evaluating macroeconomic interventions inspred
 by bifurcation theory.  Briefly, we are not optimstic that reducing
 issuance will prevent governance centralization, either.
 
-In both posts, we provide a few code examples using [ethode]() a thin
+In both posts, we provide a few code examples using [ethode](https://github.com/20squares/ethode/) a thin
 units-aware wrapper we built around `scipy.odeint` to streamline model
 evaluation.  Readers desiring to follow our derivations, dive into
 technical mathematical points not covered here, run their own
 simulations, or learn some dynamical systems are recommended to look
-at our ethode [guide](), and references therein.  It is certainly
+at our ethode [guide](https://github.com/20squares/ethode/blob/master/guide/guide.md), and references therein.  It is certainly
 incomplete, but should have enough to get you going.
 
 ## For The Impatient!
@@ -75,7 +75,8 @@ The bad news for opponents of runaway staking is that long
 $$t\to\infty$$ term, the inflation fixed point $$\alpha^\star$$
 approaches zero, so $$s^\star\to1$$. Ethereum would undergo cycles of
 inflation/deflation which we expect to die down, until an "L2 future"
-is reached.  This is the scenario, recognized by many others where
+is reached, which we'll discuss next time.
+This is the scenario, recognized by many others where
 most Ether is staked, with the majority used for settlement of L2
 rollups.
 
@@ -86,7 +87,7 @@ problems we seek to avoid, or causing even worse problems.
 ## Modeling an Open Zeppelin[^humor]
 
 ![Ethereum as a balloon with compartments.](
-    ../assetsPosts/2024-12-30-issuance-dynamics/eth-balloon.jpg)
+    ../assetsPosts/2025-01-15-issuance-dynamics/eth-balloon.jpg)
 
 Consider a "balloon" with variable internal compartments.  The average
 size of each is measured by *stocks*
@@ -117,13 +118,13 @@ $$
 
 | Flow Name        | Symbol | Domain$\to$Codomain[^cats] | Constraint |
 | :--              | :--    | :-:                        | :--        |
-| Tx Fees          | $F$    | $U\to\cancel{O},SS$        | $B+P=F$  |
+| Tx Fees          | $F$    | $U\to\cancel{O},V$         | $B+P=F<U$ |
 | Base Fees[^aves] | $B$    | $U\to\cancel{O}$           | .. |
-| Priority Fees    | $P$    | $U\to S$                   | ..       |
-| Issuance[^aves]  | $I$    | $\cdot\to V$               | $yS\leq I$ |
-| Slashing         | $J$    | $S\to\cancel{O}$           | $J+Q_-\leq S$ |
-| Unstaking        | $Q_-$  | $S\to U$                   | .. |
-| New Staking      | $Q_+$  | $U-V\to S$                 | $Q_++R\leq U$ |
+| Priority Fees    | $P$    | $U\to V$                   | ..       |
+| Issuance[^aves]  | $I$    | $\cdot\to V$               | $yS<I$ |
+| Slashing         | $J$    | $S\to\cancel{O}$           | $J<S$ |
+| Unstaking[^deneb]| $Q_-$  | $S\to U$                   | $Q_-<S$ |
+| New Staking      | $Q_+$  | $U\to S$                 | $Q_++R<U$ |
 | Reinvestment[^whyr] | $R$ | $V\to S$                   | $R+K+\dot{V}=I+P$ |
 | Costs & Profits  | $K$    | $V\to U$                   | ..        |
 
@@ -131,8 +132,18 @@ Flows $(B,J,Q_-,\ldots)$ have a "domain" $(U,S,S,\ldots)$, where the
 flow is coming from, and a "codomain"
 $(\cancel{O},\cancel{O},U,\ldots)$, where the flow is going to.[^cats]
 Flows obey constraints, often expressed as (in)equalities relating a
-flow to its source.  A few deserve further comment: $I$ and
-$(R,Q_+,K)$.
+flow to its source.
+
+In response to the concerns about $s\to1$, the Deneb upgrade
+implemented EIP 7153, an upper limit on $R+Q_+$ chosen to not limit
+any present flows.[^deneb] We also ignore the pre-existing symmmetric
+limits on (un)staking $Q_\pm$.  The purpose of our models is to show,
+in the absence of such limits, where the dynamics push the system.  We
+will revisit EIP 7153 in our next post, on staking *composition*.  So
+the constraints ($Q_-<S,Q_+<U$) could be tightened significantly, but
+more accurate upper limits would play little role in our analysis.
+
+A few flows *do* deserve further comment: $I$ and $(R,Q_+,K)$.
 
 ### Bounding Issuance $I$
 
@@ -143,40 +154,46 @@ S^\bullet(t')dt'$, etc.  In the case of issuance, we
 can express spot issuance as a known function of the yield curve
 $I^\bullet = y^\bullet S^\bullet$.  We'll assume that
 
-1. Issuance is sublinear $\boxed{I\approx yS\ll S}$[^asym] for
-[discouragement](), and that
+1. Issuance is sublinear $\boxed{1\ll I\approx yS\ll S}$[^asym] to avoid
+[discouragement attacks](https://github.com/20squares/ethode/blob/master/guide/guide.md), and that
 2. the large-stake scaling of yield (like, on a log-log plot) is not
 substantially altered by time averaging
 $\frac{\partial{d\log~y}}{\partial{d\log~S}}\approx
-\frac{\partial{d\log~y^\bullet}}{\partial{d\log~S^\bullet}}$.
+\frac{\partial{d\log~y^\bullet}}{\partial{d\log~S^\bullet}}$.[^vitalikp]
 
-The first is almost certainly an overestimate,[^ycov]
+The first is common and almost certainly an overestimate,[^ycov]
 which we deem the correct direction to err in light of our results
 concerning (the lack of) runaway inflation.
 
 ### Bounding Reinvestment $R$
 
-Staking reward reinvestment is a feedback loop
+Reinvestment of staking rewards by validators $R$ is acheived by
+staking a new validator from existing rewards.  While clearly a
+stochastic process, we approximate the net effect as smooth on
+timescales of at least $\tau$.  $R$ represents a feedback loop
 $S\overset{+}{\rightsquigarrow}S$ quite evidently related to the
-potential positive-feedback loop between staking and inflation that
-people are so concerned about.  To express this concept succinctly in
-one flow variable, we require that the averaging timescale $\tau$ be
-adjusted upward until most validators claim and reinvest the bulk of
-their staking rewards within.  That is $\dot{V}=0$, so $R+K=1+P$ so
-$R\leq I+P$.  The quantity $r=R/(I+P)$, the ratio of staking rewards
-reinvestment over issuance and priority fees is one of the
-distinguishing features of our model, and also why we have split the
-staking queue flow $R+Q_+$.  These are our motivations:
+potential positive-feedback between staking and inflation that people
+have found concerning.
 
-1. Modelling $r$ is necessary to model LSTs.[^rlst]
+To express this concept succinctly in one flow variable, we require
+that the averaging timescale $\tau$ be adjusted upward until most
+validators claim and reinvest the bulk of their staking rewards
+within.  That is $\dot{V}=0$, so $R+K=1+P$ so $R\leq I+P$.  The
+quantity $r=R/(I+P)$, the ratio of staking rewards reinvestment over
+issuance and priority fees is one of the distinguishing features of
+our model, and also why we have split the staking queue flow $R+Q_+$.
+These are our motivations:
+
+1. Modelling $r$ is absolutely necessary to model LSTs.[^rlst]
 2. We want to separate the *transient* externally-driven dynamics $Q_+$ from the
 long-term endogenous feedback $R$,[^rdyn] and
-3. $r$ should be measurable with onchain data.
+3. $r$ could be measured and monitored with onchain data.
 
 If the $\tau$ required to acheive $r=R/(I+P)<1$ in practice becomes
 too large, one might revisit the approximations used to model
-issuance, or use data to better model $\dot{V}$.  In neither case do we expect
-this to make a huge qualitative difference, but please, prove us wrong!
+issuance, or use data to better model $\dot{V}$.  In neither case do
+we expect this to make a huge qualitative difference for the issues
+consiered here, but please, prove us wrong!
 
 ## Intensive Flows give Dynamical Systems
 
@@ -187,39 +204,35 @@ variable* $(j,f,b,\ldots)$: the fractions \[1\] and fractional rates
 \[1/yr\].  In forming these, the ideal is to apply the tightest
 available bounds that still capture the [asymptotic behavior]() in the
 limit of interest $S\to A$.  We do not assume the intensive parameters
-are constant, but suppress their dependence for readability. Unless
+are constant, but suppress their dependence for readability.  Unless
 otherwise stated, the intensives are functions of the dynamical
 variables and time, so the burn: $b(A,S,t)=B/F$.[^time]
 
 ### Table of Flows
 
-| Name  | Symbol | Source$\to$Target(s) | Constraint | Intensive | Range \[Units\] |
-| :--   | :--    | :-:                  | :--        | :--       | :--             |
-| Tx Fees  | $F$ | $U\to\cancel{O},SS$ | $B+P=F$  | $f:=F/U$ | $f\in(\varepsilon_b,1)$ [1/yr] |
-| Base Fees[^aves] | $B$ | $U\to\cancel{O}$ | .. | $b:=B/F$ | $b\in[\varepsilon_b,1) \[1\] |
-| Priority Fees   | $P$ | $U\to S$     | ..       | $1-b=P/F | $1-b\in(0,1)$ \[1\] |
-| Issuance[^aves] | $I$ | $\cdot\to V$ | $yS\leq I$ | $\imath:=I/S= y-\kappa$ | $y\in(0,1)$\[1/yr\] |
-| Slashing | $J$ | $S\to\cancel{O}$    | $J\leq S$ | $j:=J/S$ | $j\in(0,1)$ \[1/yr\] |
-| Reinvestment[^whyr] | $R$ | $V\to S$ | $R+K\approx I+P$ | $r:=R/(I+P)$ \[1\] | $r\in(0,1)$ \[1\] |
-| Costs & Profit  | $K$ | $V\to U$     | ..        | $1-r=K/(I+P)$ | $1-r\in(0,1)$ \[1\] |
-| New Staking | $Q_+$ | $U\to S$       | $Q_+\leq U-V$ | $q_+:=Q_+/U | $q_+\in(0,1)$ \[1/yr\] |
-| Unstaking | $Q_-$ | $S\to U$       | $Q_-\leq S$ | $q_-:=Q_-/S | $q_-\in(0,1)$ \[1/yr\] |
+| Flow Name | Symbol | Domain$\to$Codomain[^cats] | Constraint | Intensive | Range \[Units\] |    
+| :--              | :--    | :-:                 | :--        | :-- | :-- |
+| Tx Fees          | $F$    | $U\to\cancel{O},V$  | $0<B+P=F<U$ | $f:=F/U$ | $f\in(0,1)$ [1/yr] |
+| Base Fees[^aves] | $B$    | $U\to\cancel{O}$    | ..       | $b:=B/F$ | $b\in(0,1) \[1\] |
+| Priority Fees    | $P$    | $U\to V$            | ..       | $1-b=P/F | $1-b\in(0,1)$ \[1\] |
+| Issuance[^aves]  | $I$    | $\cdot\to V$        | $0<I<yS$ | $y\in(0,1)$\[1/yr\] |
+| Slashing         | $J$    | $S\to\cancel{O}$    | $0<J<S$ | $j:=J/S$ | $j\in(0,1)$ \[1/yr\] |
+| Unstaking[^deneb]| $Q_-$  | $S\to U$            | $0<Q_-<S$ | $q_-:=Q_-0/S | $q_-\in(0,1)$ \[1/yr\] |
+| New Staking      | $Q_+$  | $U\to S$            | $0<Q_++R<U$ | $q_+:=Q_+/U | $q_+\in(0,1)$ \[1/yr\] |
+| Reinvestment[^whyr] | $R$ | $V\to S$            | $R+K=I+P$ | $r:=R/(I+P)$ \[1\] | $r\in(0,1)$ \[1\] |
+| Costs & Profits  | $K$    | $V\to U$            | ..        | $1-r=K/(I+P)$ | $1-r\in(0,1)$ \[1\] |
 
 The use of intensive variable parameters and the approximation
 $\dot{V}\approx0$[^flowfrac] allows us to reshape our conceptual model into one
 that is defined in its own dynamical and intensve variables, a
 *dynamical system*.  We'll build this up one step at a time.
 
-
-
-## Infation and Staking Fraction
-
 ### Supply growth, Crudely in One Dimension
 
 Consider $\dot{A}=I-B-J$ in light of the [above
 table](#table-of-flows), $\dot{A} = y(S)S - bf(A-S) - jS$.  To
 understand the dynamics of circulating supply, we need to understand
-that of staked ETH.  As a crude approximation, lets temporaruly hold
+that of staked ETH.  As a crude approximation, lets temporarily hold
 staking fraction $s=S/A$ constant.
 
 $$\displaystyle
@@ -229,42 +242,56 @@ $$
 You can explore this system using the following code.
 
 ```python
-class Acrude(ODESim):
+class ACrude(ODESim):
     beta: One/Yr
     j: One/Yr
     y1: One/Yr = 166.3 / Yr
-    def yield(S:ETH, *args) -> 1/Yr: return y1 / math.sqrt(S)
+    s: One = .5 * One
+    def yield(self, S:ETH) -> One/Yr: return self.y1 / math.sqrt(S)
     @staticmethod
     def func(A:ETH, t:Yr, p:Params) -> ETH/Yr:
-    	gain = yield(p.s * A)
+    	gain = p.yield(p.s * A)
 	loss = p.beta * (1 - p.s) + p.j * p.s
-        return yield(p.s * A) * v - p.beta *
-ETHODE
+        return (gain - loss) * A
+model = ACrude(beta = 8e-3/Yr,  j = 1e-6/Yr,  y1 = 166.3/Yr,  s = .3 * One)
+model.sim()	      
 ```
 
-If you have an opinion about $j,\beta$ you can replace the parameter entries
-with functions, like what we did for `yield`.
+If you have an opinion about $j(A),\beta(A)$ you can replace the parameter
+entries with functions, like what we did for `yield`: replace `pass`
+with your desired behavior, using `self.b` etc. to access parameters.
+Within `func` use `p.burn` instead of `self.burn`; `ODESim` takes care
+of the plumbing.
 
 ```python
+class ALessCrude(ACrude):
+    def slash(self, A:ETH) -> One/Yr:
+        pass # Your insights here 
+    def burn(self, A:ETH) -> One/Yr:
+        pass # Your insights here
+    @staticmethod
+    def func(A:ETH, t:Yr, p:Params) -> ETH/Yr:
+    	gain = p.yield(p.s * A) * A 
+	loss = p.slash(A) + p.burn(A) 
+        return gain - loss
 ```
 
 $A$ grows when the right hand side (RHS) is positive, and shrinks
-otherwise.  A *fixed point* is a point at which $\dot{A}=0$.
-
-Pretending $s=s^\star$ constant, we obtain the *fixed points* $A^\star$
-at which $\dot{A}=0$.
-
-Because $0<\beta,j<1$ these variable parameters cannot contribute
-fixed points themselves, only influence where they occur[^params] Let
-$\beta^\star=f(A^\star,s^\star,\ldots)$ represent the burn fractional
-rate $B/U$ evaluated at the fixed point.  There are two trivial fixed
-points, trivial $A^\circ=0$, and a non-trivial fixed point
+otherwise.  Pretending $s=s^\star$ constant, we obtain the *fixed
+points* $A^\star$ at which $\dot{A}=0$.  Because $0<\beta,j<1$ the
+parameters cannot contribute fixed points themselves, only influence
+where they occur.[^params] Let $\beta^\star=f(A^\star,s^\star,\ldots)$
+represent the burn fractional rate $\beta=bf=B/U$ evaluated at the fixed point.
+There are two trivial fixed points, trivial $A^\circ=0$, and a
+non-trivial fixed point
 
 $$\displaystyle
 A^\star = \left(
-\frac{y(1)}{\beta^\star(1-s^\star)+j^\star s^\star}
-\right)^2 s^\star
+\frac{y(1)\sqrt{s^\star}}{\beta^\star(1-s^\star)+j^\star s^\star}
+\right)^2
 $$
+
+### Stability in One Dimension
 
 In general the *stability* of a fixed point for a one-dimensional flow is
 determined by the derivative of the RHS at the fixed point: if its
@@ -272,10 +299,10 @@ negative, then small perturbations shrink and the fixed point is
 stable.  Otherwise, it is unstable.[^centers]
 
 ![1D Stability Conditions](../assetsPosts/1d-stab.png)
-
 Specifically, the sign of $\left.\frac{\partial\dot{A}}{\partial
 A}\right|^\star$ determines wether $A^\star$ is (un)stable.  After
-simne manipulations, a *sufficient*[^if-vs-iff] condition is
+some manipulations, a *sufficient*[^if-vs-iff] condition for
+stability is
 
 $$\displaystyle
 \left.\frac{\partial\log~B}{\partial\log~A}\right|^\star~~\mathrm{or}~~
@@ -283,23 +310,23 @@ $$\displaystyle
 $$
 
 If either is satisfied, the fixed point is stable, and $A^\star$
-represents the equilibrium supply value, at which Ether acheives
-zero-inflation.  Note that constant $\beta,j$ correspond to scaling
-exponent $1$, so satisfy.
+represents the equilibrium supply value, at which Ether acheives zero
+growth.  Essentially the leading component of the loss term must
+increase faster than $\sqrt{A}$ near the fixed point.  Note that
+constant $\beta,j$ correspond to scaling exponent $1$, so satisfy.
 
-Essentially the leading component of the loss term must increase
-faster than $\sqrt{A}$ near the fixed point.  Assuming negligible
-slashing, there must be sufficient economic activity so that the burn
-scales at least as the square-root of supply, or else $A^\star$ is
-unbounded.  That is true inflation, not just in the sense of supply
-expansion, but the *demand not growing sufficiently with the supply*.
-This is different but similar to the concern raised by [Elowsson
-2020]().  We address such concerns here.
+To simplify, assume negligible slashing; there must be sufficient
+economic activity so that the burn scales at least as the square-root
+of supply, or else $A^\star$ is unbounded.  That is true inflation,
+not just in the sense of supply expansion, but the *demand not growing
+sufficiently with the supply*.  This is similar to the concern raised
+by [Elowsson 2020]().
 
 ### Positive Inflation cannot maintain
 
-What happens to equilibrium supply $A^\star$ then, if $s\to1$, slashing
-is negligible $A^\star\to\infty$?
+What happens to equilibrium supply $A^\star$ then, if $s\to1$ and
+slashing is negligible, or the partials $\partial_AB,\partial_AJ$ are
+insufficient such that $A^\star\to\infty$?
 
 Inflation is used to refer to many things, but here we mean
 specifically the quarterly fractional change in accessible
@@ -310,44 +337,29 @@ $$\displaystyle
 \begin{array}{rcl}
 \dot{A} &=& \alpha A\\
 \alpha &=& (I-B-J)/A \approx y(sA)s - bf(1-s) - js
+\end{array}
 $$
 
+A key feature of $\dot{A} under the current yield curve is sublinear
+issuance $I\leq yS\lesssim S$, chosen to avoid [discouragement
+attacks](https://raw.githubusercontent.com/ethereum/research/master/papers/discouragement/discouragement.pdf).
+Because of this, the positive term continues to get smaller as
+Accessible ETH supply grows; $\dot{A}\leq y(As)A$, under the current
+yield curve $\dot{A}(s,A)\leq y_0(1)\sqrt{sA}$.  So, at any point,
+given supply $A$, the inflation rate $\alpha = \dot{A}/A$ cannot be
+larger than $\alpha_{max}=y_0(1)\sqrt{s/A}$.  Constant positive
+inflation corresponds to $A$ growing, and for
+any positive constant $\alpha=\epsilon$ there is some $A$ at which
+$\epsilon=\alpha_{max}(A)$.  Total circulating suopply $A$ is
+bounded above by a subexponential function for all time.
 
-
-A key feature of $\dot{A} concerns discouragement [Buterin](), which
-requires sublinear issuance $I\lesssim S$ to avoid instability to
-certain attacks.  Because of this, the positive term continues to get
-smaller as Accessible ETH supply grows; consistent with the
-$(S,U)$-model above, eventually average inflation tends to zero.
-
-In contrast, while slashing can go to zero, so long as blocks are
-produced, these is some minimal burn. $A$ could get quite large; for
-$s=1-\epsilon$ and the current yield curve we have $A^\star\sim
-(y(1)/b^\star f^\star)^2\epsilon^{-2}$; as $\epsilon$ is very small
-$\epsilon^{-2}$ is very large.  Nonetheless, we should expect
-$\alpha^\star=0$ to be the inflation fixed point as $t\to\infty$.
-
-- tighten alpha -> 0 argument: y(A * s) >= alpha(A,s) forall A,s
-  So A(t) is bounded above by Y = int( y(A,s) ): otherwise they must cross
-  at which point A(t), s(t) must equal the surface Y(t,s), and
-  the derivative of Adot must be greater at whatever instantaneous value
-  of s is reached, which contradicts y(A * s) >= alpha(A,s)
-  if Ydot is to sustain a positive inflation rate its leading
-  term must be at least constant (exponential growth), and it is not,
-  so A(t,s) does not cross, is bounded above by a subexponential function
-  for all time.
-
-In such models noise generally causes the value to bounce around near
-the fixed point.[^goldenfeld]
-
-
-
-
+That is, inflation must eventually return toward zero, even in the
+pressence of very weak burn, slashing, and very high staking fraction.
+This is not emphasized enough in our discussions.
 
 ### Two Dimensional $(A,s)$ System
 
-So far this is a purely *mathematical* exercise.  We know well that
-$s$ is *not constant*.  We already have equations for
+We know well that $s$ is *not constant*.  We have equations for
 $\dot{A},\dot{S}$, what about $\dot{s}=d(S/A)/dt$?  Using the quotient
 rule $\dot{s}=\frac{\dot{S}}{A}-s\frac{\dot{A}}{A}$, and after an
 algebraic massage, we obtain for staking fraction
@@ -365,103 +377,146 @@ Recalling how $s$ increases just when $\dot{s}>0$, these terms draw
 $s$ toward respective points $r,1,0$.  We emphasize that the action of
 yield $y$ is $x\to r$, *not* $x\to1$, unless $r\geq1$.
 
-This is quite a complicated equation, but we finally have a dynamical
-system.
+As expressed by the quotient rule, an increase in staking fraction
+can be driven by more people staking, and/or it can be driven by a
+reduction of the inflation rate.  The latter can be acheived in
+principle by a reduction of issuance relative to the base fee "burn
+rate".  Because of this quotient rule tradeoff, issuance plays a
+beneficial "infrastructure" role in moderating staking fraction,
+drawing itb toward $r$, which may be less than one.
 
-You can simulate it!  You can simulate it, adding inflation
-as an output as follows:
+Other aspects are harder to read, as this is quite a complicated
+equation, but we finally have a dynamical system.  You can simulate a
+general version of it, filling in your desired behavior for `pass` and
+adding inflation as an output, as follows:
 
 ```python
+class AsSys(ODESim):
+    def yield(self, S:ETH) -> One/Yr: pass
+    def burnfrac(self, A:ETH, s:One) -> One: pass
+    def feefracrate(self, A:ETH, s:One) -> One/Yr: pass
+    def slashfracrate(self, A:ETH, s:One) -> One/Yr: pass
+    def rnvstfrac(self, A:ETH, s:One) -> One: pass
+    def qstake(self, A:ETH, s:One) -> One/Yr: pass
+    def qunstake(self, A:ETH, s:One) -> One/Yr: pass
+    def _hlpr(self, A:ETH, s:One) -> tuple[One/Yr,One/Yr,One,One/Yr]:
+    	beta = (b := self.burnfrac(A,s)) * (f := self.feefracrate(A,s))
+	return s * self.slashfracrate(A,s), beta * (1 - s), b, f
+    @output
+    def inflation(self, A:ETH, s:One) -> One/Yr:
+        slash, burn = self._hlpr(A,s)[:2]
+        return self.yield(A * s) - burn - slash
+    @staticmethod
+    def func(v:tuple[ETH,One], t:Yr, p:Params) -> tuple[ETH/Yr,ETH/Yr]:
+        x = {'A': (A := v[0]), 's': (s := v[1])}
+	slash, burn, b, f = p._hlpr(A, s)
+	to0 = j * (1 - s - (r := p.rnvstfrac(**x)))  +  p.qunstake(**x)
+	to1 = p.qstake(**x)  +  f * (1-s) * (b * s  +  (1-b) * r)
+	dA = p.inflation(A,s) * A
+	ds = yld * (r - s) + to1 * (1 - s) - to0 * s
+	return dA, ds
 ```
 
-### General $(A,\alpha,s)$ System
+# The $(A,\alpha,s)$ Dynamical System
 
-If we know $alpha=\dot{A}/A$ and a starting value, we know $A$.  There
-are many reasons, especially in the context of the world economy, to
-care about total circulating supply $A$.  Recent discussions however
-have focused on inflation.  It also turns out that modeling
-inflation $\alpha$ directly simplifies our analysis considerably.
+There are many reasons, especially in the context of the world
+economy, to care about total circulating supply $A$.  Recent
+discussions however have focused most on inflation.  It also turns out
+that modeling inflation $\alpha$ directly simplifies our analysis
+considerably.
 
-$$\displaystyle
-\begin{array}{rcl}
-\dot{A} &=& \alpha A\\
-\dot{s} &=& \alpha(r-s) + (rf+q_+)(1-s) + (q_-+(1-r)j)(0-s)
-\dot{\alpha} &=& \pm\xi\dot{s} - \gamma\alpha s + \chi
-\end{array}
-$$
-
-xi --
-gamma --
-chi -- 
-
-### Changing Variables
-
-So, our new dynamical variables are $(A,\alpha,s)$.  Two important
-points now require mention.
-
-* The quotient rule $\dot{s}=\frac{\dot{S}{A}-s\alpha$ emphasizes that
-  changes in a fraction occur from *both* changes in the numerator $S$
-  and its denominator $A$.
-  
-* Making conclusions about market equilibria requires us to look at *all*
-  of the dynamical variables, and perform a [local stability analysis]().
-  - Solve $\dot{x}:=(\dot{A},\dot{\alpha},\dot{s})=(0,0,0)$, obtaining a fixed point
-    $x^\star=(A^\star,\alpha^\star,s^\star)$.
-  - This $x^\star$ is a market equilibrium when it is (possibly meta-)stable, and
-    *the* market equiibrium just when it is unique.[^metastable]
-
-That is, an increase in staking fraction can be driven by more people
-staking, and/or it can be driven by a reduction of the inflation rate.
-The latter can be acheived in principle by a reduction of issuance
-relative to the base fee "burn rate".  Because of this quotient rule
-tradeoff, low-but-positive inflation actually plays a positive almost
-"infrastructure" role in moderating staking fraction.
-
-After some calculus, and a lot of algebra, we obtain the following
+Let subscripts denote partial derivatives
+$x_y:=\frac{\partial{x}}{\partial{y}}$.  Using the product rule
+$\dot{xy}=\dot{x}y+x\dot{y}$ and the correct partial derivative
+relations for variables $(A,\alpha,s,t)$[^partial] we have
 
 $$\displaystyle
 \begin{array}{rcl}
-\dot{A} &=& \alpha A\\
-\dot{\alpha} &=& \zeta\dot{s}-\gamma\alpha s + X\\
-\dot{s} &=& \alpha\cdot(r-s)~+~(rf+q_+)\cdot(1-s)~-~\eft(q_-+(1-r)j\right)\cdot s\\
+\dot{A} &=& \pm\alpha A\\
+\dot{s} &=& \pm\alpha(r-s) + (rf+q_+)(1-s) - (q_-+(1-r)j)s
+\dot{\alpha} &=& \pm\frac{\xi}{1+\mu}\dot{s} - \frac{\gamma}{1+\mu}\alpha s \pm \frac{\chi}{1+\mu}
 \end{array}
 $$
 
-* $X= ...$ represents externallities to the $(A,\alpha,s)$ system
-* $\zeta = ... $
+Where the new greek letters are fractional rates, defined below, and
+$y':=\frac{dy}{dS}$.
 
-#### Separation of Timescales
+* $\mu:=\beta_\alpha(1-s)+\jmath_\alpha s$ is the implicit
+  sensitivity of the inflation loss term to increases in inflation.
+  We judge $0\leq\mu$; if anything inflation increases burn and
+  slashing fractional rates.[^mu]
 
-For short periods at intremediate times we believe inflation can be
-treated as a parameter instead of as its own dynamic variable
+* $\xi:=y+y'A+\beta-\beta_s(1-s)-j-j_s$ is the net
+  correlation between changes in $s$ and changes in $\alpha$, it can
+  be of either sign.  Under the current yield curve
+  $y_0+\frac{dy}{dS}A=y_0(sA)(1-1/(2s))$.
 
-$\dot{s}\ll\dot{\alpha}$
+* $\gamma:=\left(j_As+\beta_A(1-s)+s|y'|\right)A$ is a positive
+  coefficient expressing how quickly $\alpha\to\alpha^\star$, and the
+  partials are constant when initial supply is known.[^ics] We have
+  extracted the sign from the final term because sublinear issuance
+  implies $y'<0$; under the current yield curve the term
+  $sA|y'|=\frac{1}{2}y_0(sA)$.
 
-For a sanity-check, a quick look at
-YCharts since The Merge shows that $$s,\dot{s}$$ vary over a much
-greater range than $$(\ln{A},\alpha)$$.
+* $\chi:=-j_ts-\beta_t(1-s)$ represents externalities affecting the
+  inflation loss term encoded as explicit time-dependencies.
 
-![The staking fraction from YCharts](../assetsPosts/2024-12-05-issuance-fundamentals/YCharts-x.jpg)
-![The inflation rate from YCharts](../assetsPosts/2024-12-05-issuance-fundamentals/YCharts-alpha.jpg)
+In what follows we will obtain and asses the nature of the long-term
+externality-free fixed point cooridnate $(\alpha^\star=0,s^\star=1)$.
+We will observe that it is not hard for $|\dot{\alpha}|\ll|\dot{s}|$
+to obtaon, leading to a seperation of timescales where an $\alpha>0$
+may change slowly enough that we can still use equilibrium arguments
+at intermediate times.  We extract the behavior of
+$x^\star(\alpha~\mathrm{const.},\ldots)$ and break down the fixed
+point stability into LI;ELF vs. deflation.  We close with a dicussion
+of the potential for oscillations in our model vs. actual market data.
 
-At present we judge the lack of empirical data on $$r$$ would obviate
-the added precision of a more sophisticated treatment.  We will
-proceed assuming $$\dot{\alpha}\approx0$$ and treating $$\alpha$$ as a
-parameter.
+## Local Stability of $\alpha^\star=0$ and Oscillations
 
-#### s^\star
 
-So, let us examine the fixed point $s^\star$
 
-We find that if $\dot{A}=0=\alpha$ (no inflation nor deflation) then
-an interior market equilibrium $$s^\star<1$$ requires ver high slashing.  We reason
-as follows.  In the absence of in/de-flation, an interior fixed point
-$$s^\star<1$$ would require a persistent unstaking/capitulation of
-existing validators $$q_->0$$.  This in turn either requires "churn",
-a persistent supply of new validators to take their place
-$$q_+^\star>0$$, or it is only a transient and $$q_-^\star\approx0$$;
-recall that reinvestment by existing validators is not counted in
-$$q_+$$.
+
+
+## Separation of Timescales and $\alpha>0$
+
+Observe that every term in $(\xi,\gamma)$ are fractions, fractional
+rates, or derivatives thereof, so if $|\xi|,\gamma\ll1$ then the
+derivatives obey $|\dot{\alpha}|\ll|\dot{s}|$: a [seperation of
+timescales]().  For durations when this obtains, short periods at
+intremediate times, inflation could be treated as a parameter instead
+of its own dynamic variable, with staking fraction equilibrating to
+$s^\star$ more quickly than $\alpha^\star$.
+
+Does this hold presently?  For a sanity-check, a quick look at
+YCharts since The Merge shows that $$s,\dot{s}$$ do indeed vary over a much
+greater range than $$(\log{A},\alpha)$$.
+
+![The staking fraction from YCharts](../assetsPosts/2025-01-15-issuance-dynamics/YCharts-x.jpg)
+![The inflation rate from YCharts](../assetsPosts/2025-01-15-issuance-dynamics/YCharts-alpha.jpg)
+
+## The Intermediate s^\star
+
+So, let us examine the fixed point $s^\star$ with $\alpha^\star$ treated as
+a parameter.
+
+$$\displaystyle
+s^\star = \frac{
+   r^\star(\alpha^\star + f^\star) + q_+^\star
+}{
+   \alpha^\star + r^\star f^\star + q_+^\star + q_-^\star + \jmath^\star
+}
+$$
+
+If $\dot{A}=0=\alpha$ (no inflation nor deflation) then an interior
+market equilibrium $s^\star<1$ requires very high slashing.
+
+We reason as follows.  In the absence of in/de-flation, an interior
+fixed point $s^\star<1$ would require a persistent
+unstaking/capitulation of existing validators $q_->0$.  This in turn
+either requires churn, a persistent
+supply of new validators to take their place $q_+^\star>0$, or it is
+only a transient and $q_-^\star\approx0$; recall that reinvestment by
+existing validators is not counted in $q_+$.
 
 Net unstaking $$q_->0$$ could only describe a market equilibrium if
 one group of stakers was actively capitulating and withdrawing their
@@ -479,34 +534,25 @@ $$r$$, so $$q_+^\star\approx0$$.  Thus, the fixed point $$s^\star$$
 simplifies to
 
 $$\displaystyle
-s^\star ~~ = ~~ r^\star ~
-\frac{\alpha^\star + f^\star}{\alpha^\star + r^\star f^\star}
+s^\star = r^\star \frac{
+    \alpha^\star + f^\star
+}{
+    \alpha^\star + r^\star f^\star + \jmath^\star
+}
 $$
 
-A calculation is illustrative under the current regime of positive
-inflation.  If inflation dominates fees, $$\alpha\gg f$$ then
-$$s^\star\sim r^\star<1$$, while if fees dominate inflaton $$\alpha\ll
-f$$ and $$s^\star\to1$$.  For a numerical comparison, at present $$f
-\approx .001<.005\approx\alpha$$ so to within 10\% error above,
-$$s^\star\approx r$$ over the range of $$r$$ inferred from Lido yield
-rate.
+#### Stability of $x^\star$
 
-This positive role for inflation can be seen in the contours of the
+
+
+### LI;ELF Conditions
+
+A positive role for inflation can be seen in the contours of the
 market equilibrium staking fraction $$s^\star$$ corresponding to
 $$\dot{s}=0$$, shown in [figure
-1](../assetsPosts/2024-12-05-issuance-fundamentals/staking-fixpoint.png).
-The equation graphed is as follows:
+1](../assetsPosts/2025-01-15-issuance-fundamentals/staking-fixpoint.png).
 
-$$\displaystyle
-s^\star = r^\star\frac{\alpha^\star/f^\star + 1}{\alpha^\star/f^\star + r^\star}
-$$
-
-The fraction $$0\leq r\leq 1$$ is the ratio of profits reinvested
-quarterly by validators, $$0\leq f\leq 1$$ is the fraction of unstaked
-ETH spent on transaction fees (base and priority) quarterly, and as
-above $$\alpha$$ is inflation.  Here $$r^\star$$ etc. means the
-function $$r(s,\alpha,\ldots)$$ at the equilibrium coordinates
-$$(s^\star,\alpha^\star,\ldots)$$.  To find the equilibrium values
+To find the equilibrium values
 $$(\alpha^\star/f^\star,\,r^\star)$$ necessary to acheive a desired
 staking fraction $$x^\star$$, simply pick a colored contour in the
 figure: these are the values of constant $$x^\star$$.  For every point
@@ -514,23 +560,49 @@ on this curve, the equilibrium inflation:fee ratio
 $$\alpha^\star/f^\star$$ is the x-coordinate, and the equilibrium
 reinvestment ratio $$r^\star$$ is the y-value.
 
-The two extremes are $$\alpha^\star\ll f^\star$$ fees dominate and
-$$\alpha^\star\gg f^\star$$ inflation dominates.  In the former,
-staking fraction becomes insensitive to reinvestment, raising
-$$x^\star$$.  Equivalntly, for any value of positive inflation,
-$$r^\star$$ is a lower bound for the equilibrium staking fraction we
-should expect.
+A breakdown of limitng behaviors is illustrative under positive
+inflation.  For any value of non-negative inflation, $$r^\star$$ is a
+lower bound for the equilibrium staking fraction we should expect.  If
+inflation dominates fees, $$\alpha\gg f$$ then $s^\star$ is larger by
+a small amount than $r^\star$, while if fees dominate inflation
+$$\alpha\ll f$$ and $s^\star$ becomes insensitive to non-zero
+reinvestment ratio and $$s^\star\to1$$.  For a numerical comparison,
+eyeballing charts (so *extremely* rough approximations here) $$f
+\approx .002<.005\approx\alpha$$ so to within 10\% error above,
+$$s^\star\approx r^\star$$ over the range of $$r\in(.5,.75)$$ inferred
+from the Lido yield rate.
 
-Approximate present values from YCharts are very roughly
-$$f\approx.001$$/year, $$\alpha\approx.005$$/year, $$r\in(.5,.75)$$.
-How these transient values $$(\alpha/f,\,r)$$ relate to their
-equilibrium values $$(\alpha^\star/f^\star,\,r^\star)$$ depends on
-some considerations.
+How these transient values $$(\alpha/f,r)$$ relate to their
+equilibrium values $$(\alpha^\star/f^\star,r^\star)$$ depends on
+some considerations:
 
-### Reflexivity and Inflation-Response
+* If indeed churn dies down and slashing stays relatively rare, then
+  $r$ increases to reflect the growing share of businesses that
+  reinvest the most; $r^\star\approx r_{max}$, where $r_{max}$ is
+  assesed over all staking pools with at least 10\% of $S$.
 
-the conceptual source of potential oscillations can be considered by
-modelling the SU system:
+* As we have seen from $\dot{\alpha}$ above, once $\dot{s}\to0$,
+  inflation decays toward zero unless externalities intervene, but
+  with a small relaxation term.  So *very roughly*
+  $\alpha_{now}\approx\alpha^\star$ as an overestimate rule of thumb,
+  that more detailed simulation work could improve.
+
+#### Runaway $r$
+
+Could the sensitivity $r_\alpha$ be sufficient such that even at
+intermediate timescales we see $s\to1$?  This is certainly possible.
+
+### Zero-growth and Deflation
+
+### Reflexivity and Oscillations
+
+One puzzle is that unless $s^\star\to1$ the fixed point of the
+intermediate dynamics $0<\alpha\approx$const. is incompatiable with
+$\alpha=0$ the externality-free fixed point from $\dot{alpha}$.  This
+again indicates the endogenous dynamics are oscillation prone.
+
+The simplest conceptual source of oscillations can be found by
+modelling the $(S,U)$ system:
 
 $$\displaystyle
 \begn{array}{rcrlcrl}
@@ -539,28 +611,31 @@ $$\displaystyle
 \end{array}
 $$
 
+Specifically, so long as $ry>\jmath+q_-$ staked ETH $S$ just continues
+growing and growing, while $U$ cannot get too big, before its own loss
+term $-\left(rf+(1-r)bf+q_+\right)\cdot U$ dominates.  At some point
+$S$ becomes big enough that $ry<\jmath+q_-$ and the system is capable
+of oscillation, depending on a zoo of partial derivatves.  Readers
+wishing for more detail are encouraged to use the two dimensional
+local stability criterion to solve for the condition of eigenvalues
+with an imaginary part.
 
-- we have not emphasized the oscillation because we expect market
-participants can profit from it without having to coordinate their
-behavior; oscillations in supply will die down if they are big enough
-to arbitrage: buy toward the end of an inflationary phase, sell toward
-the end of a deflationary phase.
+We have not emphasized the oscillation in the introduction because we
+expect market participants can profit from them without having to
+coordinate their behavior.  Oscillations in supply will die down if
+they are big enough to arbitrage: buy "toward the end" of an
+inflationary phase, sell "toward the end" of a deflationary phase.
+This behavior would enter our model via slow oscillations arising in
+the parameters which will eventually sync with the endogenous dynamics
+so as to dampen these cycles.  Fourier methods and good data
+collection are recommended if this potential business-opportunity
+interests you.
 
-- contrast this to runaway staking... there's no obvious mechanism to
-  profit from an increase in staking fraction, other than by joining
-  in.  So this is a challenge: can you, the reader, design a
-  cryptoeconomic mechanism by which runaway staking is moderated, in a
-  way that allows individuals to profit?  Can you prove that is impossible?
-
-- we have not explicitly modelled this kind of reflexivity; it is swept into
-  the partial derivatives.  
-
-
-Could these same partial derivatives be large enough to magnify
-inflation-concerns into runaway staking even at intermediate
-timescales?  This is absolutely possible, and would require the following:
-
-
+Contrast this to runaway staking... there's no obvious mechanism to
+profit from an increase in staking fraction, other than by joining in.
+So this is a challenge: can you, the reader, design a cryptoeconomic
+mechanism by which runaway staking is moderated, in a way that allows
+individuals to profit?  Can you prove that is impossible?
 
 
 
@@ -719,7 +794,7 @@ in a bad dynamical systems joke.
 [^aves]: We use moving quarterly averages, though any timescale
 $\tau$ sufficiently long that the [fast dynammics]() of [the base]()
 fee are [integrated out](), and the lags from (un)staking queues are
-not appreciable; see [guide]() for details.  As we are averaging
+not appreciable; see [guide](https://github.com/20squares/ethode/blob/master/guide/guide.md) for details.  As we are averaging
 quarterly, we set the staking $\dot{\mathcal{Q}}_+$, unstaking
 $\dot{\mathcal{Q}}_-$, and reward $\dot{W}$ queues to zero, including
 their respective flows ($R+Q_+,Q_-,I+P$) in their target stocks
@@ -732,26 +807,30 @@ I=\frac{1}{\tau}\int_{t-\tau}^ty^\bullet S^\bullet dt'=yS-|\kappa| $$
 where $$S^\bullet,y^\bullet$ are spot values and the quarterly
 covariance between staking and yield is
 $\kappa=\int_{t-\tau}^t(y^\bullet-y)(S^\bullet-S)dt'<0$.  See the
-[ethode guide]() for more discussion
+[ethode guide](https://github.com/20squares/ethode/blob/master/guide/guide.md) for more discussion.
 
 [^regex]: This regex script is provided to translate the $\LaTeX$
 within the markdown source to (our esimatimate of) terminology more
 common at [issuance.wtf](https://issuance.wtf)
 
-[^partial]: Sometimes $\dot{x}$ is used e.g. for the partial
+[^partial]: Sometimes $\dot{x}=dx/dt$ is used e.g. for the partial
 derivative $\frac{\partial x}{\partial t}$, *but not here*.  For a model
-in which you assume dynamical variables $(x,y,z)$, these derivatives
-are thus related
-
-$$\displaystyle \frac{dx}{dt} := \dot{x} =
+in which you assume dynamical variables $(A,s,\alpha)$, these derivatives
+are related for some parameter $x(A,s,\alpha,t)$
+$$\displaystyle
+\frac{dx}{dt} := \dot{x} =
 \frac{\partial x}{\partial t} +
-\frac{\partial x}{\partial y}\dot{y} +
-\frac{\partial x}{\partial z}\dot{z}
+\frac{\partial x}{\partial A}\dot{A} +
+\frac{\partial x}{\partial s}\dot{s} +
+\frac{\partial x}{\partial\alpha}\dot{\alpha} =:
+x_t + x_A\dot{A} + x_s\dot{s} + x_\alpha\dot{\alpha}
 $$
-
-in which each partial is taken holding the other variables constant,
+in which each partial is taken holding all the other variables constant,
 and $\frac{\partial x}{\partial t}$ is used in practice to capture any
-variability from non-dynamical variables.
+variability from non-dynamical variables.  In principle
+$\partial_A{x}$ and $\partial_\alpha{x}$ are distinct; a quantity can
+depend on supply (how big ETH market cap is compared to BTC, say)
+and inflation independently.
 
 [^yield]: For anyone from finance, this is *not* the same as a [bond
 yield curve](https://www.investopedia.com/terms/y/yieldcurve.asp);
@@ -826,7 +905,7 @@ dynamical variables.  If not, we must add a dynamical variable.
 
 [^asym]: Specifically $I\ll S$ means that \lim_{S\to\infty}(I/S)=0,
 which according to Buterin's [annotated spec]() is satisfied even
-without the limit; see [guide]().
+without the limit; see [guide](https://github.com/20squares/ethode/blob/master/guide/guide.md).
 
 [^ycov]: The relation between quarterly averaged issuance and
 the yield curve $y^\bullet$ is:
@@ -850,29 +929,36 @@ contribute fixed-points themselves, but they can strongly influence
 were $\beta\sim(1-s),j\sim(1-s)^2$ this gives increasingly larger
 $A^\star$ as $s\to1$.
 
+[^vitalikp]: Our $\frac{\partial{d\log~y}}{\partial{d\log~S}}$ is
+$p-1$ in the [discouragement paper](https://github.com/20squares/ethode/blob/master/guide/guide.md)
+
+[^deneb]:
 
 
+[^noburn]: While slashing could believably go to zero on quarterly
+timescales, no burn $B=0$ implies blocks are empty, at least.
+Obviously this isn't really a functioning state for Ethereum, but
+think of it as a limiting behavior.  A more nuanced treatment of
+$s\to1$ can be obtained assuming $s^\star=1-\epsilon$ where
+$\epsilon\ll1$, making $A^\star\sim (y(1)/b^\star
+f^\star)^2\epsilon^{-2}$; as $\epsilon$ is very small $\epsilon^{-2}$
+is very large.  Detailed treatment of the forces using expansions in
+$\epsilon$ are useful, and we would need to model churn, slashing, and
+burn in light of stochasticity/quantization.  One can use difference
+equations, but a useful generic behavior of such systems (a "weak
+coupling" limit) is that such perturbations move the dynamics away from the
+fixed point, apparently randomly, yet the average rate of precession
+about $s^\star=1-\epsilon$ is often still given by the imaginary
+component of the largest eigenvalue.
 
-# Open Questions
+[^mu]: If anything the fractional rates
+  of slashing and burn are positive with small changes in inflation,
+  due to either a single ETH potentially being of less real value, or
+  stimulation of economic activity attracting more validators and
+  higher average burn.
 
-Reinvestment within each quarter may not be realistic, and could
-introduce interesting oscillations.  Some averaging timescale $\tau$,
-at least monthly, is necessary to integrate over the short-term burn
-dynamics, and (un)staking queue lags.  The shorter $\tau$, the better
-the approximations $I\approx yS$ and
-$\frac{d\log~y}{d\log~S}\approx\frac{d\log~y^\bullet}{d\log~S^\bullet}$.
-Yet, $\tau$ must be long enough so that $\dot{V}\approx0$ holds,
-allowing us to define reinvestment without a time lag $r:=R/(I+P)$.
-Once we have better data on how long the tail of reinvestment is we
-could model selling rewards for revenue $K$ and reinvestment $R$ in a
-more nuanced fashion, allowing $V$ to be its own dynamical variable.
-
-We would like to pay more closer attention to how the Deneb hardfork's
-limit on staking queue interacts with inflation and reinvestment.  We
-have ignored this affect in our dynamics, because it does not
-presently limit staking flows, and we see inflation decreasing long
-term.  However for finer questions, it depends on the resources and
-patience of the validators.  How does a potential race condition
-change the composition of the staking queue, in terms of old $R$
-vs. new $Q_+$ and LSTs $L$ vs. everybody else $S-L$.
-
+[^ics]: $\gamma$ expresses the sensitvity of inflation to supply
+  initial conditions; the partial $x_A$ always holds $(\alpha,s)$
+  consant, but $\dot{A}=\alpha A$, and the only partials in $\gamma$
+  are $\jmath_A,\beta_A$.
+  

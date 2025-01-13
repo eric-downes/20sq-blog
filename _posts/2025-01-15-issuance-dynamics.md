@@ -37,17 +37,19 @@ confluence of three interrelated challenges:
 1. Governance becomes centralized.
 
 The view of inflation emphasized in this work in particular feels
-quite different to us, than the views on inflation expressed, for instance in
-this [very helpful review podcast](https://www.youtube.com/watch?v=ivynR3RI3_Y).
+quite different to us, than the views expressed, for instance, in this
+[very helpful review
+podcast](https://www.youtube.com/watch?v=ivynR3RI3_Y).
 
 ## Lookahead
 
 In this blog post we address the first of these concerns "runaway
-(near 100\%) staking" $$s\to1$$ and how it relates to the second, using a "stock
-and flow" macroecnomics model built with guidance from dynamical
-system theory.  In contrast with other research we find inflation
-playing a positive but temporary role in moderating runaway staking,
-though most likely $$s\to1$$ eventually.
+(near 100\%) staking" $$s\to1$$ and how it relates to the second,
+using a "stock and flow" macroecnomics model built with guidance from
+dynamical system theory.  In contrast with other research we find
+inflation playing a positive role in moderating runaway staking, but
+eventually inflation must subside, along with the moderation it
+provides.
 
 In the second post, we look more closely at governance centralization
 and discuss a means for evaluating macroeconomic interventions inspred
@@ -62,8 +64,9 @@ into technical mathematical points not covered here, run their own
 simulations, or learn some dynamical systems are recommended to look
 at our ethode
 [guide](https://github.com/20squares/ethode/blob/master/guide/guide.md),
-which contains [References](#references) section below.  The guide is
-certainly a work in progress, but should have enough to get you going.
+which contains [References](#dynamical-systems-references) section
+below.  The guide is certainly a work in progress, but should have
+enough to get you going.
 
 ## For The Impatient!
 
@@ -91,7 +94,7 @@ inflation is held
 
 1. low enough, that concerns over inflation do not dominate the
 reinvestment of profits by staking businesses at equilibrium,
-$$\frac{dr}{d\alpha}|^\star<0$$ (no news here) but simultaneously
+$$\left\frac{dr}{d\alpha}\right|^\star<0$$ (no news here) but simultaneously
 
 1. high enough to numerically dominate priority fees and MEV, as a
 fraction of unstaked Ether; $$\alpha^\star\gg f^\star$$.
@@ -119,12 +122,12 @@ we call instead $$A$$, so $$s=S/A$$.  Please proceed!
 Consider a "balloon" with variable internal compartments.  The average
 size of each is measured by *stocks*
 
-- ($$S$$)taked Ether (participating in [consensus]()) is a compartment, as is
+- ($$S$$)taked Ether (participating in consensus) is a compartment, as is
 - ($$U$$)nstaked unburnt Ether,
   -- containing the ($$V$$)alidator reward queue.
-- ($$\cancel{O}$$) is all irrecoverable (burned, lost, etc.) Ether, and
+- ($$\mathrm{\{O}}$$) is all irrecoverable (burned, lost, etc.) Ether, and
 - ($$A$$)ccessible/Circul($$A$$)ting Ether supply, $$A=S+U\approx120.4\times10^6$$ in Dec 2024.
-- $$\mathcal{Q}_\pm$$ the Ether in the staking ($$+$$) and unstaking $$-$$) queues
+- $$\mathcal{Q}_\pm$$ the Ether in the staking ($$+$$) and unstaking ($$-$$) queues
 
 The net change in time of a stock is written using a dot, such as
 $$\frac{dA}{dt}:=\dot{A}$$[^partial], the net change in accessible Ether
@@ -139,7 +142,7 @@ cycles of the erratic base fee oscillations.
 
 So, our conceptual model:
 
-$$\dislaystyle
+$$\displaystyle
 \begn{array}{rcl}
 \dot{A} &=& I - B - J\\
 \dot{V} &=& I + P - R - K
@@ -148,7 +151,7 @@ $$\dislaystyle
 \end{array}
 $$
 
-| Flow Name        | Symbol | Domain$$\to$$Codomain[^cats] | Constraint |
+| Flow Name        | Symbol | Domain $$\to$$ Codomain[^cats] | Constraint |
 | :--              | :--    | :-:                          | :--        |
 | Tx Fees          | $$F$$    | $$U\to\cancel{O},V$$       | $$B+P=F<U$$ |
 | Base Fees[^aves] | $$B$$    | $$U\to\cancel{O}$$         | .. |
@@ -196,8 +199,8 @@ and that
 
 2. the large-stake scaling of yield (like, on a log-log plot) is not
 substantially altered by time averaging
-$$\frac{\partial{d\log~y}}{\partial{d\log~S}}\approx
-\frac{\partial{d\log~y^\bullet}}{\partial{d\log~S^\bullet}}$$.[^vitalikp]
+$$\frac{\partial{d\log{y}}}{\partial{d\log{S}}}
+\approx\frac{\partial{d\log{y}^\bullet}}{\partial{d\log{S^\bullet}}}$$.[^vitalikp]
 
 The first is common and almost certainly an overestimate,[^ycov]
 which we deem the correct direction to err in light of our results
@@ -216,7 +219,7 @@ have found concerning.
 To express this concept succinctly in one flow variable, we require
 that the averaging timescale $$\tau$$ be adjusted upward until most
 validators claim and reinvest the bulk of their staking rewards
-within.  That is $$\dot{V}=0$$, so $$R+K=I+P$$ so $$R\leq I+P$$.  The
+within it.  That is $$\dot{V}=0$$, so $$R+K=I+P$$ so $$R\leq I+P$$.  The
 quantity $$r=R/(I+P)$$, the ratio of staking rewards reinvestment over
 issuance and priority fees is one of the distinguishing features of
 our model, and also why we have split the staking queue flow $$R+Q_+$$.
@@ -235,16 +238,17 @@ consiered here, but please, prove us wrong!
 
 ## Intensive Flows give Dynamical Systems
 
-Flows obey inequalities, usually as a fraction of the
-source.[^flowfrac] We convert these inequalities; for each uppercase
+Flows obey inequalities, usually as a fraction of the source, except
+for $r,b$. We convert these inequalities; for each uppercase
 *extensive* flow $$(J,F,B,\ldots)$$ we define a lowercase *intensive
 variable* $$(j,f,b,\ldots)$$: the fractions \[1\] and fractional rates
 \[1/yr\].  In forming these, the ideal is to apply the tightest
-available bounds that still capture the [asymptotic behavior]() in the
-limit of interest $$S\to A$$.  We do not assume the intensive parameters
-are constant, but suppress their dependence for readability.  Unless
-otherwise stated, the intensives are functions of the dynamical
-variables and time, so the burn: $$b(A,S,t)=B/F$$.[^time]
+available bounds that still capture the asymptotic behavior[^asym] in
+the limit of interest $$S\to A$$.  We do not assume the intensive
+parameters are constant, but suppress their dependence for
+readability.  Unless otherwise stated, the intensives are functions of
+the dynamical variables and time, so the burn:
+$$b(A,S,t)=B/F$$.[^time]
 
 ### Table of Flows
 
@@ -252,11 +256,11 @@ variables and time, so the burn: $$b(A,S,t)=B/F$$.[^time]
 | :--              | :--    | :-:                 | :--        | :-- | :-- |
 | Tx Fees          | $$F$$    | $$U\to\cancel{O},V$$  | $$0<B+P=F<U$$ | $$f:=F/U$$ | $$f\in(0,1)$$ [1/yr] |
 | Base Fees[^aves] | $$B$$    | $$U\to\cancel{O}$$    | ..       | $$b:=B/F$$ | $$b\in(0,1) \[1\] |
-| Priority Fees    | $$P$$    | $$U\to V$$            | ..       | $$1-b=P/F | $$1-b\in(0,1)$$ \[1\] |
+| Priority Fees    | $$P$$    | $$U\to V$$            | ..       | $$1-b=P/F$$ | $$1-b\in(0,1)$$ \[1\] |
 | Issuance[^aves]  | $$I$$    | $$\cdot\to V$$        | $$0<I<yS$$ | $$y\in(0,1)$$\[1/yr\] |
 | Slashing         | $$J$$    | $$S\to\cancel{O}$$    | $$0<J<S$$ | $$j:=J/S$$ | $$j\in(0,1)$$ \[1/yr\] |
-| Unstaking | $$Q_-$$  | $$S\to U$$            | $$0<Q_-<S$$ | $$q_-:=Q_-0/S | $$q_-\in(0,1)$$ \[1/yr\] |
-| New Staking      | $$Q_+$$  | $$U\to S$$            | $$0<Q_++R<U$$ | $$q_+:=Q_+/U | $$q_+\in(0,1)$$ \[1/yr\] |
+| Unstaking | $$Q_-$$  | $$S\to U$$            | $$0<Q_-<S$$ | $$q_-:=Q_-0/S$$ | $$q_-\in(0,1)$$ \[1/yr\] |
+| New Staking      | $$Q_+$$  | $$U\to S$$            | $$0<Q_++R<U$$ | $$q_+:=Q_+/U$$ | $$q_+\in(0,1)$$ \[1/yr\] |
 | Reinvestment[^whyr] | $$R$$ | $$V\to S$$            | $$R+K=I+P$$ | $$r:=R/(I+P)$$ \[1\] | $$r\in(0,1)$$ \[1\] |
 | Costs & Profits  | $$K$$    | $$V\to U$$            | ..        | $$1-r=K/(I+P)$$ | $$1-r\in(0,1)$$ \[1\] |
 
@@ -291,7 +295,7 @@ With the above, you should be able to construct the following $$(S,U)$$ system:
 $$\displaystyle
 \begn{array}{rcrlcrl}
 \dot{S} &=& (ry-\jmath-q_-) & S & + & \left(q_++r(1-b)f\right) & U\\
-\dot{U} &=& \left((1-r)y+q_-\right) & S & - & \left(rf+(1-r)bf+q_+\right) & U\\
+\dot{U} &=& \left((1-r)y+q_-\right) & S & - & \left(rf+(1-r)bf+q_+\right) & U
 \end{array}
 $$
 
@@ -327,11 +331,14 @@ These dynamic variables are kind of boring, but critically and unlike
 $$(A,S)$$, there are *no extra conditions* (such as $$S<A$$) that we
 haven't told the math about.  The equations are not
 [stiff](https://en.wikipedia.org/wiki/Stiff_equation); they can be
-accurately simulated.  Most importantly, the variables of interest in
-the ongoing debate are functions of $$S,U$$, so we lose nothing by
-calculating them post-simulation; we'll demonstrate how.  Even as we
-change dynamical variables for intuition building, we recommend using
-models like $$(S,U)$$ as a base for simulation whenever possible.
+simulated without too much pain, though we always recommend to backup
+a simulation result with some analysis: numerical regimes can miss
+important dynamics when perturbation series are insufficient.  Most
+importantly, the variables of interest in the ongoing debate are
+functions of $$S,U$$, so we lose nothing by calculating them
+post-simulation; we'll demonstrate how.  Even as we change dynamical
+variables for intuition building, we recommend using models like
+$$(S,U)$$ as a base for simulation whenever possible.
 
 ### Inflation
 
@@ -342,7 +349,7 @@ table](#table-of-flows).   In general and under
 the existing yield curve we have (where $$\beta=bf=B/U$$):
 
 $$\displaystyle
-\alpha\approx y(sA)s-\beta(1-s)-\jmath s\right) = y_0(1)\sqrt{s/A}-\beta(1-s)-\jmath s
+\alpha\approx y(sA)s-\beta(1-s)-\jmath s = y_0(1)\sqrt{s/A}-\beta(1-s)-\jmath s
 $$
 
 You can explore this by noting `alpha(), sfrac()` as `@output` methods
@@ -363,14 +370,15 @@ su_a.sim()
 
 ### Persistent inflation cannot maintain
 
-A key feature of $$\dot{A} under the current yield curve $$y_0(S)$$ is
-sublinear issuance $$I\leq yS\lesssim S$$, chosen to avoid
+A key feature of $$\dot{A}$$ under the current yield curve $$y_0(S)$$
+is sublinear issuance $$I\leq yS\lesssim S$$, chosen to avoid
 [discouragement
 attacks](https://raw.githubusercontent.com/ethereum/research/master/papers/discouragement/discouragement.pdf).
 Because of this, positive inflation cannot maintain indeinitely.  We
 will demonstrate with the existing yield curve, but the argument is
-general.  Unusually for this blog post, we will show most of the steps so
-the argument is hopefully understood.
+general.  Unusually for this blog post, we will show most of the steps
+so the argument is hopefully understood.  Elsewhere we use $I\approx
+yS$, but here we use $I\leq yS$ as this rigor is required.[^ycov]
 
 $$\displaystyle
 \begin{array}{rcl}
@@ -384,7 +392,7 @@ A(t) &\leq& \left(A(0)+\frac{3}{2}y_0(1)t\right)^{2/3}\\
 \end{array}
 $$
 
-The last line is asymptotic notation.  For two positive functions, $$g$$
+The last line is Vinogradov asymptotic notation.[^asym]  For two positive functions, $$g$$
 dominates $$f$$, written $$f(t)\ll g(t)$$ just when
 $$\lim_{t\to\infty}[f(t)/g(t)]=0$$.  Since supply $$A(t)$$ is *eventually*
 less than a powerlaw of $$t$$, it is *subexponential*.  Thus, no
@@ -956,9 +964,15 @@ first for stable fixed points.
 any forces, like market panics, etc. that we neglected to include as
 dynamical variables.  If not, we must add a dynamical variable.
 
-[^asym]: Specifically $$I\ll S$$ means that \lim_{S\to\infty}(I/S)=0,
-which according to Buterin's [annotated spec]() is satisfied even
-without the limit; see [guide](https://github.com/20squares/ethode/blob/master/guide/guide.md).
+[^asym]: For computer scientists $f\ll g$ is equivalent to
+$f=\mathcal{O}(g)$, which you may be more familiar with.  Specifically
+$$I\ll S$$ means that $$\lim_{S\to\infty}(I/S)=0$$.  We say this
+instead of $I\leq S$ to avoid confusion with inequality due merely to
+coefficients.  Asymptotic Notation is well-explained on
+[wikipedia](https://en.wikipedia.org/wiki/Big_O_notation); see the
+bottom for Vinogradov.  The art of using it to your advantage in
+calculations is demonstrated by [Prof. Carl
+Bender](https://www.youtube.com/watch?v=LYNOGk3ZjFM).
 
 [^ycov]: The relation between quarterly averaged issuance and
 the yield curve $$y^\bullet$$ is:
@@ -1031,3 +1045,7 @@ dimensional local stability criterion (see
 [Strogatz](https://www.youtube.com/watch?v=9yh9DmNqdk4)) to solve for
 the condition of eigenvalues with an imaginary part.  But simulate it
 too!
+
+[^asym]:
+
+

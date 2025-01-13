@@ -293,7 +293,7 @@ class ConstParams(Params):
 With the above, you should be able to construct the following $$(S,U)$$ system:
 
 $$\displaystyle
-\begn{array}{ccrlcrl}
+\begin{array}{ccrlcrl}
 \dot{S} &=& (ry-\jmath-q_-) & S & + & \left(q_++r(1-b)f\right) & U\\
 \dot{U} &=& \left((1-r)y+q_-\right) & S & - & \left(rf+(1-r)bf+q_+\right) & U\\
 \end{array}
@@ -525,7 +525,7 @@ Recall our approximate equation for the fraction of staked ETH $$s$$, in
 which all coefficients are positive but inflation $$\alpha$$:
 
 $$\displaystyle
-\dot{s} &=& \alpha\ (r-s) + (rf+q_+)\ (1-s) + (q_-+(1-r)j)\ (0-s)
+\dot{s} = \alpha\ (r-s) + (rf+q_+)\ (1-s) + (q_-+(1-r)j)\ (0-s)
 $$
 
 So assuming $$|\dot{\alpha}|\ll|\dot{s}|$$, let us examine the fixed

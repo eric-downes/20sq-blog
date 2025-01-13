@@ -145,7 +145,7 @@ So, our conceptual model:
 $$\displaystyle
 \begn{array}{rcl}
 \dot{A} &=& I - B - J\\
-\dot{V} &=& I + P - R - K
+\dot{V} &=& I + P - R - K\\
 \dot{U} - \dot{V} &=& K + Q_- - Q_+ - F\\
 \dot{S} &=& R + Q_+ - Q_- - J\\
 \end{array}
@@ -255,9 +255,9 @@ $$b(A,S,t)=B/F$$.[^time]
 | Flow Name | Symbol | Domain$$\to$$Codomain[^cats] | Constraint | Intensive | Range \[Units\] |    
 | :--              | :--    | :-:                 | :--        | :-- | :-- |
 | Tx Fees          | $$F$$    | $$U\to\cancel{O},V$$  | $$0<B+P=F<U$$ | $$f:=F/U$$ | $$f\in(0,1)$$ [1/yr] |
-| Base Fees[^aves] | $$B$$    | $$U\to\cancel{O}$$    | ..       | $$b:=B/F$$ | $$b\in(0,1) \[1\] |
+| Base Fees[^aves] | $$B$$    | $$U\to\cancel{O}$$    | ..       | $$b:=B/F$$ | $$b\in(0,1)$$ \[1\] |
 | Priority Fees    | $$P$$    | $$U\to V$$            | ..       | $$1-b=P/F$$ | $$1-b\in(0,1)$$ \[1\] |
-| Issuance[^aves]  | $$I$$    | $$\cdot\to V$$        | $$0<I<yS$$ | $$y\in(0,1)$$\[1/yr\] |
+| Issuance[^aves]  | $$I$$    | $$\cdot\to V$$        | $$0<I\leq yS$$ |$$y\approx I/S$$ | $$y\in(0,1)$$\[1/yr\] |
 | Slashing         | $$J$$    | $$S\to\cancel{O}$$    | $$0<J<S$$ | $$j:=J/S$$ | $$j\in(0,1)$$ \[1/yr\] |
 | Unstaking | $$Q_-$$  | $$S\to U$$            | $$0<Q_-<S$$ | $$q_-:=Q_-0/S$$ | $$q_-\in(0,1)$$ \[1/yr\] |
 | New Staking      | $$Q_+$$  | $$U\to S$$            | $$0<Q_++R<U$$ | $$q_+:=Q_+/U$$ | $$q_+\in(0,1)$$ \[1/yr\] |
@@ -293,9 +293,9 @@ class ConstParams(Params):
 With the above, you should be able to construct the following $$(S,U)$$ system:
 
 $$\displaystyle
-\begn{array}{rcrlcrl}
+\begn{array}{ccrlcrl}
 \dot{S} &=& (ry-\jmath-q_-) & S & + & \left(q_++r(1-b)f\right) & U\\
-\dot{U} &=& \left((1-r)y+q_-\right) & S & - & \left(rf+(1-r)bf+q_+\right) & U
+\dot{U} &=& \left((1-r)y+q_-\right) & S & - & \left(rf+(1-r)bf+q_+\right) & U\\
 \end{array}
 $$
 
@@ -349,7 +349,7 @@ table](#table-of-flows).   In general and under
 the existing yield curve we have (where $$\beta=bf=B/U$$):
 
 $$\displaystyle
-\alpha\approx y(sA)s-\beta(1-s)-\jmath s = y_0(1)\sqrt{s/A}-\beta(1-s)-\jmath s
+\alpha\ \approx\ y(sA)s-\beta(1-s)-\jmath s \ =\ y_0(1)\sqrt{s/A}-\beta(1-s)-\jmath s
 $$
 
 You can explore this by noting `alpha(), sfrac()` as `@output` methods
@@ -434,7 +434,7 @@ $$\displaystyle
 \end{array}
 $$
 
-The coefficients of $$(r-s),~(1-s),~(0-s)$$ are variable but *positive*.
+The coefficients of $$(r-s),\ (1-s),\ (0-s)$$ are variable but *positive*.
 Recalling how $$s$$ increases just when $$\dot{s}>0$$, these terms draw
 $$s$$ toward respective points $$r,1,0$$.  We emphasize that the action of
 yield $$y$$ is $$x\to r$$, which may not be the same as $$x\to1$$.
@@ -462,9 +462,9 @@ derivative relations for variables $$(A,\alpha,s,t)$$[^partial] we have
 
 $$\displaystyle
 \begin{array}{rcl}
-\dot{A} &=& \pm\alpha A\\
-\dot{s} &=& \pm\alpha(r-s) + (rf+q_+)(1-s) - (q_-+(1-r)j)s
-\dot{\alpha} &=& \pm\xi\dot{s} - \gamma\alpha s \pm\chi
+\dot{A} &=& \alpha A\\
+\dot{s} &=& \alpha(r-s) + (rf+q_+)(1-s) - (q_-+(1-r)j)s\\
+\dot{\alpha} &=& \xi\dot{s} - \gamma\alpha s +\chi
 \end{array}
 $$
 
@@ -533,8 +533,8 @@ point $$s^\star$$ during a period in which we may treat inflation as
 constant $$\alpha=\alpha_{const}$$.
 
 $$\displaystyle
-s^\star = \frac{
-   r^\star(\alpha_{const} + f^\star) + q_+^\star
+s^\star =
+   \frac{r^\star(\alpha_{const} + f^\star) + q_+^\star
 }{
    m^\star := (\alpha_{const} + r^\star f^\star + q_+^\star + q_-^\star + (1-r)\jmath^\star)
 }
@@ -580,8 +580,8 @@ s^\star \approx r^\star \frac{
     \alpha_const} + r^\star f^\star + (1-r)\jmath^\star}
 = 1 - \frac{
     \jmath^\star}{
-    \alpha_{const} + r^\star f^\star + (1-r)\jmath^\star}
-  - \frac{\alpha_{const}(1-2)}{\alpha_{const} + r^\star f^\star + (1-r)\jmath^\star}
+    \alpha_{const} + r^\star f^\star + (1-r)\jmath^\star} -
+    \frac{\alpha_{const}(1-2)}{\alpha_{const} + r^\star f^\star + (1-r)\jmath^\star}
 $$
 
 We will explore the *stability* of this fixed point below, and based on
@@ -599,7 +599,8 @@ stable *sink*.  If the derivative is zero, the fixed point is a
 degenerate *center*, unrealistic outside of physics.  If positive, the
 fixed point is an unstable *source*.
 
-![1D Stability Conditions](../assetsPosts/1d-stab.png)
+![1D Stability Conditions](
+   ../assetsPosts/2025-01-15-issuance-dynamics/1d-stab.png)
 
 Specifically, we want the sign of
 $$\left.\frac{\partial\dot{s}}{\partial s}\right|^\star$$ to determine
@@ -610,16 +611,15 @@ with their corresponding intensives.[^small-part]
 The full no-churn stability condition, including variations in $\alpha$ is
 
 $$\displaystyle
-\alpha^\star/f^\star + r + \jmath^\star/f^\star
-  >
+\alpha^\star/f^\star + r + \jmath^\star/f^\star >
 \left(\frac{\partial\log\ r}{\partial\log\ x}\right|^\star\left(
 \alpha^\star/f^\star + \left(\frac{1}{r^\star}-\frac{1}{x^\star}\right)
 \left.\frac{\partial(\alpha/f)}{\partial r}\right|^\star\right)
 $$
 
 If we assume that sensitivities are dominated by their respective
-intensives, this reduces to a simple $$\alpha^\star+r^\star f^\star \gtsim
--\jmath^\star$.
+intensives, this reduces to a simple
+$$\alpha^\star+r^\star f^\star \gtrsim -\jmath^\star$$.
 
 Weak Deflation.  If $$\alpha_{const}\in(-rf-\jmath,0]$$ then an
 interior market equilibrium $$s^\star$$ requires high slashing, as we
@@ -662,7 +662,8 @@ be seen in the contours of the market equilibrium staking fraction
 $$s^\star$$ corresponding to $$\dot{s}=0$$, shown here with
 $$\alpha^\star=\alpha_{const}$$.
 
-![alpha vs. s Figure](../assetsPosts/2025-01-15-issuance-fundamentals/staking-fixpoint.png).
+![alpha vs. s Figure](
+    ../assetsPosts/2025-01-15-issuance-dynamics/staking-fixpoint.png).
 
 To find the equilibrium values $$(\alpha^\star/f^\star,\,r^\star)$$
 necessary to acheive a desired staking fraction $$x^\star$$, simply
@@ -713,10 +714,10 @@ for inflation to push the market equilibrium $$s^\star$$ itself into
 runaway staking is (see below for explanation):
 
 $$\displaystyle
-1 ~~ < ~~
-\left.\frac{\partial\log\ r}{\partial\log\ \alpha}\right|^\star
-\cdot \frac{1 + \alpha^\star/f^\star}{1 - r^\star} ~~ + ~~
-\left.\frac{\partial\log\ f}{\partial\log\ \alpha}\right|^\star
+1 \ \ < \ \
+\left(\frac{\partial\log\ r}{\partial\log\ \alpha}\right)^\star
+\cdot \frac{1 + \alpha^\star/f^\star}{1 - r^\star} \ \ + \ \
+\left(\frac{\partial\log\ f}{\partial\log\ \alpha}\right)^\star
 $$
 
 In practtice it all depends on what ETH users consider sufficiently
@@ -766,7 +767,7 @@ moderate $$s$$, which brings us to the quotient rule.
 ## The Quotient Rule
 
 $$\displaystyle
-\dot{s}=\frac{\dot{S}}{A}-s\frac{\dot{A}}{A}=\frac{\dot{S}}{S}-s\alpha
+\dot{s}\ =\ \frac{\dot{S}}{A}\ -\ s\frac{\dot{A}}{A}\ =\ \frac{\dot{S}}{S}\ -\ s\alpha
 $$
 
 What increases $$s$$ is any increase in staked Ether $$S$$, but also any
@@ -845,7 +846,7 @@ question about user preferences.  Austrian School devotees may be so
 inflation-averse that they are already staking all their
 previously-liquid ETH at $$\alpha\approx0.5$$\%/yr.  In contrast users
 who were content to grow up with fiat currencies during periods of
-$$\approx$$3\% inflation or even worse might not care, or would just
+$$\approx$$ 3\% inflation or even worse might not care, or would just
 stake in Compound or buy stETH.
 
 For users seeking to passively preserve wealth, staking in Compound
@@ -874,7 +875,7 @@ research!"
 We are developing the ethode guide in the hope that it can serve a
 pedagogical role.  For now we have assumed some basic familiarity with
 nonlinear dynamics, asymptotic methods, etc. at the level of the first
-few of Prof. S. Strogatz’ youtube lectures.
+few of Prof. S. Strogatz youtube lectures.
 
 - [Nonlinear Dynamics](https://youtube.com/playlist?list=PLbN57C5Zdl6j_qJA-pARJnKsmROzPnO9V&si=iN5YCipB_CeIfrbB)
 

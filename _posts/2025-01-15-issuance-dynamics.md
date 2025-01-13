@@ -387,7 +387,7 @@ dA  &\leq&  ysdt = y_0(1)\sqrt{s/A}dt \leq y_0(1)/\sqrt{A}dt\\
 \sqrt{A}dA  &\leq&  y_0(1)dt\\
 \int_{A(0)}^{A(t)}\sqrt{A}dA  &\leq&  \int_0^{\ t} y_0(1)dt\\
 \left.\frac{2}{3}x^3\right|^{\sqrt{A(t)}}_{\sqrt{A(0)}}  &\leq&  y_0(1)t\\
-A(t)  &\leq&  \left(A(0)+\frac{3}{2}y_0(1)t\right)^{2/3}\\
+A(t)  &\leq&  \left(A(0)^{3/2}+\frac{3}{2}y_0(1)t\right)^{2/3}\\
 \therefore A(t)  &\ll&  e^{kt} ~\forall ~\mathrm{const.}~k>0
 \end{array}
 $$
@@ -819,11 +819,11 @@ prove this is impossible?
 
 So, finally... should the Ethereum community reduce issuance?
 
-* Glib answer:
+### Glib answer
 
 Nope.
 
-* Short answer:
+### Short answer
 
 If you are very inflation averse or you want to slow down the
 transition to high staking, please consider and simulate downward
@@ -834,7 +834,7 @@ solve, and does not claim to solve, the long term problems, but we
 have been forced to conclude that reducing issuance doesn't solve them
 either!
 
-* Long answer:
+### Long answer
 
 Ask the users, especially the validators, especially the LSTs.  Model
 user preferences so that the demand curve becomes semi-empirical

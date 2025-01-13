@@ -385,18 +385,20 @@ $$\displaystyle
 dA = \alpha dt &\leq& \left(ys-\beta(1-s)-\jmath s\right)dt\\
 dA &\leq& ysdt = y_0(1)\sqrt{s/A}dt \leq y_0(1)/\sqrt{A}dt\\
 \sqrt{A}dA &\leq& y_0(1)dt\\
-\int_{A(0)}^{A(t)}\sqrt{A}dA &\leq& \int_0^t y_0(1)dt\\
-\frac{2}{3}x^3\Big|^{\sqrt{A(t)}}_{\sqrt{A(0)}} &\leq& y_0(1)t\\
+\int_{A(0)}^{A(t)}\sqrt{A}dA &\leq& \int_0^{\ t} y_0(1)dt\\
+\left.\frac{2}{3}x^3\right|^{\sqrt{A(t)}}_{\sqrt{A(0)}} &\leq& y_0(1)t\\
 A(t) &\leq& \left(A(0)+\frac{3}{2}y_0(1)t\right)^{2/3}\\
 \therefore A(t) &\ll& e^{kt} ~\forall ~\mathrm{const.}~k>0
 \end{array}
 $$
 
-The last line is Vinogradov asymptotic notation.[^asym]  For two positive functions, $$g$$
-dominates $$f$$, written $$f(t)\ll g(t)$$ just when
-$$\lim_{t\to\infty}[f(t)/g(t)]=0$$.  Since supply $$A(t)$$ is *eventually*
-less than a powerlaw of $$t$$, it is *subexponential*.  Thus, no
-positive inflation rate can maintain indefinitely.
+The last line is Vinogradov asymptotic notation.[^asym] For two
+positive functions, $$g$$ dominates $$f$$, written $$f(t)\ll g(t)$$
+just when $$\lim_{t\to\infty}[f(t)/g(t)]=0$$; when the limit is a
+non-zero constant we say $f\sim g$.  Since supply $$A(t)$$ is
+*eventually* less than a powerlaw of $$t$$, it is *subexponential*.
+Thus, no positive rate of Ether suply expansion can maintain
+indefinitely.
 
 This does not mean we would find every intermediate inflation rate
 pleasant.  Following surges in $$Q_+$$, inflation can accelerate quite
@@ -605,27 +607,52 @@ wether $$s^\star$$ is (un)stable.  We will be ignoring the partial
 derivatives ("sensitivities") by assuming they are small in comparison
 with their corresponding intensives.[^small-part]
 
+The full no-churn stability condition, including variations in $\alpha$ is
 
+$$\displaystyle
+\alpha^\star/f^\star + r + \jmath^\star/f^\star
+  >
+\left(\frac{\partial\log\ r}{\partial\log\ x}\right|^\star\left(
+\alpha^\star/f^\star + \left(\frac{1}{r^\star}-\frac{1}{x^\star}\right)
+\left.\frac{\partial(\alpha/f)}{\partial r}\right|^\star\right)
+$$
 
-### Weak Deflation
+If we assume that sensitivities are dominated by their respective
+intensives, this reduces to a simple $$\alpha^\star+r^\star f^\star \gtsim
+-\jmath^\star$.
 
-If $$\alpha_{const}\in(-rf-\jmath,0]$$ then an interior market equilibrium
-$$s^\star$$ requires high slashing, as we argued before based on
-Churn.  All other things being equal, it is also less stable.
+Weak Deflation.  If $$\alpha_{const}\in(-rf-\jmath,0]$$ then an
+interior market equilibrium $$s^\star$$ requires high slashing, as we
+argued before based on Churn.  All other things being equal, it is
+also less stable; in the region where partial derivatiives might play
+a role, but probably okay.  Assuming low slashing continues, as
+validators must pay the cost themselves so are incentivized to
+minimize it, then $x^\star>1$ and runaway staking is inevitable if the
+fixed point is stable: the numerator is larger than the denominator.
+If unstable, $s$ is pushed toward zero, and becomes unpredictable.
 
+Strong deflation.  Consider now $$\alpha<-rf-\jmath$$.  This could
+happen for instance if the issuance curve were reduced particularly
+bluntly, or changes in fundamentals drove either MEV or the base fee
+(and thus $$f$$) to a persistently higher amount, such that $$ys\ll
+bf(1-s)+\jmath s$$.  These conditions cannot maintain of course.  You
+don't need differential equations to see that $$\alpha<0$$ shrinks
+$$A$$, which eventually raises $$y(sA)$$.  But as a temporary
+intervention to tame runaway staking fraction how would this work?
+Our fixed point is negative and the simplistic "ignore the constants"
+stability criteria is no longer met.  So again, 100\% staking becomes
+inevitable (the source $s^\star<0$ pushes $s$ instead of pulling it),
+or the behavior becomes unpredictable as externalities intervene.
 
-
-### Strong Deflation
-
-Consider now $$\alpha<-rf-\jmath$$.  This could happen for instance if
-the issuance curve were reduced particularly bluntly, or changes in
-fundamentals drove either MEV or the base fee (and thus $$f$$) to a
-persistently higher amount, such that $$ys\ll bf(1-s)+\jmath s$$.
-
-These conditions cannot maintain of course.  You don't need
-differential equations to see that $$\alpha<0$$ shrinks $$A$$, which
-eventually raises $$y(sA)$$.  But as a temporary intervention to tame
-runaway staking fraction how would this work?
+There's a lot of potential complexity here, but none of it is
+desirable!  If you don't like inflation, wait until you try deflation!
+In all seriousness, while we agree largely with the aversion to
+inflation in the context of national economies, it is really important
+to recognize that those economies have a level of demand diversity and
+robustness that Ethereum at present can only dream of.  One day
+hopefully we will have the luxury of bemoaning inflation's effects on
+hodlers, and reducing it, without fear of the infrastructural dynamics
+of these market equilibria running amok.
 
 ### Low Inflation; Even Lower Fees
 
@@ -843,6 +870,30 @@ research!"
 
 
 # Dynamical Systems References
+
+We are developing the ethode guide in the hope that it can serve a
+pedagogical role.  For now we have assumed some basic familiarity with
+nonlinear dynamics, asymptotic methods, etc. at the level of the first
+few of Prof. S. Strogatz’ youtube lectures.
+
+- [Nonlinear Dynamics](https://youtube.com/playlist?list=PLbN57C5Zdl6j_qJA-pARJnKsmROzPnO9V&si=iN5YCipB_CeIfrbB)
+
+- [Perturbation Theory](https://youtube.com/playlist?list=PL5EH0ZJ7V0jV7kMYvPcZ7F9oaf_YAlfbI&si=lFFFJIMAH6nE5BX1)
+
+Highly Recommended books in order of increasing difficulty and
+sophistication if you want to understand this stuff:
+
+- Kun (2020) [A Programmer’s Introduction to Mathematics](https://www.amazon.com/Programmers-Introduction-Mathematics-Second/dp/B088N68LTJ/)
+
+- Strogatz (2024) [Nonlinear Dynamics and Chaos](https://www.amazon.com/Nonlinear-Dynamics-Chaos-Steven-Strogatz/dp/0367026503/)
+
+- Hirsch, Smale and Devaney (2003) [Differential Equations …](https://www.amazon.com/Differential-Equations-Dynamical-Introduction-Mathematics/dp/0123497035/)
+
+- Bender and Orszag (1997) [Advanced Mathematical Methods for Scientists and Engineers](https://www.amazon.com/Advanced-Mathematical-Methods-Scientists-Engineers/dp/0387989315/)
+
+- Arnol\’d (Ed.) the Dynamical Systems Series
+    - esp. V (1994) [Bifurcation and Catastrophe](https://www.amazon.com/Dynamical-Systems-Bifurcation-Encyclopaedia-Mathematical/dp/0387181733/)
+
 
 # Footnotes
 

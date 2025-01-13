@@ -3,7 +3,7 @@ layout: post
 title:  "Ethereum Macroeconomics via Dynamics 1/2"
 author: Eric Downes
 categories: ["ethereum", "macroeconomics", "dynamics", "issuance"]
-excerpt: Work on ETH Macro supported by the Ethereumm Foundation
+excerpt: Work on ETH Macro supported by the Ethereum Foundation
 usemathjax: true
 thanks: We are deeply grateful to the Ethereum Foundation for their support of this work.  I, the author, feel indebted to the profound patience and forebearance of Eric Siu and my colleagues at 20 Squares, as this is *months* overdo.  This work has benefited from conversations with Danieli and Philipp, as well as Eric Siu, Andrew Sudbury, Ansgar Dietrichs, and Mac Budkowski.
 ---
@@ -46,19 +46,19 @@ podcast](https://www.youtube.com/watch?v=ivynR3RI3_Y).
 In this blog post we address the first of these concerns "runaway
 (near 100\%) staking" $$s\to1$$ and how it relates to the second,
 using a "stock and flow" macroecnomics model built with guidance from
-dynamical system theory.  In contrast with other research we find
+dynamical system theory.  In contrast with other research, we find
 inflation playing a positive role in moderating runaway staking, but
 eventually inflation must subside, along with the moderation it
 provides.
 
 In the second post, we look more closely at governance centralization
-and discuss a means for evaluating macroeconomic interventions inspred
+and discuss a means for evaluating macroeconomic interventions inspired
 by bifurcation theory.  Briefly, we are not optimstic that reducing
 issuance will prevent governance centralization, either.
 
 In both posts, we provide a few code examples using
-[ethode](https://github.com/20squares/ethode/) a thin units-aware
-wrapper we built around `scipy.integrate.solve_ivp` to streamline
+[ethode](https://github.com/20squares/ethode/), a thin units-aware
+wrapper we built around `scipy.integrate.solve_ivp`, to streamline
 model evaluation.  Readers desiring to follow our derivations, dive
 into technical mathematical points not covered here, run their own
 simulations, or learn some dynamical systems are recommended to look
@@ -70,7 +70,7 @@ enough to get you going.
 
 ## For The Impatient!
 
-Issuance does not all get dumped into liquid unstaked Ether.  Some
+Issuance does not all get dumped into native Ether.  Some
 portion of it is reinvested by staking businesses; indeed this process is
 coded into LST smart contracts.
  
@@ -81,7 +81,7 @@ is dominated by reinvestment instead of speculation, inflation
 persistently decreases.
 
 We use our macroeconmics model to identify a "low inflation; even
-lower fees" regime (LI;ELF).  Outside of LI;ELF convergence to a
+lower fees" regime (LI;ELF).  Outside of LI;ELF, convergence to a
 desirable staking future without runaway staking is unlikely.  Strong
 deflation, in which the magnitude of deflation exceeds the
 reinvestment of transaction fees, probably corresponds to unstable
@@ -406,7 +406,7 @@ alarmingly.  A good example will be the 2032 Ethereum staking-mania.
 This can be modeled in future retrospect by the following graph
 showing a simulation with `qs=.05, qu=.01`; a constant $$q_+=5$$\% of
 unstaked ETH is added to the staking queue each year.  We aren't
-excited to hodl through multiple decades of 10\% inflation, and we
+excited to HODL through multiple decades of 10\% inflation, and we
 expect you aren't either.
 
 ![US President-Elect Swift Endorses Ethereum!](

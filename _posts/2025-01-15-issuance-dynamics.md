@@ -257,7 +257,7 @@ $$b(A,S,t)=B/F$$.[^time]
 | Tx Fees          | $$F$$    | $$U\to\cancel{O},V$$  | $$0<B+P=F<U$$ | $$f:=F/U$$ | $$f\in(0,1)$$ [1/yr] |
 | Base Fees[^aves] | $$B$$    | $$U\to\cancel{O}$$    | ..       | $$b:=B/F$$ | $$b\in(0,1)$$ \[1\] |
 | Priority Fees    | $$P$$    | $$U\to V$$            | ..       | $$1-b=P/F$$ | $$1-b\in(0,1)$$ \[1\] |
-| Issuance[^aves]  | $$I$$    | $$\cdot\to V$$        | $$0<I\leq yS$$ |$$y\approx I/S$$ | $$y\in(0,1)$$\[1/yr\] |
+| Issuance[^aves]  | $$I$$    | $$\ \to V$$        | $$0<I\leq yS$$ |$$y\approx I/S$$ | $$y\in(0,1)$$\[1/yr\] |
 | Slashing         | $$J$$    | $$S\to\cancel{O}$$    | $$0<J<S$$ | $$j:=J/S$$ | $$j\in(0,1)$$ \[1/yr\] |
 | Unstaking | $$Q_-$$  | $$S\to U$$            | $$0<Q_-<S$$ | $$q_-:=Q_-0/S$$ | $$q_-\in(0,1)$$ \[1/yr\] |
 | New Staking      | $$Q_+$$  | $$U\to S$$            | $$0<Q_++R<U$$ | $$q_+:=Q_+/U$$ | $$q_+\in(0,1)$$ \[1/yr\] |
@@ -304,7 +304,7 @@ written they are all (but one) positive, and so we can reason about
 this model's evolution.  Specifically, so long as $$ry(S)>\jmath+q_-$$
 staked ETH $$S$$ just continues growing and growing.  In contrast it is
 harder for $$U$$ to get as big, limited by its own loss term
-$$-\left(rf+(1-r)bf+q_+\right)\cdot U$$.  At some point in the (far)
+$$-\left(rf+(1-r)bf+q_+\right) U$$.  At some point in the (far)
 future $$S$$ becomes big enough that $$ry(S)<\jmath+q_-$$ and the system
 becomes *capable* of oscillation, depending on parameters and a zoo of
 partial derivatives.[^SU]
@@ -428,9 +428,9 @@ massage, we obtain for staking fraction
 
 $$\displaystyle
 \begin{array}{rcl}
-\dot{s} &=& y(sA)\cdot(r-s) + \\
+\dot{s} &=& y(sA)\ (r-s) + \\
  && \left[q_++f(1-s)\left(bs +(1-b)r\right)\right]\cdot(1-s) + \\
- && \left[j(1-s+r)+q_-\right]\cdot(0-s).
+ && \left[j(1-s+r)+q_-\right]\ (0-s).
 \end{array}
 $$
 
@@ -525,7 +525,7 @@ Recall our approximate equation for the fraction of staked ETH $$s$$, in
 which all coefficients are positive but inflation $$\alpha$$:
 
 $$\displaystyle
-\dot{s} &=& \alpha\cdot(r-s) + (rf+q_+)\cdot(1-s) + (q_-+(1-r)j)\cdot(0-s)
+\dot{s} &=& \alpha\ (r-s) + (rf+q_+)\ (1-s) + (q_-+(1-r)j)\ (0-s)
 $$
 
 So assuming $$|\dot{\alpha}|\ll|\dot{s}|$$, let us examine the fixed
@@ -575,13 +575,12 @@ $$q_+^\star\ll(rf)^\star$$.  Thus, the fixed point $$s^\star$$
 simplifies to
 
 $$\displaystyle
-s^\star \approx r^\star \frac{
-    \alpha_const} + f^\star}{
-    \alpha_const} + r^\star f^\star + (1-r)\jmath^\star}
-= 1 - \frac{
-    \jmath^\star}{
-    \alpha_{const} + r^\star f^\star + (1-r)\jmath^\star} -
-    \frac{\alpha_{const}(1-2)}{\alpha_{const} + r^\star f^\star + (1-r)\jmath^\star}
+s^\star \approx r^\star \frac{\alpha_{const} + f^\star}{
+    \alpha_{const} + r^\star f^\star + (1-r)\jmath^\star} \ =\  1\ -\
+\frac{\jmath^\star}{
+    \alpha_{const} + r^\star f^\star + (1-r)\jmath^\star}\ -\
+\frac{\alpha_{const}(1-2)}{
+    \alpha_{const} + r^\star f^\star + (1-r)\jmath^\star}
 $$
 
 We will explore the *stability* of this fixed point below, and based on

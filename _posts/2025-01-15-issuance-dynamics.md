@@ -1,3 +1,18 @@
+---
+layout: post
+title:  "Ethereum Macroecon via Dynamics 1/2"
+author: Eric Downes
+categories: ["ethereum", "macroeconomics", "dynamics", "issuance"]
+excerpt: Work on ETH Macro supported by the Ethereumm Foundation
+usemathjax: true
+thanks: We are deeply grateful to the Ethereum Foundation for their
+support of this work.  I, the author, feel indebted to the profound
+patience, forebearance, and professionalism of Eric Siu, as this is
+*months* overdo.  This work has benefited significantly from
+conversations with Danieli and Philipp, as well as Eric Siu, Andrew
+Sudbury, and Ansgar Dietrichs.
+---
+
 # Ethereum Macroeconomics
 
 This is the first of two posts on Ethereum macroeconomics.
@@ -9,10 +24,11 @@ this supports, and the Layer-2 blockchains, a conservative valuation
 might be half a trillion dollars.  At the core of Ethereum's "brand",
 distinguishing it from other smart contract platforms, is the
 consistent effort put into decentralized governance.  Via its
-[consensus mechanism]() no central authority can censor a
-transaction, freeze the native asset of a user, etc.  This depends in
-turn on a sufficient diversity of validators staking ETH to
-participate in consensus.
+[consensus
+mechanism](https://ethereum.org/en/developers/docs/consensus-mechanisms/pos/gasper/)
+no central authority can censor a transaction, freeze the native asset
+of a user, etc.  This brand commitment depends in turn on a sufficient diversity of
+validators staking ETH to participate in consensus.
 
 The share of Ether staked by "centralized" staking services, such as
 exchanges and Liquid Staking Providers (LSTs) [is
@@ -76,9 +92,9 @@ $$\frac{dr}{d\alpha}|^\star<0$$ (no news here) but simultaneously
 1. high enough to numerically dominate priority fees and MEV, as a
 fraction of unstaked Ether; $$\alpha^\star\gg f^\star$$.
 
-The importance of this last point in moderatingh staking fraction is
-very different than the view on inflation expressed, for instance [in
-this podcast]().
+The importance of this last point in moderating staking fraction feels
+quite different to us, than the view on inflation expressed, for instance [in
+this video/podcast](https://www.youtube.com/watch?v=ivynR3RI3_Y).
 
 Inflation should *eventually* decay, driving $s\to1$, though it will
 take some time.  This "L2 future" has been recognized by many others:
@@ -128,6 +144,7 @@ $$\dislaystyle
 \dot{V} &=& I + P - R - K
 \dot{U} - \dot{V} &=& K + Q_- - Q_+ - F\\
 \dot{S} &=& R + Q_+ - Q_- - J\\
+\end{array}
 $$
 
 | Flow Name        | Symbol | Domain$\to$Codomain[^cats] | Constraint |
@@ -355,36 +372,41 @@ general.  Unusually for this blog post, we will show most of the steps so
 the argument is hopefully understood.
 
 $$\displaystyle
+\begin{array}{rcl}
 dA = \alpha dt &\leq& \left(ys-\beta(1-s)-\jmath s\right)dt\\
 dA &\leq& ysdt = y_0(1)\sqrt{s/A}dt \leq y_0(1)/\sqrt{A}dt\\
 \sqrt{A}dA &\leq& y_0(1)dt\\
 \int_{A(0)}^{A(t)}\sqrt{A}dA &\leq& \int_0^t y_0(1)dt\\
 \frac{2}{3}x^3\Big|^{\sqrt{A(t)}}_{\sqrt{A(0)}} &\leq& y_0(1)t\\
 A(t) &\leq& \left(A(0)+\frac{3}{2}y_0(1)t\right)^{2/3}\\
-\therefore A(t) \ll e^{kt} ~\forall ~\mathrm{const.}~k>0
+\therefore A(t) &\ll& e^{kt} ~\forall ~\mathrm{const.}~k>0
+\end{array}
 $$
 
-The last line, for those unfamiliar is asymptotic notation.  For two
-positive functions, $g$ dominates $f$, written $f(t)\ll g(t)$ just
-when $\lim_{t\to\infty}[f(t)/g(t)]=0$.  Since supply $A(t)$ is
-*eventually* less than a powerlaw of $t$, it is *subexponential*.
-Thus, no positive inflation rate can maintain.
+The last line is asymptotic notation.  For two positive functions, $g$
+dominates $f$, written $f(t)\ll g(t)$ just when
+$\lim_{t\to\infty}[f(t)/g(t)]=0$.  Since supply $A(t)$ is *eventually*
+less than a powerlaw of $t$, it is *subexponential*.  Thus, no
+positive inflation rate can maintain indefinitely.
 
 This does not mean we would find every intermediate inflation rate
 pleasant.  Following surges in $Q_+$, inflation can accelerate quite
 alarmingly.  A good example will be the 2032 Ethereum staking-mania.
-This can be modeled in the following graph showing `qs=.05, qu=.01`; a
-constant $q_+=5$\% of unstaked ETH is added to the staking queue each
-year.
+This can be modeled in future retrospect by the following graph
+showing a simulation with `qs=.05, qu=.01`; a constant $q_+=5$\% of
+unstaked ETH is added to the staking queue each year.  We aren't
+excited to hodl through multiple decades of 10\% inflation, and we
+expect you aren't either.
 
 ![US President-Elect Swift Endorses Ethereum!](
     ../assetsPosts/swifties.jpg)
 
-Instead we mean to separate concerns.  Unpleasantly high inflation in
-the medium term, even if that "medium term" lasts decades, is a
-*dynamics* problem, not an equilibrium problem, and so dynamical
-solutions (like EIP 7514) are perhaps better suited.  Unfortunately we
-will see that given the above, $s\to1$ is an equilibrium problem.
+Instead of downplaying fears of inflation, rather we mean to separate
+concerns.  Unpleasantly high inflation in the medium term, even if
+that "medium term" lasts decades, is a *dynamics* problem, not an
+equilibrium problem, and so dynamical solutions (like EIP 7514) seem
+better suited.  Unfortunately we will see that given the above,
+$s\to1$ is an *equilibrium* problem.
 
 ### Staking Fraction
 
@@ -404,7 +426,7 @@ $$
 The coefficients of $(r-s),~(1-s),~(0-s)$ are variable but *positive*.
 Recalling how $s$ increases just when $\dot{s}>0$, these terms draw
 $s$ toward respective points $r,1,0$.  We emphasize that the action of
-yield $y$ is $x\to r$, *not* $x\to1$, unless $r\geq1$.
+yield $y$ is $x\to r$, which may not be the same as $x\to1$.
 
 As expressed by the quotient rule, an increase in staking fraction
 can be driven by more people staking, and/or it can be driven by a
@@ -469,10 +491,10 @@ $\alpha\approx0$ and sensityivities are weak, $|\xi|\sim\gamma\sim y$
 obtains.  Generally if $|\xi|,\gamma\ll1$ then the derivatives obey
 $|\dot{\alpha}|\ll|\dot{s}|$: a [seperation of
 timescales](https://en.wikipedia.org/wiki/Method_of_averaging).  For
-durations when this obtains, short periods at intremediate times,
-inflation could be treated as a parameter instead of its own dynamic
-variable, with staking fraction equilibrating to $s^\star$ more
-quickly than $\alpha^\star$ equilibrates.
+durations when this obtains, one or more periods at intremediate
+times, inflation can be usefully approximated as a parameter instead
+of its own dynamic variable, with staking fraction equilibrating to
+$s^\star$ more quickly than $\alpha^\star$ equilibrates.
 
 Does this hold presently?  For a sanity-check, a quick look at YCharts
 since The Merge shows that $$s,\dot{s}$$ do indeed seem to vary over a
@@ -501,9 +523,9 @@ constant $\alpha=\alpha_{const}$.
 
 $$\displaystyle
 s^\star = \frac{
-   r^\star(\alpha_0 + f^\star) + q_+^\star
+   r^\star(\alpha_{const} + f^\star) + q_+^\star
 }{
-   m^\star := (\alpha_0 + r^\star f^\star + q_+^\star + q_-^\star + (1-r)\jmath^\star)
+   m^\star := (\alpha_{const} + r^\star f^\star + q_+^\star + q_-^\star + (1-r)\jmath^\star)
 }
 = 1 - \frac{(1-r)\jmath+q_-}{m^star} - \frac{\alpha_0(1-r^\star)}{m^\star}
 $$
@@ -543,11 +565,12 @@ simplifies to
 
 $$\displaystyle
 s^\star \approx r^\star \frac{
-    \alpha^\star + f^\star}{
-    \alpha^\star + r^\star f^\star + (1-r)\jmath^\star}
+    \alpha_const} + f^\star}{
+    \alpha_const} + r^\star f^\star + (1-r)\jmath^\star}
 = 1 - \frac{
     \jmath^\star}{
-    \alpha^\star + r^\star f^\star + (1-r)\jmath^\star}
+    \alpha_{const} + r^\star f^\star + (1-r)\jmath^\star}
+  - \frac{\alpha_{const}(1-2)}{\alpha_{const} + r^\star f^\star + (1-r)\jmath^\star}
 $$
 
 We will explore the *stability* of this fixed point below, and based on
@@ -598,34 +621,34 @@ runaway staking fraction how would this work?
 ### Low Inflation; Even Lower Fees
 
 Well, that was deflating!  Let's cheer ourselves up by considering the
-behaviors under $\alpha>0$.
+behaviors under $\alpha_{const}>0$.  A positive role for inflation can
+be seen in the contours of the market equilibrium staking fraction
+$$s^\star$$ corresponding to $$\dot{s}=0$$, shown here with
+$\alpha^\star=\alpha_{const}$.
 
-A positive role for inflation can be seen in the contours of the
-market equilibrium staking fraction $$s^\star$$ corresponding to
-$$\dot{s}=0$$, shown in [figure
-1](../assetsPosts/2025-01-15-issuance-fundamentals/staking-fixpoint.png).
+![alpha vs. s Figure](../assetsPosts/2025-01-15-issuance-fundamentals/staking-fixpoint.png).
 
-To find the equilibrium values
-$$(\alpha^\star/f^\star,\,r^\star)$$ necessary to acheive a desired
-staking fraction $$x^\star$$, simply pick a colored contour in the
-figure: these are the values of constant $$x^\star$$.  For every point
-on this curve, the equilibrium inflation:fee ratio
-$$\alpha^\star/f^\star$$ is the x-coordinate, and the equilibrium
-reinvestment ratio $$r^\star$$ is the y-value.
+To find the equilibrium values $$(\alpha^\star/f^\star,\,r^\star)$$
+necessary to acheive a desired staking fraction $$x^\star$$, simply
+pick a colored contour in the figure: these are the values of constant
+$$x^\star$$.  For every point on this curve, the equilibrium
+inflation:fee ratio $$\alpha^\star/f^\star$$ is the x-coordinate, and
+the equilibrium reinvestment ratio $$r^\star$$ is the y-value.
 
 A breakdown of limitng behaviors is illustrative under positive
 inflation.  For any value of non-negative inflation, $$r^\star$$ is a
 lower bound for the equilibrium staking fraction we should expect.  If
-inflation dominates fees, $$\alpha\gg f$$ then $s^\star$ is larger by
-a small amount than $r^\star$, while if fees dominate inflation
-$$\alpha\ll f$$ and $s^\star$ becomes insensitive to non-zero
-reinvestment ratio and $$s^\star\to1$$.  For a numerical comparison,
-eyeballing charts (so *extremely* rough approximations here) $$f
+inflation dominates fees, $$\alpha_{const}\gg f^\star$$ then $s^\star$
+is larger by a small amount than $r^\star$, while if fees dominate
+inflation $$0<\alpha_{const}\ll f^\star$$ then $s^\star$ becomes
+insensitive to non-zero reinvestment ratio and $$s^\star\to1$$.  For a
+numerical comparison, eyeballing charts (so *extremely* rough
+approximations here, possibly off by an order of magnitude) $$f
 \approx .002<.005\approx\alpha$$ so to within 10\% error above,
 $$s^\star\approx r^\star$$ over the range of $$r\in(.5,.75)$$ inferred
 from the Lido yield rate.
 
-How these transient values $$(\alpha/f,r)$$ relate to their
+How the transient values $$(\alpha_{now}/f,r)$$ relate to the true
 equilibrium values $$(\alpha^\star/f^\star,r^\star)$$ depends on
 some considerations:
 
@@ -634,11 +657,10 @@ some considerations:
   reinvest the most; $r^\star\approx r_{max}$, where $r_{max}$ is
   assesed over all staking pools with at least 10\% of $S$.
 
-* As we have seen from $\dot{\alpha}$ above, once $\dot{s}\to0$,
-  inflation decays toward zero unless externalities intervene, but
-  with a small relaxation term.  So *very roughly*
-  $\alpha_{now}\approx\alpha^\star$ as an overestimate rule of thumb,
-  that more detailed simulation work could improve.
+* We are holding $\alpha_{const}=\alpha^\star$, so
+  $\alpha_{now}\approx\alpha^\star$ but a more sophisticated approximation
+  is likely possible keeping within the two-timescale context... maybe
+  you'll find one!
 
 ### Runaway $r$ from Inflation pressure
 
@@ -809,30 +831,6 @@ short of details.  Put anoher way, since you have insisted on reading
 the "long answer", we will end with the classic and cowardly refrain
 of academics and academic-adjacents everywhere "it requires more
 research!"
-
-## Externalities
-
-There are many things we have not tried to model: price, external
-markets, etc.  These must enter via the sensitivity of intensives, yet
-even here we have done very little.  We have not assumed the
-intensives $\beta,f,r,\ldots$ constant, but nor do we know enough to
-reliably model their dependence on the dynamical variables
-$A,s,\alpha$.  For finding fixed points this has not mattered
-because the intensives did not have zeros by construction.  For
-stability arguments, however, including how the $(A,s,\alpha)$ system
-couples to cyclical forcings, this does matter quite a bit.
-
-Every local stability condition reduces to an expression of intensives
-$\betya,f,r$ and their sensitivites (partial derivatives) $\beta_s$
-etc.  In making stability judgements, we have assumed that the
-magnitude of sensitivities is always dominated by their corresponding
-intensives.  This may not be true, especially when the intensives get
-very small, as they do here!  There is a lot of good economics and
-interesting mathematics that could go into approximating the forms of
-these sensitivities, and how they couple to price, either from first
-principles or data.  A real understanding of Ethereum macroeconomics
-will require this; we encourage you to take these tools and find what
-we have missed.
 
 
 # Dynamical Systems References

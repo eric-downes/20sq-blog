@@ -94,7 +94,7 @@ inflation is held
 
 1. low enough, that concerns over inflation do not dominate the
 reinvestment of profits by staking businesses at equilibrium,
-$$\left\frac{dr}{d\alpha}\right|^\star<0$$ (no news here) but simultaneously
+$$\left(\frac{dr}{d\alpha}\right)^\star<0$$ (no news here) but simultaneously
 
 1. high enough to numerically dominate priority fees and MEV, as a
 fraction of unstaked Ether; $$\alpha^\star\gg f^\star$$.
@@ -137,13 +137,13 @@ units \[ETH/yr\].
 
 By averaging over "long" timescales (at least quarterly)[^aves] we
 approximate the staking and unstaking queues as equilibrated;
-$$\mathcal{Q}_+\approx0\approx\mathcal{Q}_-$$, and average over many
+$$\mathcal{Q}_+ \approx 0 \approx \mathcal{Q}_-$$, and average over many
 cycles of the erratic base fee oscillations.
 
 So, our conceptual model:
 
 $$\displaystyle
-\begn{array}{rcl}
+\begin{array}{rcl}
 \dot{A} &=& I - B - J\\
 \dot{V} &=& I + P - R - K\\
 \dot{U} - \dot{V} &=& K + Q_- - Q_+ - F\\

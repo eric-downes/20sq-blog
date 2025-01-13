@@ -265,7 +265,7 @@ $$b(A,S,t)=B/F$$.[^time]
 | Costs & Profits  | $$K$$    | $$V\to U$$            | ..        | $$1-r=K/(I+P)$$ | $$1-r\in(0,1)$$ \[1\] |
 
 The use of intensive variable parameters and the approximation
-$$\dot{V}\approx0$$[^flowfrac] allows us to reshape our conceptual model
+$$\dot{V}\approx0$$ allows us to reshape our conceptual model
 into one that is defined in its own dynamical and intensive variables,
 a *dynamical system*.  We'll build this up one step at a time.  As you
 follow along you may find it useful to look at models in python.  You
@@ -397,7 +397,7 @@ positive functions, $$g$$ dominates $$f$$, written $$f(t)\ll g(t)$$
 just when $$\lim_{t\to\infty}[f(t)/g(t)]=0$$; when the limit is a
 non-zero constant we say $f\sim g$.  Since supply $$A(t)$$ is
 *eventually* less than a powerlaw of $$t$$, it is *subexponential*.
-Thus, no positive rate of Ether suply expansion can maintain
+Thus, no positive rate of Ether supply expansion can maintain
 indefinitely.
 
 This does not mean we would find every intermediate inflation rate
@@ -611,9 +611,9 @@ The full no-churn stability condition, including variations in $\alpha$ is
 
 $$\displaystyle
 (\alpha^\star/f^\star)\ +\ r\ +\ (\jmath^\star/f^\star)\ \ >\ \
-\log{r}_{\log x}^\star\left(
-(\alpha^\star/f^\star)\ +\ (r^\star)^{-1}-(x^\star)^{-1}
-(\alpha/f)_r^\star\right)
+\log{r}_{\log x}^\star\left[
+(\alpha^\star/f^\star)\ +\ (1/r^\star-1/x^\star)
+(\alpha/f)_r^\star\right]
 $$
 
 If we assume that sensitivities are dominated by their respective

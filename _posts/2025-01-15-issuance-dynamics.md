@@ -257,7 +257,7 @@ $$b(A,S,t)=B/F$$.[^time]
 | Tx Fees          | $$F$$    | $$U\to\cancel{O},V$$  | $$0<B+P=F<U$$ | $$f:=F/U$$ | $$f\in(0,1)$$ [1/yr] |
 | Base Fees[^aves] | $$B$$    | $$U\to\cancel{O}$$    | ..       | $$b:=B/F$$ | $$b\in(0,1)$$ \[1\] |
 | Priority Fees    | $$P$$    | $$U\to V$$            | ..       | $$1-b=P/F$$ | $$1-b\in(0,1)$$ \[1\] |
-| Issuance[^aves]  | $$I$$    | $$\ \to V$$        | $$0<I\leq yS$$ |$$y\approx I/S$$ | $$y\in(0,1)$$\[1/yr\] |
+| Issuance[^aves]  | $$I$$    | $$\cdot \to V$$        | $$0<I\leq yS$$ |$$y\approx I/S$$ | $$y\in(0,1)$$\[1/yr\] |
 | Slashing         | $$J$$    | $$S\to\cancel{O}$$    | $$0<J<S$$ | $$j:=J/S$$ | $$j\in(0,1)$$ \[1/yr\] |
 | Unstaking | $$Q_-$$  | $$S\to U$$            | $$0<Q_-<S$$ | $$q_-:=Q_-0/S$$ | $$q_-\in(0,1)$$ \[1/yr\] |
 | New Staking      | $$Q_+$$  | $$U\to S$$            | $$0<Q_++R<U$$ | $$q_+:=Q_+/U$$ | $$q_+\in(0,1)$$ \[1/yr\] |
@@ -293,8 +293,8 @@ class ConstParams(Params):
 With the above, you should be able to construct the following $$(S,U)$$ system:
 
 $$\displaystyle
-\begin{array}{ccrlcrl}
-\dot{S} &=& (ry-\jmath-q_-) & S & + & \left(q_++r(1-b)f\right) & U\\
+\begin{array}{rrrlcrl}
+\dot{S} &=& \ \ (ry-\jmath-q_-) & S & + & \ \ \left(q_++r(1-b)f\right) & U\\
 \dot{U} &=& \left((1-r)y+q_-\right) & S & - & \left(rf+(1-r)bf+q_+\right) & U\\
 \end{array}
 $$
@@ -382,13 +382,13 @@ yS$, but here we use $I\leq yS$ as this rigor is required.[^ycov]
 
 $$\displaystyle
 \begin{array}{rcl}
-dA = \alpha dt &\leq& \left(ys-\beta(1-s)-\jmath s\right)dt\\
-dA &\leq& ysdt = y_0(1)\sqrt{s/A}dt \leq y_0(1)/\sqrt{A}dt\\
-\sqrt{A}dA &\leq& y_0(1)dt\\
-\int_{A(0)}^{A(t)}\sqrt{A}dA &\leq& \int_0^{\ t} y_0(1)dt\\
-\left.\frac{2}{3}x^3\right|^{\sqrt{A(t)}}_{\sqrt{A(0)}} &\leq& y_0(1)t\\
-A(t) &\leq& \left(A(0)+\frac{3}{2}y_0(1)t\right)^{2/3}\\
-\therefore A(t) &\ll& e^{kt} ~\forall ~\mathrm{const.}~k>0
+dA = \alpha dt  &\leq&  \left(ys-\beta(1-s)-\jmath s\right)dt\\
+dA  &\leq&  ysdt = y_0(1)\sqrt{s/A}dt \leq y_0(1)/\sqrt{A}dt\\
+\sqrt{A}dA  &\leq&  y_0(1)dt\\
+\int_{A(0)}^{A(t)}\sqrt{A}dA  &\leq&  \int_0^{\ t} y_0(1)dt\\
+\left.\frac{2}{3}x^3\right|^{\sqrt{A(t)}}_{\sqrt{A(0)}}  &\leq&  y_0(1)t\\
+A(t)  &\leq&  \left(A(0)+\frac{3}{2}y_0(1)t\right)^{2/3}\\
+\therefore A(t)  &\ll&  e^{kt} ~\forall ~\mathrm{const.}~k>0
 \end{array}
 $$
 
@@ -610,10 +610,10 @@ with their corresponding intensives.[^small-part]
 The full no-churn stability condition, including variations in $\alpha$ is
 
 $$\displaystyle
-\alpha^\star/f^\star + r + \jmath^\star/f^\star >
-\left(\frac{\partial\log\ r}{\partial\log\ x}\right|^\star\left(
-\alpha^\star/f^\star + \left(\frac{1}{r^\star}-\frac{1}{x^\star}\right)
-\left.\frac{\partial(\alpha/f)}{\partial r}\right|^\star\right)
+(\alpha^\star/f^\star)\ +\ r\ +\ (\jmath^\star/f^\star)\ \ >\ \
+\log{r}_{\log x}^\star\left(
+(\alpha^\star/f^\star)\ +\ (r^\star)^{-1}-(x^\star)^{-1}
+(\alpha/f)_r^\star\right)
 $$
 
 If we assume that sensitivities are dominated by their respective

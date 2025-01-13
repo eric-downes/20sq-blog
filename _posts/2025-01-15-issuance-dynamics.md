@@ -607,7 +607,8 @@ wether $$s^\star$$ is (un)stable.  We will be ignoring the partial
 derivatives ("sensitivities") by assuming they are small in comparison
 with their corresponding intensives.[^small-part]
 
-The full no-churn stability condition, including variations in $\alpha$ is
+The full no-churn stability condition, including variations in
+$\alpha$ is (with subscripts denoting partials)
 
 $$\displaystyle
 (\alpha^\star/f^\star)\ +\ r\ +\ (\jmath^\star/f^\star)\ \ >\ \

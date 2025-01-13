@@ -5,34 +5,29 @@ author: Eric Downes
 categories: ["ethereum", "macroeconomics", "dynamics", "issuance"]
 excerpt: Work on ETH Macro supported by the Ethereumm Foundation
 usemathjax: true
-thanks: We are deeply grateful to the Ethereum Foundation for their
-support of this work.  I, the author, feel indebted to the profound
-patience and forebearance of Eric Siu and my colleagues at 20 Squares,
-as this is *months* overdo.  This work has benefited
-from conversations with Danieli and Philipp, as well as Eric Siu,
-Andrew Sudbury, Ansgar Dietrichs, and Mac Budkowski.
+thanks: We are deeply grateful to the Ethereum Foundation for their support of this work.  I, the author, feel indebted to the profound patience and forebearance of Eric Siu and my colleagues at 20 Squares, as this is *months* overdo.  This work has benefited from conversations with Danieli and Philipp, as well as Eric Siu, Andrew Sudbury, Ansgar Dietrichs, and Mac Budkowski.
 ---
 
 # Ethereum Macroeconomics
 
 This is the first of two posts on Ethereum macroeconomics.
 
-Ethereum has grown into a [major economic
-force](https://www.grayscale.com/research/reports/the-battle-for-value-in-smart-contract-platforms);
+Ethereum has grown into a [major economic force](
+ https://www.grayscale.com/research/reports/the-battle-for-value-in-smart-contract-platforms);
 between its native asset Ether (ETH), the smart contract ecosystem
 this supports, and the Layer-2 blockchains, a conservative valuation
 might be half a trillion dollars.  At the core of Ethereum's "brand",
 distinguishing it from other smart contract platforms, is the
 consistent effort put into decentralized governance.  Via its
-[consensus
-mechanism](https://ethereum.org/en/developers/docs/consensus-mechanisms/pos/gasper/)
+[consensus mechanism](
+    https://ethereum.org/en/developers/docs/consensus-mechanisms/pos/gasper/)
 no central authority can censor a transaction, freeze the native asset
 of a user, etc.  This brand commitment depends in turn on a sufficient diversity of
 validators staking ETH to participate in consensus.
 
 The share of Ether staked by "centralized" staking services, such as
-exchanges and Liquid Staking Providers (LSTs) [is
-considerable](https://dune.com/queries/2394100/3928083), and continues
+exchanges and Liquid Staking Providers (LSTs) [is considerable](
+    https://dune.com/queries/2394100/3928083), and continues
 to grow.  This has provoked [concerns](https://issuance.wtf/), among
 Ethereum researchers that the future of Ethereum might involve a
 confluence of three interrelated challenges:
@@ -40,6 +35,10 @@ confluence of three interrelated challenges:
 1. Nearly all Ether becomes staked.
 1. Inflation becomes excessive.
 1. Governance becomes centralized.
+
+The view of inflation emphasized in this work in particular feels
+quite different to us, than the views on inflation expressed, for instance in
+this [very helpful review podcast](https://www.youtube.com/watch?v=ivynR3RI3_Y).
 
 ## Lookahead
 
@@ -97,13 +96,9 @@ $$\frac{dr}{d\alpha}|^\star<0$$ (no news here) but simultaneously
 1. high enough to numerically dominate priority fees and MEV, as a
 fraction of unstaked Ether; $$\alpha^\star\gg f^\star$$.
 
-The importance of this last point in moderating staking fraction feels
-quite different to us, than the view on inflation expressed, for instance [in
-this helpful review podcast](https://www.youtube.com/watch?v=ivynR3RI3_Y).
-
 Inflation should *eventually* decay, driving $$s\to1$$ if it is not
-already there, though it may take some time.  This "L2 future" has
-been recognized by many others: most Ether is staked, with the
+already there, though it may take considerable time.  This "L2 future"
+has been recognized by many others: most Ether is staked, with the
 majority used for settlement of L2 rollups.  We'll discuss it more
 next time.
 

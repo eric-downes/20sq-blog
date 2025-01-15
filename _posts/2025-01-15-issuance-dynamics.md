@@ -189,12 +189,9 @@ A few flows deserve specific comment: $$I$$ and $$(R,Q_+,K)$$.
 
 All of these stocks and flows, $$(I,S,\ldots)$$, are moving
 time-averages over *spot values* $$(I^\bullet,S^\bullet,\ldots)$$
-defined at a given block; $$S:=\tau^{-1}\int_{t-\tau}^t
-S^\bullet(t')dt'$$, etc.  In the case of issuance, we
-can express spot issuance as a known function of the yield curve
-$$I^\bullet = y^\bullet S^\bullet$$.  We'll assume that
+defined at a given block.  For issuance, we'll assume that
 
-1. Issuance is sublinear $$\boxed{1\ll I\approx yS\ll S}$$[^asym] to
+1. Issuance is sublinear $$1\ll I\approx yS\ll S$$[^asym] to
 avoid [discouragement attacks](
     https://github.com/20squares/ethode/blob/master/guide/guide.md),
 and that
@@ -205,8 +202,25 @@ $$\frac{\partial{d\log{y}}}{\partial{d\log{S}}}
 \approx\frac{\partial{d\log{y}^\bullet}}{\partial{d\log{S^\bullet}}}$$.[^vitalikp]
 
 The first is common and almost certainly an overestimate with
-$I\leq{yS}$ more precise.[^ycov] We deem this a good direction in
-which to err in light of our results concerning (the lack of) runaway
+$I\leq{yS}$ more precise.  We reason as follows.  We can express spot
+issuance as a known function of the yield curve $$I^\bullet =
+y^\bullet S^\bullet$$.  From this we obtain an inequality for the
+quarterly-averaged issuance $I\leq yS$ using time-covariance.
+
+$$\displaystyle
+\begin{array}{rcl}
+I &=& \frac{1}{\tau}\int_{t-\tau}^ty^\bullet S^\bullet dt'\\
+ &\approx& yS + \frac{1}{\tau}\int_{t-\tau}^t(y^\bullet-y)(S^\bullet-S)dt'\\
+ &=& yS - |COV(y^\bullet,S^\bullet)|\\
+I &\leq& yS
+\end{array}
+$$
+
+This approximation should work for any positive definite yield curve
+with finite slope, erring in a conservative direction without explicit
+dependence on the present curve $y^\bullet = y_0(1)/sqrt(S^\bullet)$
+with $y_0(1)\approx166.3$/yr.  We deem this a good direction in which
+to err in light of our results concerning (the lack of) runaway
 inflation.
 
 ### Bounding Reinvestment $$R$$
@@ -278,7 +292,9 @@ with $A_{now}\approx120e6,\ s_{now}\approx.3$ as a start for the
 models that follow.
 
 ```python
+from numpy import sqrt
 from ethode import *
+
 @dataclass
 class ConstParams(Params):
     y1: 1/Yr = 166.3
@@ -358,7 +374,7 @@ $$\displaystyle
 \alpha\ \approx\ y(sA)s-\beta(1-s)-\jmath s \ =\ y_0(1)\sqrt{s/A}-\beta(1-s)-\jmath s
 $$
 
-You can explore this by noting `alpha(), sfrac()` as `@output` methods
+You can explore this by adding `alpha(), sfrac()` as `@output` methods
 
 ```python
 @dataclass
@@ -995,14 +1011,6 @@ produces empty blocks, so long as the reward queue is not empty U > 0.
 Se also our next footnote on I<=yS.[^ycov]
 
 [^ycov]: (Here the lack of latex in footnotes really sucks.)  The
-inequality I <= yS is due to the use of quarterly averages.  Using
-"int" for integral, and "S.", "y." for spot values.
-   * I = int[t-τ to t][y.(S.) S. dt'/τ]
-   * I = yS - int[t-τ to t][(y - y.)(S - S.)dt/τ
-   * I = yS - |COV(y., S.)| <= yS
-This approximation works for any yield curve, erring in a
-conservative direction without explicit dependence on the present-day
-yield curve `y. = y0(1)/sqrt(S)` where y0(1)~166.3/yr.
 
 [^partial]: Sometimes "dot x" = dx/dt is used for the partial
 derivative of x with time t, which we denote x_t.  The full relation

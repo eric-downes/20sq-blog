@@ -185,7 +185,7 @@ but more accurate upper limits would play little role in our analysis.
 
 A few flows deserve specific comment: $$I$$ and $$(R,Q_+,K)$$.
 
-### Bounding Issuance $$I$$
+### Bounding Issuance
 
 All of these stocks and flows, $$(I,S,\ldots)$$, are moving
 time-averages over *spot values* $$(I^\bullet,S^\bullet,\ldots)$$
@@ -223,7 +223,7 @@ with $y_0(1)\approx166.3$/yr.  We deem this a good direction in which
 to err in light of our results concerning (the lack of) runaway
 inflation.
 
-### Bounding Reinvestment $$R$$
+### Bounding Reinvestment
 
 Reinvestment of staking rewards by validators $$R$$ is achieved by
 staking a new validator from existing rewards.  While clearly a
@@ -339,7 +339,7 @@ class SUSimConst(ODESim):
     params: Params = ConstParams()
     @staticmethod
     def func(t:Yr, v:tuple[ETH, ETH], p:Params) -> tuple[ETH/Yr, ETH/Yr]:
-        x = {'S': (S := v[0]), 'U': (U := v[1])}
+    	S, U = v
     	dS = (p.r * (y := p.yld(S)) - p.j - p.qu) * S + \
             ((rf := p.r * p.f) * (1 - p.b) + p.qs) * U
         dU = ((1 - p.r) * y + p.qu) * S - \
@@ -400,7 +400,7 @@ Because of this, positive inflation cannot maintain indefinitely.  We
 will demonstrate with the existing yield curve, but the argument is
 general.  Unusually for this blog post, we show most of the steps
 so the argument is hopefully understood.  Elsewhere we use $I\approx
-yS$, but here we use $I\leq yS$ as greater rigor is appropriate.[^ycov]
+yS$, but here we use $I\leq yS$ as greater [rigor](#bounding-issuance) is appropriate.
 
 $$\displaystyle
 \begin{array}{rcl}
@@ -1005,9 +1005,7 @@ appreciable.  As we are averaging quarterly, we set the staking,
 unstaking, and reward queues to zero, including their respective flows
 (R+Q+,Q-,I+P) in their codomain stocks (S,U,V); even if ethereum
 produces empty blocks, so long as the reward queue is not empty U > 0.
-Se also our next footnote on I<=yS.[^ycov]
-
-[^ycov]: (Here the lack of latex in footnotes really sucks.)  The
+Se also our [section](bounding-issuance) on I<=yS.
 
 [^partial]: Sometimes "dot x" = dx/dt is used for the partial
 derivative of x with time t, which we denote x_t.  The full relation

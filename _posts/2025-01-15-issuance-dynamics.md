@@ -429,9 +429,7 @@ This does not mean we would find every intermediate inflation rate
 pleasant.  Following surges in $$Q_+$$ and/or drops in supply,
 inflation can accelerate quite alarmingly.  A good example will be the
 Ethereum staking-mania following the 2132 Atlantia-v-Eurasia market
-crash, in which 99\% of present-day Ether will have been burned.  We
-aren't excited to hodl through multiple decades of 10\% inflation, and
-we expect you aren't either!
+crash, in which 99\% of present-day Ether will have been burned.
 
 ```python
 @dataclass
@@ -448,16 +446,19 @@ zomg.sim()
 ```
 
 ![Disaster Scenario](
-    ../assetsPosts/2025-issuance-dynamics/mega-burn.png)
+    ../assetsPosts/2025-01-15-issuance-dynamics/1d-stab.jpg)
 
-Silliness aside, we do not mean to downplay fears of inflation, and we
-encourage you to find more realistic scenarios in which such sustained
-inflation occurs.  Rather, we mean to separate concerns.  Unpleasantly
-high inflation in the medium term, even if that "medium term" lasts
-decades, is a *dynamics* problem, not an equilibrium problem, and so
-dynamical solutions (like EIP 7514) seem better suited.  Unfortunately
-we will see that given the above, $$s\to1$$ *is* an equilibrium
-problem.
+We aren't excited to hodl through multiple decades of 10\% inflation,
+and we expect you aren't either!  Silliness aside, we do not mean to
+downplay fears of inflation, and we encourage you to find more
+realistic scenarios in which such sustained inflation occurs.  Rather,
+we mean to separate concerns.
+
+Unpleasantly high inflation in the medium term, even if that "medium
+term" lasts decades, is a *dynamics* problem, not an equilibrium
+problem, and so dynamical solutions (like EIP 7514) seem better
+suited.  Unfortunately we will see that given the above, $$s\to1$$
+*is* an equilibrium problem.
 
 ### Staking Fraction
 

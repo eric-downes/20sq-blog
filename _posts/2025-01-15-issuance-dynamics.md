@@ -584,7 +584,7 @@ s^\star =
 }{
    m^\star := (\alpha_{const} + r^\star f^\star + q_+^\star + q_-^\star + (1-r)\jmath^\star)
 }
-= 1 - \frac{(1-r)\jmath+q_-}{m^star} - \frac{\alpha_0(1-r^\star)}{m^\star}
+= 1 - \frac{(1-r)\jmath+q_-}{m^\star} - \frac{\alpha_0(1-r^\star)}{m^\star}
 $$
 
 We will see that without $$\alpha>0$$ an interior market equilibrium is
@@ -622,10 +622,6 @@ simplifies to
 
 $$\displaystyle
 s^\star \approx r^\star \frac{\alpha_{const} + f^\star}{
-    \alpha_{const} + r^\star f^\star + (1-r)\jmath^\star} \ =\  1\ -\
-\frac{\jmath^\star}{
-    \alpha_{const} + r^\star f^\star + (1-r)\jmath^\star}\ -\
-\frac{\alpha_{const}(1-2)}{
     \alpha_{const} + r^\star f^\star + (1-r)\jmath^\star}
 $$
 

@@ -270,16 +270,16 @@ $$b(A,S,t)=B/F$$.[^time]
 
 ### Table of Flows
 
-| Flow Name | Symbol | Domain$$\to$$Codomain[^cats] | Constraint | Intensive | Range \[Units\] |    
+| Flow Name | Symbol | Domain $$\to$$ Codomain[^cats] | Constraint | Intensive | Range \[Units\] |    
 | :--              | :--    | :-:                 | :--        | :-- | :-- |
 | Tx Fees          | $$F$$    | $$U\to\cancel{O},V$$  | $$0<B+P=F<U$$ | $$f:=F/U$$ | $$f\in(0,1)$$ [1/yr] |
 | Base Fees[^aves] | $$B$$    | $$U\to\cancel{O}$$    | ..       | $$b:=B/F$$ | $$b\in(0,1)$$ \[1\] |
 | Priority Fees    | $$P$$    | $$U\to V$$            | ..       | $$1-b=P/F$$ | $$1-b\in(0,1)$$ \[1\] |
-| Issuance[^aves]  | $$I$$    | $$\cdot \to V$$        | $$0<I\leq yS$$ |$$y\approx I/S$$ | $$y\in(0,1)$$\[1/yr\] |
+| Issuance[^aves]  | $$I$$    | $$\cdot \to V$$        | $$0<I\leq yS$$ |$$y\approx I/S$$ | $$0<y(S)\ll 1$$ \[1/yr\] |
 | Slashing         | $$J$$    | $$S\to\cancel{O}$$    | $$0<J<S$$ | $$j:=J/S$$ | $$j\in(0,1)$$ \[1/yr\] |
 | Unstaking | $$Q_-$$  | $$S\to U$$            | $$0<Q_-<S$$ | $$q_-:=Q_-0/S$$ | $$q_-\in(0,1)$$ \[1/yr\] |
 | New Staking      | $$Q_+$$  | $$U\to S$$            | $$0<Q_++R<U$$ | $$q_+:=Q_+/U$$ | $$q_+\in(0,1)$$ \[1/yr\] |
-| Reinvestment[^whyr] | $$R$$ | $$V\to S$$            | $$R+K=I+P$$ | $$r:=R/(I+P)$$ \[1\] | $$r\in(0,1)$$ \[1\] |
+| Reinvestment[^whyr] | $$R$$ | $$V\to S$$            | $$R+K=I+P$$ | $$r:=R/(I+P)$$ | $$r\in(0,1)$$ \[1\] |
 | Costs & Profits  | $$K$$    | $$V\to U$$            | ..        | $$1-r=K/(I+P)$$ | $$1-r\in(0,1)$$ \[1\] |
 
 The use of intensive variable parameters and the approximation

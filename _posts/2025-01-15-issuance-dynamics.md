@@ -446,7 +446,7 @@ zomg.sim()
 ```
 
 ![Disaster Scenario](
-    ../assetsPosts/2025-01-15-issuance-dynamics/1d-stab.jpg)
+    ../assetsPosts/2025-01-15-issuance-dynamics/mega-burn.png)
 
 We aren't excited to hodl through multiple decades of 10\% inflation,
 and we expect you aren't either!  Silliness aside, we do not mean to

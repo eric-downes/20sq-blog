@@ -302,7 +302,7 @@ class ConstParams(Params):
     f: 1/Yr = 8e-3
     j: 1/Yr = 1e-5
     r: One = .65
-    W's: 1/Yr = 1e-4
+    qs: 1/Yr = 1e-4
     qu: 1/Yr = 1e-4
     s1: ETH = 1
     def yld(self, S:ETH, **kwargs) -> 1/Yr:

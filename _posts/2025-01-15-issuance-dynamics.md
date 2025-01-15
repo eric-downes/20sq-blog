@@ -393,7 +393,7 @@ dA  &\leq&  ysAdt = y_0(1)\sqrt{sA}dt \leq y_0(1)\sqrt{A}dt\\
 \int_{A(0)}^{A(t)}A^{-1/2}dA  &\leq&  \int_0^{\ t} y_0(1)dt\\
 \left.\frac{1}{2}\sqrt{A}\right|^{\sqrt{A(t)}}_{\sqrt{A(0)}}  &\leq&  y_0(1)t\\
 A(t)  &\leq&  \left(\sqrt{A(0)}+2y_0(1)t\right)^2\\
-\therefore A(t) \sim t^2 &\ll&  e^{kt} ~\forall ~\mathrm{const.}~k>0
+\therefore A(t) &\lesssim& t^2 \ll  e^{kt} ~\forall ~\mathrm{const.}~k>0
 \end{array}
 $$
 
@@ -432,7 +432,7 @@ zomg.sim()
 ```
 
 ![Disaster Scenario](
-    ../assetsPosts/2025-issuance-dynamics/megaburn.png)
+    ../assetsPosts/2025-issuance-dynamics/mega-burn.png)
 
 Silliness aside, we do not mean to downplay fears of inflation, and we
 encourage you to find more realistic scenarios in which such sustained
@@ -629,7 +629,7 @@ point is a degenerate *center*, unrealistic outside of physics.  If
 positive, the fixed point is an unstable *source* and repels $x$.
 
 ![1D Stability Conditions](
-   ../assetsPosts/2025-01-15-issuance-dynamics/1d-stab.png)
+   ../assetsPosts/2025-01-15-issuance-dynamics/1d-stab.jpg)
 
 Specifically for staking fraction, we want the sign of
 $$\left.\frac{\partial\dot{s}}{\partial s}\right|^\star$$ to determine
@@ -996,12 +996,10 @@ Se also our next footnote on I<=yS.[^ycov]
 
 [^ycov]: (Here the lack of latex in footnotes really sucks.)  The
 inequality I <= yS is due to the use of quarterly averages.  Using
-"int" for integral, and "S.", "y." for spot values
-```
-I = int[t-τ to t][y.(S.) S. dt'/τ]
-  = yS - int[t-τ to t][(y - y.)(S - S.)dt/τ
-  = yS - |COV(y., S.)|
-```
+"int" for integral, and "S.", "y." for spot values.
+   * I = int[t-τ to t][y.(S.) S. dt'/τ]
+   * I = yS - int[t-τ to t][(y - y.)(S - S.)dt/τ
+   * I = yS - |COV(y., S.)| <= yS
 This approximation works for any yield curve, erring in a
 conservative direction without explicit dependence on the present-day
 yield curve `y. = y0(1)/sqrt(S)` where y0(1)~166.3/yr.

@@ -101,11 +101,11 @@ $$\left(\frac{dr}{d\alpha}\right)^\star<0$$ (no news here) but simultaneously
 priority fees and MEV, as a fraction of unstaked Ether;
 $$\alpha^\star\gtrsim r^\star f^\star$$.
 
-Inflation will *eventually* decay though, driving $$s\to1$$ if it is not
-already there, though it may take considerable time.  This "L2 future"
-has been recognized by many others: most Ether is staked, with the
-majority used for settlement of L2 rollups.  We'll discuss it more
-next time.
+Inflation will *eventually* decay though, driving the equilibrium
+point itself $$s^\star\to1$$, though it may
+take considerable time.  This "L2 future" has been recognized by many
+others: most Ether is staked, with the majority used for settlement of
+L2 rollups.  We'll discuss it more next time.
 
 Given all the above, we advise caution.  Intervening to reduce the
 issuance yield curve seems quite capable of exacerbating the very
@@ -455,7 +455,7 @@ we mean to separate concerns.
 Unpleasantly high inflation in the medium term, even if that "medium
 term" lasts decades, is a *dynamics* problem, not an equilibrium
 problem, and so dynamical solutions (like EIP 7514) seem better
-suited.  Unfortunately we will see that given the above, $$s\to1$$
+suited.  Unfortunately we will see that given the above, $$s^\star\to1$$
 *is* an equilibrium problem.
 
 ### Staking Fraction
@@ -747,7 +747,7 @@ some considerations:
 ### Runaway $$r$$ from Inflation pressure
 
 Could the sensitivity $$r_\alpha$$ be sufficient such that even at
-intermediate timescales we see $$s\to1$$?  This is certainly possible;
+intermediate timescales we see $$s^\star\to1$$?  This is certainly possible;
 per the arguments of Ethereum researchers, high inflation could still
 lead to runaway staking if $$r$$ is sensitive enough.
 
@@ -805,7 +805,7 @@ We saw above a few things:
 1. Reinvestment $$r$$ is a lower-bound for $$s^\star$$.
 1. Low (but positive) inflation moderates staking fraction closer to this lower bound
    at intermediate timescales
-1. Positive inflation cannot maintain indefinitely, so eventually $$s\to1$$.
+1. Positive inflation cannot maintain indefinitely, so eventually $$s^]star\to1$$.
 
 Conceptually, how can inflation *moderate* staking fraction, though?
 Shouldn't more staking lead to more issuance, which leads to more

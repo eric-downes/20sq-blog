@@ -807,10 +807,11 @@ but its worth being aware of.
 
 We saw above a few things:
 
-1. Reinvestment $$r$$ is a lower-bound for $$s^\star$$.
+1. Reinvestment $$r$$ is a lower-bound for the staking fraction fixed point $$s^\star$$
+   unless Ether is deflating, when likely $s\to1$ or the dynamics are unstable.
 1. Low (but positive) inflation moderates staking fraction closer to this lower bound
    at intermediate timescales
-1. Positive inflation cannot maintain indefinitely, so eventually $$s^]star\to1$$.
+1. Positive inflation cannot maintain indefinitely, so eventually $$s^\star\to1$$.
 
 Conceptually, how can inflation *moderate* staking fraction, though?
 Shouldn't more staking lead to more issuance, which leads to more
@@ -857,15 +858,15 @@ So, while we could certainly model reinvestment differently, and there
 are lags we are blithely integrating over, we think that these market
 forces will still act as described above in a different model.  It is
 possible that even during sustained inflation, these effects will be
-unable to prevent the upward creep in $$s$$, because $$r$$ is too large,
-or the sensitivity of $$r$$ to inflation at equilibrium is too great, a
-condition which we mathematized above.  In fact we expect that every
-argument about inflation effects driving increased staking, overpaying
-for security, etc. could (perhaps should) be rephrased in terms of
-reinvestment of staking rewards.  All these critically depend on the
-preferences of ETH users for, and thus their behavior in reaction to,
-inflation rate etc., which thusfar are not measured.  We encourage the
-community to rectify this!
+unable to prevent the upward creep in $$s$$, because $$r$$ is too
+large, or the sensitivity of $$r$$ to inflation at equilibrium is too
+great, a condition which we mathematized above.  In fact we expect
+that every argument about inflation effects driving increased staking,
+overpaying for security, etc. could (perhaps should) be rephrased in
+terms of reinvestment of staking rewards.  All these critically depend
+on the preferences of ETH users for, and thus their behavior in
+reaction to, inflation rate etc., which thusfar are not measured, as
+far as we know.  We encourage the community to rectify this!
 
 ## Can reflexivity prevent $$s\to1$$?
 
@@ -875,7 +876,8 @@ capable of such behavior under different parameters or when coupled to
 price.  Why such negligence?  If cycles *do* arise, we expect market
 participants, anticipating such cycles, would act to profit off of
 these cycles in a way that should reduce them.  Buy late in the
-inflation cycle, sell, late in the deflation cycle, etc.
+inflation cycle, sell, late in the deflation cycle, etc.  This would show
+up in our model via the partial derivatives including externalities.
 
 Notably though, we only expect this to happen because
 it does not require the coordination of market participants: each
@@ -976,13 +978,37 @@ sophistication if you decide you want to understand this stuff:
     - esp. V (1994) [Bifurcation and Catastrophe](https://www.amazon.com/Dynamical-Systems-Bifurcation-Encyclopaedia-Mathematical/dp/0387181733/)
 
 
+## Glossary of Things What Have Dots or Dot-Adjacent Shapes
+
+Unfortunately the fonts used in markdown on the blog are not the
+greatest at rendering nicely for some of the chosen syntax, especially
+on certain monitors/browsers.  Due to feedback from people with
+bleeding eyes, we can at least offefr this table.  We also included,
+or tried to include, the common variables not present in other tables.
+
+| :-- | :-- |
+| Symbol | Description |
+| $:=$ | Equality by definition, as opposed to a result which is $=$ |
+| $S$ | Staked Ether, |
+| $U$ | Unstaked Ether |
+| $A:=S+U$ | Circulating/Accessible Supply of Ether |
+| $\cancel{O}$ | Burned Ether |
+| $\alpha:=\dot{A}/A$ | Inflation |
+| $y$ | $\tau$-averaged Issuance yield |
+| $y':=dy/dS$ | "y prime" the derivative of the issuance yield curve |
+| $\dot{X}:=dX/dt$ | Change in time of $X$, meant as a generic |
+| $X^\star$ | "X star" a fixed point where $\dot{X}=0$ |
+| $X^\bullet$ | "X spot" the value of $X$ at a given block; anything without a spot is averaged over $\tau$, at least quarterly |
+| $(\ldots)^\star$ | anything including derivatives etc. evaluated at the fixed point |
+
+
 # Footnotes
 
-[^humor]: [Open Zeppelin]() is an early icon of smart contract best
-practices, and continues to provide templates and auditing services in
-high demand.  They have absolutely no connection to this post, our
-models, etc. and hopefully they will not sue us for using their name
-in a bad dynamical systems joke.
+[^humor]: [Open Zeppelin](https://www.openzeppelin.com/) is an early
+icon of smart contract best practices, and continues to provide
+templates and auditing services in high demand.  They have absolutely
+no connection to this post, our models, etc. and hopefully they will
+not sue us for using their name in a bad dynamical systems joke.
 
 [^reasons]: For derivations involving differential equations, "D"
 (used for staking Deposit) and its corresponding intensive "d" are
@@ -1012,7 +1038,7 @@ Se also our [section](bounding-issuance) on I<=yS.
 
 [^partial]: Sometimes "dot x" = dx/dt is used for the partial
 derivative of x with time t, which we denote x_t.  The full relation
-is ```dx = x_t + x_A dA + x_s ds + x_α dα``` in which each partial is
+is `dx = x_t + x_A dA + x_s ds + x_α dα` in which each partial is
 taken holding all the other variables constant, and x_t is used in
 practice to smuggle in any variability from non-dynamical variables.
 In principle x_A and x_α are distinct; a quantity can depend on supply

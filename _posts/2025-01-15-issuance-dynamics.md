@@ -533,7 +533,7 @@ $$y':=\frac{dy}{dS}$$.
   issuance implies $$y'<0$$; under the current yield curve the term
   $$sA|y'|=\frac{1}{2}y_0(sA)$$.
 
-* $$\chi:=-j\math_ts-\beta_t(1-s)$$ represents externalities affecting the
+* $$\chi:=-\jmath_ts-\beta_t(1-s)$$ represents externalities affecting the
   inflation loss term encoded as explicit time-dependencies.  We
   neglect externalities $$\chi\approx0$$ because we have nothing
   intelligent to say about them, but you might not want to.
@@ -972,7 +972,7 @@ sophistication if you decide you want to understand this stuff:
 
 - Bender and Orszag (1997) [Advanced Mathematical Methods for Scientists and Engineers](https://www.amazon.com/Advanced-Mathematical-Methods-Scientists-Engineers/dp/0387989315/)
 
-- Arnol\’d (Ed.) the Dynamical Systems Series
+- Arnol’d (Ed.) the Dynamical Systems Series
     - esp. V (1994) [Bifurcation and Catastrophe](https://www.amazon.com/Dynamical-Systems-Bifurcation-Encyclopaedia-Mathematical/dp/0387181733/)
 
 

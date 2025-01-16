@@ -986,8 +986,8 @@ on certain monitors/browsers.  Due to feedback from people with
 bleeding eyes, we can at least offefr this table.  We also included,
 or tried to include, the common variables not present in other tables.
 
-| :-- | :-- |
 | Symbol | Description |
+| :-- | :-- |
 | $:=$ | Equality by definition, as opposed to a result which is $=$ |
 | $S$ | Staked Ether |
 | $U$ | Unstaked Ether |

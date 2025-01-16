@@ -139,7 +139,7 @@ units \[ETH/yr\].
 
 By averaging over "long" timescales (at least quarterly)[^aves] we
 approximate the staking and unstaking queues as equilibrated;
-$$\mathcal{Q}_+ \approx 0 \approx \mathcal{Q}_-$$, and average over many
+$\mathcal{Q}_+\approx0\approx\mathcal{Q}_-$, and average over many
 cycles of the erratic base fee oscillations.
 
 So, our conceptual model:

@@ -292,11 +292,11 @@ with $A_{now}\approx120e6,\ s_{now}\approx.3$ as a start for the
 models that follow.
 
 ```python
-from numpy import sqrt
 from ethode import *
-
 @dataclass
 class ConstParams(Params):
+    init_conds: ETH_Data = (('S', 120e6 * .3), ('U', 120e6 * .7))
+    tspan: tuple[Yr, Yr] = (0, 100)
     y1: 1/Yr = 166.3
     b: One = 5e-1
     f: 1/Yr = 8e-3
@@ -306,7 +306,7 @@ class ConstParams(Params):
     qu: 1/Yr = 1e-4
     s1: ETH = 1
     def yld(self, S:ETH, **kwargs) -> 1/Yr:
-        return self.y1 * sqrt(self.s1 / S)
+        return self.y1 * np.sqrt(self.s1 / S)
 ```
 
 ### $$(S,U)$$; not just a UNIX Command!
@@ -334,18 +334,16 @@ partial derivatives.[^SU]
 ```python
 @dataclass
 class SUSimConst(ODESim):
-    ic: tuple[ETH, ETH] = (120e6 * .3, 120e6 * .7)
-    tspan: tuple[Yr, Yr] = (0, 100)
-    params: Params = ConstParams()
+    params: Params = field(default_factory = ConstParams)
     @staticmethod
     def func(t:Yr, v:tuple[ETH, ETH], p:Params) -> tuple[ETH/Yr, ETH/Yr]:
-    	S, U = v
-    	dS = (p.r * (y := p.yld(S)) - p.j - p.qu) * S + \
+        S, U = v
+        dS = (p.r * (y := p.yld(S)) - p.j - p.qu) * S + \
             ((rf := p.r * p.f) * (1 - p.b) + p.qs) * U
         dU = ((1 - p.r) * y + p.qu) * S - \
             (rf + (1 - p.r) * p.b * p.f + p.qs) * U
-	return dS, dU
-su = SUSim()
+        return dS, dU
+su = SUSimConst()
 su.sim()
 ```
 

@@ -438,7 +438,7 @@ crash, in which 99\% of present-day Ether will have been burned.
 ```python
 @dataclass
 class MegaBurnParams(SUaConstParams):
-    init_conds: ETH_Data = (('S', 120e6 * .4), ('U', 120e6 * .6))
+    init_conds: ETH_Data = (('S', 1.2e6 * .4), ('U', 1.2e6 * .6))
     tspan: tuple[Yr, Yr] = (0, 200)
     b: One   = 1e-3
     qs: 1/Yr = 2e-1

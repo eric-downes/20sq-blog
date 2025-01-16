@@ -5,7 +5,7 @@ author: Eric Downes
 categories: ["ethereum", "macroeconomics", "dynamics", "issuance"]
 excerpt: Work on ETH Macro supported by the Ethereum Foundation
 usemathjax: true
-thanks: We are deeply grateful to the Ethereum Foundation for their support of this work.  I, the author, feel indebted to the profound patience and forbearance of Eric Siu and my colleagues at 20 Squares, as this is *months* overdo.  This work has benefited from conversations with Danieli and Philipp, as well as Eric Siu, Andrew Sudbury, Ansgar Dietrichs, and Mac Budkowski.
+thanks: We are deeply grateful to the Ethereum Foundation for their support of this work.  I, the author, feel indebted to the profound patience and forbearance of Eric Siu and my colleagues at 20 Squares, as this is *months* overdo.  This work has benefited from conversations with Daniele and Philipp, as well as Eric Siu, Andrew Sudbury, Ansgar Dietrichs, and Mac Budkowski.
 ---
 
 # Ethereum Macroeconomics

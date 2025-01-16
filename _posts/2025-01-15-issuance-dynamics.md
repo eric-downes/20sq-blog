@@ -378,14 +378,17 @@ You can explore this by adding `alpha(), sfrac()` as `@output` methods
 
 ```python
 @dataclass
-class SUaConstSim(SUConstSim):
+class SUaConstParams(SUConstParams):
     @output
     def sfrac(self, S:ETH, U:ETH) -> One:
         return S / (S + U)
     @output
     def alpha(self, S:ETH, U:ETH) -> 1/Yr:
         s = self.sfrac(S,U)
-	return p.yld(S) * s - p.b * p.f * (1 - s) - p.j * s
+        return self.yld(S) * s - self.b * self.f * (1 - s) - self.j * s
+@dataclass
+class SUaConstSim(SUConstSim):
+    params: Params = field(default_factory = SUaConstParams)
 su_a = SUaConstSim()
 su_a.sim()
 ```
@@ -433,14 +436,14 @@ crash, in which 99\% of present-day Ether will have been burned.
 
 ```python
 @dataclass
-class MegaBurnParams(SUConstParams):
+class MegaBurnParams(SUaConstParams):
     init_conds: ETH_Data = (('S', 120e6 * .4), ('U', 120e6 * .6))
     tspan: tuple[Yr, Yr] = (0, 200)
     b: One   = 1e-3
     qs: 1/Yr = 2e-1
 @dataclass
 class MegaBurnSim(SUaConstSim):
-    params: Params = MegaBurnParams()
+    params: Params = field(default_factory = MegaBurnParams)
 zomg = MegaBurnSim()
 zomg.sim()
 ```

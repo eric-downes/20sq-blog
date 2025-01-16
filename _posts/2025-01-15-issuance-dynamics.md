@@ -295,8 +295,6 @@ models that follow.
 from ethode import *
 @dataclass
 class ConstParams(Params):
-    init_conds: ETH_Data = (('S', 120e6 * .3), ('U', 120e6 * .7))
-    tspan: tuple[Yr, Yr] = (0, 100)
     y1: 1/Yr = 166.3
     b: One = 5e-1
     f: 1/Yr = 8e-3
@@ -333,8 +331,12 @@ partial derivatives.[^SU]
 
 ```python
 @dataclass
-class SUSimConst(ODESim):
-    params: Params = field(default_factory = ConstParams)
+class SUConstParams(ConstParams):
+    init_conds: ETH_Data = (('S', 120e6 * .3), ('U', 120e6 * .7))
+    tspan: tuple[Yr, Yr] = (0, 100)
+@dataclass
+class SUConstSim(ODESim):
+    params: Params = field(default_factory = SUConstParams)
     @staticmethod
     def func(t:Yr, v:tuple[ETH, ETH], p:Params) -> tuple[ETH/Yr, ETH/Yr]:
         S, U = v
@@ -343,7 +345,7 @@ class SUSimConst(ODESim):
         dU = ((1 - p.r) * y + p.qu) * S - \
             (rf + (1 - p.r) * p.b * p.f + p.qs) * U
         return dS, dU
-su = SUSimConst()
+su = SUConstSim()
 su.sim()
 ```
 
@@ -376,7 +378,7 @@ You can explore this by adding `alpha(), sfrac()` as `@output` methods
 
 ```python
 @dataclass
-class SUaSim(SUSimConst):
+class SUaConstSim(SUConstSim):
     @output
     def sfrac(self, S:ETH, U:ETH) -> One:
         return S / (S + U)
@@ -384,7 +386,7 @@ class SUaSim(SUSimConst):
     def alpha(self, S:ETH, U:ETH) -> 1/Yr:
         s = self.sfrac(S,U)
 	return p.yld(S) * s - p.b * p.f * (1 - s) - p.j * s
-su_a = SUaSim()
+su_a = SUaConstSim()
 su_a.sim()
 ```
 
@@ -431,13 +433,13 @@ crash, in which 99\% of present-day Ether will have been burned.
 
 ```python
 @dataclass
-class MegaBurnParams(ConstParams):
+class MegaBurnParams(SUConstParams):
+    init_conds: ETH_Data = (('S', 120e6 * .4), ('U', 120e6 * .6))
+    tspan: tuple[Yr, Yr] = (0, 200)
     b: One   = 1e-3
     qs: 1/Yr = 2e-1
 @dataclass
-class MegaBurnSim(SUaSim):
-    ic: tuple[ETH, ETH] = (1.20e6 * .4, 1.20e6 * .6)
-    tspan: tuple[Yr, Yr] = (0, 200)
+class MegaBurnSim(SUaConstSim):
     params: Params = MegaBurnParams()
 zomg = MegaBurnSim()
 zomg.sim()
@@ -447,16 +449,15 @@ zomg.sim()
     ../assetsPosts/2025-01-15-issuance-dynamics/mega-burn.png)
 
 We aren't excited to hodl through multiple decades of 10\% inflation,
-and we expect you aren't either!  Silliness aside, we do not mean to
-downplay fears of inflation, and we encourage you to find more
-realistic scenarios in which such sustained inflation occurs.  Rather,
-we mean to separate concerns.
+and we expect you aren't either!  Silliness aside, we encourage you to find more
+realistic scenarios in which such sustained inflation occurs.
 
+We mean to separate concerns, not dismiss inflation as a problem.
 Unpleasantly high inflation in the medium term, even if that "medium
 term" lasts decades, is a *dynamics* problem, not an equilibrium
 problem, and so dynamical solutions (like EIP 7514) seem better
-suited.  Unfortunately we will see that given the above, $$s^\star\to1$$
-*is* an equilibrium problem.
+suited.  Unfortunately we will see that given the above,
+$$s^\star\to1$$ *is* an equilibrium problem.
 
 ### Staking Fraction
 

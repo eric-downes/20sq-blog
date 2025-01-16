@@ -138,9 +138,10 @@ from their derivatives.  Here all flows are positive real numbers with
 units \[ETH/yr\].
 
 By averaging over "long" timescales (at least quarterly)[^aves] we
-approximate the staking and unstaking queues as equilibrated;
-$\mathcal{Q}_+\approx0\approx\mathcal{Q}_-$, and average over many
-cycles of the erratic base fee oscillations.
+approximate the staking and unstaking queues as equilibrated, and
+average over many cycles of the
+[erratic](https://decentralizedthoughts.github.io/2022-03-10-eip1559/)
+base fee oscillations.
 
 So, our conceptual model:
 
@@ -259,7 +260,7 @@ considered here, but please, prove us wrong!
 Flows obey inequalities, usually as a fraction of the source, except
 for $r,b$. We convert these inequalities; for each uppercase
 *extensive* flow $$(J,F,B,\ldots)$$ we define a lowercase *intensive
-variable* $$(j,f,b,\ldots)$$: the fractions \[1\] and fractional rates
+variable* $$(\jmath,f,b,\ldots)$$: the fractions \[1\] and fractional rates
 \[1/yr\].  In forming these, the ideal is to apply the tightest
 available bounds that still capture the asymptotic behavior[^asym] in
 the limit of interest $$S\to A$$.  We do not assume the intensive
@@ -276,7 +277,7 @@ $$b(A,S,t)=B/F$$.[^time]
 | Base Fees[^aves] | $$B$$    | $$U\to\cancel{O}$$    | ..       | $$b:=B/F$$ | $$b\in(0,1)$$ \[1\] |
 | Priority Fees    | $$P$$    | $$U\to V$$            | ..       | $$1-b=P/F$$ | $$1-b\in(0,1)$$ \[1\] |
 | Issuance[^aves]  | $$I$$    | $$\cdot \to V$$        | $$0<I\leq yS$$ |$$y\approx I/S$$ | $$0<y(S)\ll 1$$ \[1/yr\] |
-| Slashing         | $$J$$    | $$S\to\cancel{O}$$    | $$0<J<S$$ | $$j:=J/S$$ | $$j\in(0,1)$$ \[1/yr\] |
+| Slashing         | $$J$$    | $$S\to\cancel{O}$$    | $$0<J<S$$ | $$\jmath:=J/S$$ | $$\jmath\in(0,1)$$ \[1/yr\] |
 | Unstaking | $$Q_-$$  | $$S\to U$$            | $$0<Q_-<S$$ | $$q_-:=Q_-0/S$$ | $$q_-\in(0,1)$$ \[1/yr\] |
 | New Staking      | $$Q_+$$  | $$U\to S$$            | $$0<Q_++R<U$$ | $$q_+:=Q_+/U$$ | $$q_+\in(0,1)$$ \[1/yr\] |
 | Reinvestment[^whyr] | $$R$$ | $$V\to S$$            | $$R+K=I+P$$ | $$r:=R/(I+P)$$ | $$r\in(0,1)$$ \[1\] |
@@ -473,7 +474,7 @@ $$\displaystyle
 \begin{array}{rcl}
 \dot{s} &=& y(sA)\ (r-s) + \\
  && \left[q_++f(1-s)\left(bs +(1-b)r\right)\right]\cdot(1-s) + \\
- && \left[j(1-s+r)+q_-\right]\ (0-s).
+ && \left[\jmath(1-s+r)+q_-\right]\ (0-s).
 \end{array}
 $$
 
@@ -506,7 +507,7 @@ derivative relations for variables $$(A,\alpha,s,t)$$[^partial] we have
 $$\displaystyle
 \begin{array}{rcl}
 \dot{A} &=& \alpha A\\
-\dot{s} &=& \alpha(r-s) + (rf+q_+)(1-s) - (q_-+(1-r)j)s\\
+\dot{s} &=& \alpha(r-s) + (rf+q_+)(1-s) - (q_-+(1-r)\jmath)s\\
 \dot{\alpha} &=& \xi\dot{s} - \gamma\alpha s +\chi
 \end{array}
 $$
@@ -519,20 +520,20 @@ $$y':=\frac{dy}{dS}$$.
   We judge $$0\leq\mu$$; if anything inflation increases burn and
   slashing fractional rates.[^mu]
 
-* $$\xi:=(y+y'A+\beta-\beta_s(1-s)-j-j_s)/(1+\mu)$$ is the net
+* $$\xi:=(y+y'A+\beta-\beta_s(1-s)-\jmath-\jmath_s)/(1+\mu)$$ is the net
   correlation between changes in $$s$$ and changes in $$\alpha$$
   normalized by $$1+\mu$$. $$\xi$$ can be of either sign.  Under the
   current yield curve $$y_0+\frac{dy}{dS}A=y_0(sA)(1-1/(2s))$$, which
   changes its sign at 50\% ETH staked.
 
-* $$\gamma:=j_{\log{A}}s+\beta_{\log{A}}(1-s)+s|y'|A$$ is a
+* $$\gamma:=\jmath_{\log{A}}s+\beta_{\log{A}}(1-s)+s|y'|A$$ is a
   positive coefficient expressing how quickly $$\alpha\to\alpha^\star$$,
   and the partials are constant when initial supply is known.[^ics] We
   have extracted the sign from the final term because sublinear
   issuance implies $$y'<0$$; under the current yield curve the term
   $$sA|y'|=\frac{1}{2}y_0(sA)$$.
 
-* $$\chi:=-j_ts-\beta_t(1-s)$$ represents externalities affecting the
+* $$\chi:=-j\math_ts-\beta_t(1-s)$$ represents externalities affecting the
   inflation loss term encoded as explicit time-dependencies.  We
   neglect externalities $$\chi\approx0$$ because we have nothing
   intelligent to say about them, but you might not want to.
@@ -573,7 +574,7 @@ Recall our approximate equation for the fraction of staked ETH $$s$$, in
 which all coefficients are positive but inflation $$\alpha$$:
 
 $$\displaystyle
-\dot{s} = \alpha\ (r-s) + (rf+q_+)\ (1-s) + (q_-+(1-r)j)\ (0-s)
+\dot{s} = \alpha\ (r-s) + (rf+q_+)\ (1-s) + (q_-+(1-r)\jmath)\ (0-s)
 $$
 
 So assuming $$|\dot{\alpha}|\ll|\dot{s}|$$, let us examine the fixed

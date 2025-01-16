@@ -983,7 +983,7 @@ sophistication if you decide you want to understand this stuff:
 Unfortunately the fonts used in markdown on the blog are not the
 greatest at rendering nicely for some of the chosen syntax, especially
 on certain monitors/browsers.  Due to feedback from people with
-bleeding eyes, we can at least offefr this table.  We also included,
+bleeding eyes, we can at least offer this table.  We also included,
 or tried to include, the common variables not present in other tables.
 
 | Symbol | Description |
@@ -1148,7 +1148,7 @@ model.
   initial conditions; the partial x_A always holds (alpha,s) constant,
   but dA = alpha dt and the partials in gamma are j_A and (bf)_A.
 
-[^small-part]: Smallness of sensitivities wrt intensives is not gauranteed.
+[^small-part]: Smallness of sensitivities wrt intensives is not guaranteed.
 Certainly a large magnitude, say (bf)_s>1 cannot maintain for too
 long; 0<bf<1 afterall.  Locally, a large spike in derivative (bf)_s >
 bf is still possible.
@@ -1157,13 +1157,13 @@ bf is still possible.
 returning to a region of the fixed point (think comets) or a
 contraction map showing the system shrinking to a limit set.  We won't
 rule out global stability, but recommend you look first for locally
-stable fixed points.  Assesing the stability of equilibrium zero
+stable fixed points.  Assessing the stability of equilibrium zero
 inflation in the (A,s,alpha) model is interesting but probably
 academic.  One of the eigenvalues at any fixed point with alpha=0 is
 zero, so higher-order terms matter (the fixed point is degenerate),
 and linear-stability analysis is insufficient: we need to care about
 global stability not just local.  A reader imbued with mathematical
-athleticism and free time is encouraged to think of a Lyapunovv
+athleticism and free time is encouraged to think of a Lyapunov
 function л(alpha=0) >= 0, and obtain a contraction
 mapping dл(alpha)/dt <= 0.
 

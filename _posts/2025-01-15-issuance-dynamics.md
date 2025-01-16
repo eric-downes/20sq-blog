@@ -989,7 +989,7 @@ or tried to include, the common variables not present in other tables.
 | :-- | :-- |
 | Symbol | Description |
 | $:=$ | Equality by definition, as opposed to a result which is $=$ |
-| $S$ | Staked Ether, |
+| $S$ | Staked Ether |
 | $U$ | Unstaked Ether |
 | $A:=S+U$ | Circulating/Accessible Supply of Ether |
 | $\cancel{O}$ | Burned Ether |
@@ -998,8 +998,8 @@ or tried to include, the common variables not present in other tables.
 | $y':=dy/dS$ | "y prime" the derivative of the issuance yield curve |
 | $\dot{X}:=dX/dt$ | Change in time of $X$, meant as a generic |
 | $X^\star$ | "X star" a fixed point where $\dot{X}=0$ |
-| $X^\bullet$ | "X spot" the value of $X$ at a given block; anything without a spot is averaged over $\tau$, at least quarterly |
-| $(\ldots)^\star$ | anything including derivatives etc. evaluated at the fixed point |
+| $X^\bullet$ | "X spot" the value of $X$ at a given block; *not* a $\tau$-average |
+| $(\ldots)^\star$ | any expression evaluated at the fixed point |
 
 
 # Footnotes

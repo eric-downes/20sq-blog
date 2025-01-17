@@ -119,7 +119,7 @@ while others have at times used $$S$$ for "circulating (S)upply", which
 we call instead $$A$$, so $$s=S/A$$.  Please proceed!
 
 ![Ethereum as a balloon with compartments.](
-    ../assetsPosts/2025-01-15-issuance-dynamics/eth-balloon.jpg)
+    ../assetsPosts/2025-01-17-issuance-dynamics/eth-balloon.jpg)
 
 Consider a "balloon" with variable internal compartments.  The average
 size of each is measured by *stocks*
@@ -450,7 +450,7 @@ zomg.sim()
 ```
 
 ![Disaster Scenario](
-    ../assetsPosts/2025-01-15-issuance-dynamics/mega-burn.png)
+    ../assetsPosts/2025-01-17-issuance-dynamics/mega-burn.png)
 
 We aren't excited to hodl through multiple decades of 10\% inflation,
 and we expect you aren't either!  Silliness aside, we encourage you to find more
@@ -559,9 +559,9 @@ since Sept 2022 (the Merge) shows that $$s,\dot{s}$$ do indeed seem to vary over
 much greater range than $$(\log{A},\alpha)$$ under Proof-of-Stake.
 
 ![The staking fraction from YCharts](
-    ../assetsPosts/2025-01-15-issuance-dynamics/YCharts-x.jpg)
+    ../assetsPosts/2025-01-17-issuance-dynamics/YCharts-x.jpg)
 ![The inflation rate from YCharts](
-    ../assetsPosts/2025-01-15-issuance-dynamics/YCharts-alpha.jpg)
+    ../assetsPosts/2025-01-17-issuance-dynamics/YCharts-alpha.jpg)
 
 For the remainder of this post, we will assume this obtains.
 Anecdotally, even when it does not, the revealed interplay between
@@ -645,7 +645,7 @@ point is a degenerate *center*, unrealistic outside of physics.  If
 positive, the fixed point is an unstable *source* and repels $x$.
 
 ![1D Stability Conditions](
-   ../assetsPosts/2025-01-15-issuance-dynamics/1d-stab.jpg)
+   ../assetsPosts/2025-01-17-issuance-dynamics/1d-stab.jpg)
 
 Specifically for staking fraction, we want the sign of
 $$\left.\frac{\partial\dot{s}}{\partial s}\right|^\star$$ to determine
@@ -708,7 +708,7 @@ $$s^\star$$ corresponding to $$\dot{s}=0$$, shown here with
 $$\alpha^\star=\alpha_{const}$$.
 
 ![alpha vs. s Figure](
-    ../assetsPosts/2025-01-15-issuance-dynamics/staking-fixpoint.png).
+    ../assetsPosts/2025-01-17-issuance-dynamics/staking-fixpoint.png).
 
 To find the equilibrium values $$(\alpha^\star/f^\star,\,r^\star)$$
 necessary to achieve a desired staking fraction $$x^\star$$, simply

@@ -5,7 +5,7 @@ author: Eric Downes
 categories: ["ethereum", "macroeconomics", "dynamics", "issuance"]
 excerpt: Work on ETH Macro supported by the Ethereum Foundation
 usemathjax: true
-thanks: We are deeply grateful to the Ethereum Foundation for their support of this work.  I, the author, feel indebted to the profound patience and forbearance of Eric Siu and my colleagues at 20 Squares, as this is *months* overdo.  This work has benefited from conversations with Daniele and Philipp, as well as Eric Siu, Andrew Sudbury, Ansgar Dietrichs, and Mac Budkowski.
+thanks: We are deeply grateful to the Ethereum Foundation for their support of this work.  I, the author, feel indebted to the profound patience and forbearance of Eric Siu and my colleagues at 20 Squares, as this is *months* overdo.  This work has benefited from conversations with Daniele and Philipp, as well as Eric Siu, Andrew Sudbury, Ansgar Dietrichs, Mac Budkowski, and Ignat Insarov.
 ---
 
 # Ethereum Macroeconomics
@@ -30,21 +30,21 @@ exchanges and Liquid Staking Providers (LSTs) [is considerable](
     https://dune.com/queries/2394100/3928083), and continues
 to grow.  This has provoked [concerns](https://issuance.wtf/), among
 Ethereum researchers that the future of Ethereum might involve a
-confluence of three interrelated challenges:
+confluence of three interrelated challenges
 
 1. Nearly all Ether becomes staked.
 1. Inflation becomes excessive.
 1. Governance becomes centralized.
 
-The view of inflation emphasized in this work in particular feels
-quite different to us, than the views expressed, for instance, in this
-[very helpful review podcast](
-    https://www.youtube.com/watch?v=ivynR3RI3_Y).
+upon which we focus.  The view of inflation emphasized
+in this work in particular feels quite different to us, than the views
+expressed for instance, in this [very helpful review podcast](
+https://www.youtube.com/watch?v=ivynR3RI3_Y).
 
 ## Lookahead
 
 In this blog post we address the first of these concerns "runaway
-(near 100\%) staking" $$s\to1$$ and how it relates to the second,
+(near 100%) staking" $$s\to1$$ and how it relates to the second,
 using a "stock and flow" macroeconomics model built with guidance from
 dynamical system theory.  In contrast with other research, we find
 inflation playing a positive role in moderating runaway staking, but
@@ -71,8 +71,8 @@ enough to get you going.
 ## For The Impatient!
 
 Issuance does not all get dumped into native unstaked Ether.  Some
-portion of it is reinvested by staking businesses at ratio $r$; indeed this process is
-coded into LST smart contracts.
+portion of it is reinvested by staking businesses at ratio $r$; indeed
+this process is coded into LST smart contracts.
  
 It is important to distinguish between transient behavior, such as
 speculation in staking, and medium/long-term behavior, such as the
@@ -159,30 +159,33 @@ $$
 | Tx Fees          | $$F$$    | $$U\to\cancel{O},V$$       | $$B+P=F<U$$ |
 | Base Fees[^aves] | $$B$$    | $$U\to\cancel{O}$$         | .. |
 | Priority Fees    | $$P$$    | $$U\to V$$                 | ..       |
-| Issuance[^aves]  | $$I$$    | $$\cdot\to V$$             | $$yS<I$$ |
+| Issuance[^aves]  | $$I$$    | $$\cdot\to V$$             | $$I\leq yS$$ |
 | Slashing         | $$J$$    | $$S\to\cancel{O}$$         | $$J<S$$ |
 | Unstaking        | $$Q_-$$  | $$S\to U$$                 | $$Q_-<S$$ |
 | New Staking      | $$Q_+$$  | $$U\to S$$                 | $$Q_++R<U$$ |
 | Reinvestment[^whyr] | $$R$$ | $$V\to S$$                 | $$R+K+\dot{V}=I+P$$ |
 | Costs & Profits  | $$K$$    | $$V\to U$$                 | ..        |
 
-Flows $$(B,J,Q_-,\ldots)$$ have a "domain" $$(U,S,S,\ldots)$$, where the
-flow is coming from, and a "codomain"
-$$(\cancel{O},\cancel{O},U,\ldots)$$, where the flow is going to.[^cats]
-Flows obey constraints, often expressed as (in)equalities relating a
-flow to its source.
+Flows $$(B,J,Q_-,\ldots)$$ have a "domain" $$(U,S,S,\ldots)$$, where
+the flow is coming from, and a "codomain"
+$$(\cancel{O},\cancel{O},U,\ldots)$$, where the flow is going
+to.[^cats] Flows obey constraints, often expressed as (in)equalities
+relating a flow to its domain.  In case you've forgot or are skimming,
+(co)domains are summarized in [this glossary](
+    #Glossary-of-Things-That-Have-Dots-or-Dot-Adjacent-Shapes).
 
-In response to the concerns about $$s\to1$$, the recent [Deneb
-upgrade](https://github.com/ethereum/consensus-specs/blob/dev/specs/deneb/beacon-chain.md)
+In response to the concerns about $$s\to1$$, the recent [Deneb upgrade](
+    https://github.com/ethereum/consensus-specs/blob/dev/specs/deneb/beacon-chain.md)
 implemented [EIP 7514](https://eips.ethereum.org/EIPS/eip-7514), an
 upper limit on $$R+Q_+$$ chosen so as to not limit any present flows.
 We also ignore the pre-existing symmetric limits on (un)staking
 $$Q_\pm$$.  The purpose of our models is to show, in the absence of
 such limits, where the dynamics push the system.  If you wish to study
 an extreme of dynamics post-Deneb, you could make $$R+Q_+$$ constant;
-we will revisit EIP 7514 in our next post, on staking *composition*.
-So the constraints ($$Q_-<S,Q_+<U$$) could be tightened significantly,
-but more accurate upper limits would play little role in our analysis.
+we will revisit EIP 7514 in our next post in this series, on staking
+*composition*.  So the constraints ($$Q_-<S,Q_+<U$$) could be
+tightened significantly, but more accurate upper limits would play
+little role in our analysis.
 
 A few flows deserve specific comment: $$I$$ and $$(R,Q_+,K)$$.
 
@@ -219,7 +222,7 @@ $$
 
 This approximation should work for any positive definite yield curve
 with finite slope, erring in a conservative direction without explicit
-dependence on the present curve $y^\bullet = y_0(1)/sqrt(S^\bullet)$
+dependence on the present curve $y^\bullet = y_0(1)/\sqrt(S^\bullet)$
 with $y_0(1)\approx166.3$/yr.  We deem this a good direction in which
 to err in light of our results concerning (the lack of) runaway
 inflation.
@@ -227,9 +230,11 @@ inflation.
 ### Bounding Reinvestment
 
 Reinvestment of staking rewards by validators $$R$$ is achieved by
-staking a new validator from existing rewards.  While clearly a
-stochastic process, we approximate the net effect as smooth on
-timescales of at least $$\tau$$.  $$R$$ represents a feedback loop
+staking a new validator from existing rewards, or
+post-[Electra](https://eips.ethereum.org/EIPS/eip-7251) increasing the
+stake on an existing validator.  While clearly a stochastic process,
+we approximate the net effect as smooth on timescales of at least
+$$\tau$$.  $$R$$ represents a feedback loop
 $$S\overset{+}{\rightsquigarrow}S$$ quite evidently related to the
 potential positive-feedback between staking and inflation that people
 have found concerning.
@@ -260,13 +265,13 @@ considered here, but please, prove us wrong!
 Flows obey inequalities, usually as a fraction of the source, except
 for $r,b$. We convert these inequalities; for each uppercase
 *extensive* flow $$(J,F,B,\ldots)$$ we define a lowercase *intensive
-variable* $$(\jmath,f,b,\ldots)$$: the fractions \[1\] and fractional rates
-\[1/yr\].  In forming these, the ideal is to apply the tightest
-available bounds that still capture the asymptotic behavior[^asym] in
-the limit of interest $$S\to A$$.  We do not assume the intensive
-parameters are constant, but suppress their dependence for
-readability.  Unless otherwise stated, the intensives are functions of
-the dynamical variables and time, so the burn:
+variable[^intensive] $$(\jmath,f,b,\ldots)$$ with \[units\]: the
+fractions \[1\] and fractional rates \[1/yr\].  In forming these, the
+ideal is to apply the tightest available bounds that still capture the
+asymptotic behavior[^asym] in the limit of interest $$S\to A$$.  We do
+not assume the intensive parameters are constant, but suppress their
+dependence for readability.  Unless otherwise stated, the intensives
+are functions of the dynamical variables and time, so the burn:
 $$b(A,S,t)=B/F$$.[^time]
 
 ### Table of Flows
@@ -427,7 +432,7 @@ by which we mean the order of magnitude is much larger / much smaller
 
 The point.  Since supply $$A(t)$$ is *eventually* less than a powerlaw of $$t$$,
 it is *subexponential*.  Thus, no positive rate of Ether supply
-expansion can maintain indefinitely.
+expansion can maintain indefinitely.[^caveat]
 
 This does not mean we would find every intermediate inflation rate
 pleasant.  Following surges in $$Q_+$$ and/or drops in supply,
@@ -957,7 +962,7 @@ more research!"
 We hope to develop the ethode guide so it can serve a pedagogical
 role.  For now we have assumed some basic familiarity with nonlinear
 dynamics, asymptotic methods, etc. at the level of the first few of
-Prof. S. Strogatz youtube lectures.
+Prof. Steven Strogatz youtube lectures.
 
 - [Nonlinear Dynamics](https://youtube.com/playlist?list=PLbN57C5Zdl6j_qJA-pARJnKsmROzPnO9V&si=iN5YCipB_CeIfrbB)
 
@@ -991,9 +996,10 @@ or tried to include, the common variables not present in other tables.
 | $:=$ | Equality by definition, as opposed to a result which is $=$ |
 | $S$ | Staked Ether |
 | $U$ | Unstaked Ether |
+| $V$ | Validator rewards, part of $U$, presumed equilibrated on $\tau$ |
 | $A:=S+U$ | Circulating/Accessible Supply of Ether |
 | $\cancel{O}$ | Burned Ether |
-| $\alpha:=\dot{A}/A$ | Inflation |
+| $\alpha:=\dot{A}/A$ | Inflation (greek alpha) |
 | $y$ | $\tau$-averaged Issuance yield |
 | $y':=dy/dS$ | "y prime" the derivative of the issuance yield curve |
 | $\dot{X}:=dX/dt$ | Change in time of $X$, meant as a generic |
@@ -1004,46 +1010,200 @@ or tried to include, the common variables not present in other tables.
 
 # Footnotes
 
-[^humor]: [Open Zeppelin](https://www.openzeppelin.com/) is an early icon of smart contract best practices, and continues to provide templates and auditing services in high demand.  They have absolutely no connection to this post, our models, etc. and hopefully they will not sue us for using their name in a bad dynamical systems joke.
+[^humor]: [Open Zeppelin](https://www.openzeppelin.com/) is an early
+icon of smart contract best practices, and continues to provide
+templates and auditing services in high demand.  They have absolutely
+no connection to this post, our models, etc. and hopefully they will
+not sue us for using their name in a bad dynamical systems joke.
 
-[^reasons]: For derivations involving differential equations, "D" (used for staking Deposit) and its corresponding intensive "d" are cursed variables. "s" was already in use in some places for staking fraction, and we are resolute on keeping the intensive and its corresponding extensive the same letter.  "C" is a more natural choice for circulating supply, but then the three variables of most interest are something like (C,s,ς) which is masochistic in its sibilance, even for squares.  We prefer "accessible" to circulating because the former implies you *could* access it, at some cost, while the latter sometimes implies a velocity of money.  A velocity which S and much of U may lack depending on dynamics: backed up unstaking queue, leveraged or looped CDPs, etc.  But even if our terminology were actually superior, we're not going to change economic jargon any time soon.
+[^reasons]: For derivations involving differential equations, `D`
+(used for staking Deposit) and its corresponding intensive `d` are
+cursed variables. `s` was already in use in some places for staking
+fraction, and we are resolute on keeping the intensive and its
+corresponding extensive the same letter.  `C` is a more natural choice
+for circulating supply, but then the three variables of most interest
+are something like `(C,s,ς)` which is masochistic in its sibilance, even
+for squares.  We prefer "accessible" to circulating because the former
+implies you *could* access it, at some cost, while the latter
+sometimes implies a velocity of money.  A velocity which `S` and much of
+`U` may lack depending on dynamics: backed up unstaking queue, leveraged
+or looped CDPs, etc.  But even if our terminology were actually
+superior, we're not going to change economic jargon any time soon.
 
-[^aves]: We use moving quarterly averages, though any timescale τ sufficiently long that the [erratic](https://decentralizedthoughts.github.io/2022-03-10-eip1559/) and [fast dynamics](https://arxiv.org/pdf/2102.10567) of [the base fee](https://ethereum.github.io/abm1559/notebooks/eip1559.html) are integrated out, and the lags from (un)staking queues are not appreciable.  As we are averaging quarterly, we set the staking, unstaking, and reward queues to zero, including their respective flows (R+Q+,Q-,I+P) in their codomain stocks (S,U,V); even if ethereum produces empty blocks, so long as the reward queue is not empty U > 0. See also our [section](bounding-issuance) on I<=yS.
+[^aves]: We use moving quarterly averages, though any timescale `τ`
+sufficiently long that the
+[erratic](https://decentralizedthoughts.github.io/2022-03-10-eip1559/)
+and [fast dynamics](https://arxiv.org/pdf/2102.10567) of [the base
+fee](https://ethereum.github.io/abm1559/notebooks/eip1559.html) are
+integrated out, and the lags from (un)staking queues are not
+appreciable.  As we are averaging quarterly, we set the staking,
+unstaking, and reward queues to zero, including their respective flows
+`(R+Q+,Q-,I+P)` in their codomain stocks `(S,U,V)`; even if ethereum
+produces empty blocks, so long as the reward queue is not empty `U >
+0`. See also our [section](#bounding-issuance) on `I<=yS`.
 
-[^partial]: Sometimes "dot x" = dx/dt is used for the partial derivative of x with time t, which we denote x_t.  The full relation is `dx = x_t + x_A dA + x_s ds + x_α dα` in which each partial is taken holding all the other variables constant, and x_t is used in practice to smuggle in any variability from non-dynamical variables. In principle x_A and x_α are distinct; a quantity can depend on supply (how big ETH market cap is compared to BTC, say) and inflation independently.
+[^partial]: Sometimes "dot x" `=dx/dt` is used for the partial
+derivative of `x` with time `t`, which we denote `x_t`.  The full relation
+is `dx = x_t + x_A dA + x_s ds + x_α dα` in which each partial is
+taken holding all the other variables constant, and `x_t` is used in
+practice to smuggle in any variability from non-dynamical
+variables. In principle `x_A` and `x_α` are distinct; a quantity can
+depend on supply (how big ETH market cap is compared to BTC, say) and
+inflation independently.
 
-[^yield]: For anyone from finance, this is *not* the same as a [bond yield curve](https://www.investopedia.com/terms/y/yieldcurve.asp); there is essentially no necessary lag for validator rewards, accounting quarterly.
+[^yield]: For anyone from finance, this is *not* the same as a [bond
+yield curve](https://www.investopedia.com/terms/y/yieldcurve.asp);
+there is essentially no necessary lag for validator rewards,
+accounting quarterly.
 
-[^cats]: We use domain/codomain in imprecise analogy with category theory mainly because we want to reserve "source" for an attractor, as per dynamical systems.  The analogy, while inexact is not inappropriate.  It is routine to implicitly use associativity to account for fibers of flows through multiple steps; "electricity from wind/nuclear/gas" even though the electrons are indistinguishable. Flows such as tx fees U--F-->V,Ø involve a categorical product VxØ in that the smaller fractional flows U--B-->Ø must factor through it. Similarly the staking queue V+(U-V)---R+Q+-->S involves a coproduct in he domain.  Whether there is content here beyond "flows are injective morphisms in Set" is unclear.  None of this matters in the least for Ethereum dynamics, of course.  If you're reading it consider this an easter egg / attempt to detect a living and alert audience.
+[^cats]: We use domain/codomain in imprecise analogy with category
+theory mainly because we want to reserve "source" for an attractor, as
+per dynamical systems.  The analogy, while inexact is not
+inappropriate.  It is routine to implicitly use associativity to
+account for fibers of flows through multiple steps; "electricity from
+wind/nuclear/gas" even though the electrons are
+indistinguishable. Flows such as tx fees `U--F-->V,Ø` involve a
+categorical product `VxØ` in that the smaller fractional flows
+`U--B-->Ø` must factor through it. Similarly the staking queue
+`V+(U-V)---R+Q+-->S` involves a coproduct in the domain.  Whether
+there is content here beyond "flows correspond to injective maps
+between measurable sets" is unclear.  None of this matters in the
+least for Ethereum dynamics, of course.  If you're reading it consider
+this an easter egg / attempt to detect a living and alert audience.
 
-[^elowex]: Why not simply choose "B = bA" as was done in a 2020 post by Elowsson?  Obviously if there is no unstaked Ether no one can afford tx fees. Here s is a *dynamical variable*, so b = B(A-S) = bf(1-s)A is more appropriate for our model.  The function B might do all kinds of complicated nonsense, but it can never go negative and it can never exceed U.
+[^time]: We can often use the dependence on `t` to smuggle in any
+forces, like market panics, etc. that we neglected to include as
+dynamical variables.  If we cannot add something essential this way,
+we must add a dynamical variable.
 
-[^whyr]: Intensives expressed as fractions of flows such as R/(I+P), instead of fractional rates of sources (like J/S or Q-/S) occur when the source dynamical variable, here V, is assumed to equilibrate dV/dt=0.  Then the outgoing flows R+K must equal the incoming flows I+P, so we choose R=r(I+P). If onchain data indicates, say, ~70\% reinvestment of staking rewards into S takes a lot longer than three months, we would revisit this assumption, though we do not expect our qualitative results to change re inflation and staking fraction.
+[^intensive]: The use here is related to but slightly different than
+the simplified use "independent of systemm size" [common in
+thermodynamics](
+https://en.wikipedia.org/wiki/Intensive_and_extensive_properties).
+Specifically we use that Ether is something *preserved* in the flow to
+bound the measure of the flow by the size of its domain above and zero
+below, with subleading terms possible.  So `B ~ U - log(1+U) -
+U**(1/2)` is possible but `B ~ U + U**2` and `B ~ U - U**2` are out.
+We care most about the limit `S -> A (U -> 0)`; see[^asym] also[^elowex]
+other[^whyr] footnotes[^params] for[^noburn] examples[^mu] and context.
 
-[^rlst]: A non-zero r=R/(I+P) is built into the smart contract of every Liquid Staking Provider (LSP).  Here, token-holders provide Ether and receive a redeemable token (LST) that shares some staking rewards with them. This fraction of rewards r_LST is a lower bound on the long term behavior r_LST <= equilibrium R(I+P).
+[^elowex]: Why not simply choose `B = bA`, essentially as was done in
+[this 2021 post](
+    https://ethresear.ch/t/circulating-supply-equilibrium-for-ethereum-and-minimum-viable-issuance-during-the-proof-of-stake-era/10954)
+by Elowsson?  (We use `S` for his `D` and `A` for his `S`.[^reasons])
+Obviously if there is no unstaked Ether no one can afford tx
+fees. Here `s` is a *dynamical variable*, so `b = B(A-S) = bf(1-s)A`
+is more appropriate for our model.  The function B might do all kinds
+of complicated nonsense, but it can never go negative and it can never
+exceed U.
 
-[^rdyn]: Splitting the staking queue into R + Q+ allows us to somewhat separate short-term *transient* behavior from long-term dynamics.  Speculative investment in staking by venture capitalists and novice stakers is expected to die down eventually; either they give up or they run staking like a business where making a profit matters.  Every business that wants to stay in business reinvests some portion of its profits, so r,R > 0 is what matters in the long run, once most everyone who wants to stake is staking.
+[^whyr]: Intensives expressed as fractions of flows such as `R/(I+P)`,
+instead of fractional rates of sources (like `J/S` or `Q_-/S`) occur when
+the source dynamical variable, here `V`, is assumed to equilibrate
+`dV/dt=0`.  Then the outgoing flows `R+K` must equal the incoming flows
+`I+P`, so we choose `R=r(I+P)`. If onchain data indicates, say, $\approx70$%
+reinvestment of staking rewards into `S` takes a lot longer than three
+months, we would revisit this assumption, though we do not expect our
+qualitative results to change re inflation and staking fraction.
 
-[^flowflux]: Confusingly the movement of a dynamic variable toward/away-from a fixed point is often also called a "flow". Terms in equations like R,J,... could then be called "fluxes".  But you're not confused, right?
+[^rlst]: A non-zero `r=R/(I+P)` is built into the smart contract of
+every Liquid Staking Provider (LSP).  Here, token-holders provide
+Ether and receive a redeemable token (LST) that shares some staking
+rewards with them. This fraction of rewards `r_LST` is a lower bound on
+`R/(I+P)` at the fixed point.
 
-[^time]: We can often use the dependence on t to smuggle in any forces, like market panics, etc. that we neglected to include as dynamical variables.  If not, we must add a dynamical variable.
+[^rdyn]: Splitting the staking queue into `R + Q_+` allows us to
+somewhat separate short-term *transient* behavior from long-term
+dynamics.  Speculative investment in staking by venture capitalists
+and novice stakers is expected to die down eventually; either they
+give up or they run staking like a business where making a profit
+matters.  Every business that wants to stay in business reinvests some
+portion of its profits, so `r,R > 0` is what matters in the long run,
+once most everyone who wants to stake is staking.
 
-[^asym]: For computer scientists f << g is equivalent to F=O(g) if you're more familiar with big-O notation.  Specifically I << S means that the limit of I/S as t gets very large is 0.  Contrast to I <= yS, which could just be a matter of coefficients.  Asymptotic Notation is well-explained on [wikipedia](https://en.wikipedia.org/wiki/Big_O_notation); see the bottom for Vinogradov.  The art of using it to your advantage in calculations is demonstrated by [Prof. Carl Bender](https://www.youtube.com/watch?v=LYNOGk3ZjFM).
+[^flowflux]: Confusingly the movement of a dynamic variable
+toward/away-from a fixed point is often also called a "flow". Terms in
+equations like `R,J,...` could then be called "fluxes".  But you're not
+confused, right?
 
-[^params]: Variable parameters that are positive fractions cannot contribute fixed-points themselves, but they can strongly influence *where* a fixed point is. Example: as s -> 1, if the leading terms were bf~(1-s) and j~(1-s)**2 this gives increasingly larger equilibrium A as s goes to 1.
+[^asym]: For computer scientists `f << g` is equivalent to `F = O(g)` if
+you're more familiar with big-O notation.  Specifically `I << S` means
+that the limit of `I/S` as `t` gets very large is `0`.  Contrast to `I <= yS`,
+which could just be a matter of coefficients.  Asymptotic Notation is
+well-explained on
+[wikipedia](https://en.wikipedia.org/wiki/Big_O_notation); see the
+bottom for Vinogradov.  The art of using it to your advantage in
+calculations is demonstrated by [Prof. Carl
+Bender](https://www.youtube.com/watch?v=LYNOGk3ZjFM).
 
-[^vitalikp]: Our (dlog y)/(dlog S) = 1 - p in the [discouragement paper](https://github.com/20squares/ethode/blob/master/guide/guide.md)
+[^params]: Variable parameters that are positive fractions cannot
+contribute fixed-points themselves, but they can strongly influence
+*where* a fixed point is. Example: as `s -> 1`, if the leading terms
+were `bf~(1-s)` and `j~(1-s)**2` this gives increasingly larger
+equilibrium `A` as `s->1`.
 
-[^noburn]: Regarding B = bf(1-s)A the burn.  While slashing could believably go to zero on quarterly timescales, no burn B=0 implies blocks are empty.  Obviously s=1, B=0 isn't really a functioning state for Ethereum.  A better asymptotic limit would be s = 1-ε making A ~ (1/ε)**2 (that's squared... so very big as ε is very small).  Detailed treatment of the burn, staking queues using expansions in ε would be useful, and we would need to model churn, slashing, and burn in light of stochasticity/quantization.  One can use difference equations, but a useful generic behavior of such systems (a "weak coupling" limit) is that such perturbations move the dynamics away from the fixed point, apparently randomly. Yet! Somehow, the average rate of precession about s=1-ε is often given by the imaginary component of the largest eigenvalue of the simpler model.
+[^vitalikp]: Our `(dlog y)/(dlog S) = 1 - p` in the [discouragement paper](https://github.com/20squares/ethode/blob/master/guide/guide.md)
 
-[^mu]: If anything the fractional rates of slashing and burn are positive with small changes in inflation, due to either a single ETH potentially being of less real value, or stimulation of economic activity attracting more validators and higher average burn.
+[^noburn]: Regarding `B = bf(1-s)A` the burn.  While slashing could
+believably go to zero on quarterly timescales, no burn `B=0` implies
+blocks are empty.  Obviously `s=1, B=0` isn't really a functioning
+state for Ethereum.  A better asymptotic limit would be s = 1-ε making
+A ~ (1/ε)**2 (that's squared... so very big as ε is very small).
+Detailed treatment of the burn, staking queues using expansions in ε
+would be necessary here, and are among our desiderata.  We anticipate
+the need to model churn, slashing, and burn in light of
+stochasticity/quantization.  One can use difference equations or Ito
+Calculus, but a useful generic behavior of such systems is obtained in
+a "weak coupling" limit. Perturbations due to quantization move the
+dynamics away from the fixed point, apparently randomly. Yet!
+Somehow, the average rate of precession about `s=1-ε` is often given
+by the imaginary component of the largest eigenvalue of the simpler
+model.
 
-[^ics]: gamma γ expresses the sensitivity of inflation to supply initial conditions; the partial x_A always holds (alpha,s) constant, but dA = alpha dt and the partials in gamma are j_A and (bf)_A.
+[^caveat]: A warning!  Simulations are necessarily imperfect, and
+especially if you use `method='RK4'` (Runga-Kutta) or other methods
+based on local approximations only, it is not hard to find simulations
+in which it sure as hell seems like the system has settled down into a
+small but positive inflation fixed point.  The following is a useful
+sanity check for the existing issuance yield curve, obtained using
+Jensen's inequality. An inflation rate α cannot persist longer than
+Δt, according to ```exp(α Δt/2) - 1 < 2y1 Δt sqrt(s_ave / A_now)```
+where `s_ave` is the average of staking fraction over Δt, `A_now` is
+the supply at the beginning of the inflation period, and `y1` is
+166.3/yr.
 
-[^small-part]: Smallness of sensitivities wrt intensives is not guaranteed. Certainly a large magnitude, say (bf)_s>1 cannot maintain for too long; 0<bf<1 afterall.  Locally, a large spike in derivative (bf)_s > bf is still possible.
+[^mu]: If anything the fractional rates of slashing and burn are
+positive with small changes in inflation, due to either a single ETH
+potentially being of less real value, or stimulation of economic
+activity attracting more validators and higher average burn.
 
-[^stability]: Global stability involves either trajectories infinitely returning to a region of the fixed point (think comets) or a contraction map showing the system shrinking to a limit set.  We won't rule out global stability, but recommend you look first for locally stable fixed points.  Assessing the stability of equilibrium zero inflation in the (A,s,alpha) model is interesting but probably academic.  One of the eigenvalues at any fixed point with alpha=0 is zero, so higher-order terms matter (the fixed point is degenerate), and linear-stability analysis is insufficient: we need to care about global stability not just local.  A reader imbued with mathematical athleticism and free time is encouraged to think of a Lyapunov function л(alpha=0) >= 0, and obtain a contraction mapping dл(alpha)/dt <= 0.
+[^ics]: Here gamma `γ` expresses the sensitivity of inflation to supply
+initial conditions; the partial `x_A` always holds `(α,s)` constant,
+but `dA = α dt` and the partials in gamma are `j_A` and `(bf)_A`.
 
-[^SU]: Readers wishing for more detail are encouraged to use the two dimensional local stability criterion (see [Strogatz](https://www.youtube.com/watch?v=9yh9DmNqdk4)) to solve for the condition of eigenvalues with an imaginary part.  But simulate it too!
+[^small-part]: Smallness of sensitivities wrt intensives is not
+guaranteed. Certainly a large magnitude, say `(bf)_s>1` cannot maintain
+for too long; `0<bf<1` afterall.  Locally, a large spike in derivative
+`(bf)_s > bf` is still possible.
+
+[^stability]: Global stability involves either trajectories infinitely
+returning to a region of the fixed point (think comets) or a
+contraction map showing the system shrinking to a limit set.  We won't
+rule out global stability, but recommend you look first for locally
+stable fixed points.  Assessing the stability of equilibrium zero
+inflation in the `(A,s,α)` model is interesting but probably
+academic.  One of the eigenvalues at any fixed point with `α=0` is
+zero, so higher-order terms matter (the fixed point is degenerate),
+and linear-stability analysis is insufficient: we need to care about
+global stability not just local.  A reader imbued with mathematical
+athleticism and free time is encouraged to think of a Lyapunov
+function `л(α=0) = 0 <= л(α)`, and obtain a contraction mapping
+`dл(α)/dt <= 0`.
+
+[^SU]: Readers wishing for more detail are encouraged to use the two
+dimensional local stability criterion (see [Prof. Steven
+Strogatz](https://www.youtube.com/watch?v=9yh9DmNqdk4)) to solve for
+the condition of eigenvalues with an imaginary part.  But simulate it
+too!
 
 

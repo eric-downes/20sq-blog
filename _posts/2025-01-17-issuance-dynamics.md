@@ -26,7 +26,7 @@ of a user, etc.  This brand commitment depends in turn on a sufficient diversity
 validators staking ETH to participate in consensus.
 
 The share of Ether staked by "centralized" staking services, such as
-exchanges and Liquid Staking Providers (LSTs) [is considerable](
+exchanges and Liquid Staking Providers (LSPs) [is considerable](
     https://dune.com/queries/2394100/3928083), and continues
 to grow.  This has provoked [concerns](https://issuance.wtf/), among
 Ethereum researchers that the future of Ethereum might involve a
@@ -72,7 +72,7 @@ enough to get you going.
 
 Issuance does not all get dumped into native unstaked Ether.  Some
 portion of it is reinvested by staking businesses at ratio $r$; indeed
-this process is coded into LST smart contracts.
+this process is coded into Liquid Staking Token (LST) smart contracts.
  
 It is important to distinguish between transient behavior, such as
 speculation in staking, and medium/long-term behavior, such as the
@@ -220,11 +220,13 @@ I &\leq& yS
 \end{array}
 $$
 
-This approximation should work for any positive definite yield curve
-with finite slope, erring in a conservative direction without explicit
-dependence on the present curve $y^\bullet = y_0(1)/\sqrt(S^\bullet)$
-with $y_0(1)\approx166.3$/yr.  We deem this a good direction in which
-to err in light of our results concerning (the lack of) runaway
+Other approximations are also possible, see
+[guide](https://github.com/20squares/ethode/blob/master/guide/guide.md#bounding-persistent-inflation).
+This should work for any positive definite yield curve with finite
+slope, erring in a conservative direction without explicit dependence
+on the present curve $y^\bullet = y_0(1)/\sqrt(S^\bullet)$ with
+$y_0(1)\approx166.3$/yr.  We deem this a good direction in which to
+err in light of our results concerning (the lack of) runaway
 inflation.
 
 ### Bounding Reinvestment
@@ -438,7 +440,7 @@ This does not mean we would find every intermediate inflation rate
 pleasant.  Following surges in $$Q_+$$ and/or drops in supply,
 inflation can accelerate quite alarmingly.  A good example will be the
 Ethereum staking-mania following the 2132 Atlantia-v-Eurasia market
-crash, in which 99\% of present-day Ether will have been burned.
+crash, in which 99% of present-day Ether will have been burned.
 
 ```python
 @dataclass
@@ -457,7 +459,7 @@ zomg.sim()
 ![Disaster Scenario](
     ../assetsPosts/2025-01-17-issuance-dynamics/mega-burn.png)
 
-We aren't excited to hodl through multiple decades of 10\% inflation,
+We aren't excited to hodl through multiple decades of 10% inflation,
 and we expect you aren't either!  Silliness aside, we encourage you to find more
 realistic scenarios in which such sustained inflation occurs.
 
@@ -529,7 +531,7 @@ $$y':=\frac{dy}{dS}$$.
   correlation between changes in $$s$$ and changes in $$\alpha$$
   normalized by $$1+\mu$$. $$\xi$$ can be of either sign.  Under the
   current yield curve $$y_0+\frac{dy}{dS}A=y_0(sA)(1-1/(2s))$$, which
-  changes its sign at 50\% ETH staked.
+  changes its sign at 50% ETH staked.
 
 * $$\gamma:=\jmath_{\log{A}}s+\beta_{\log{A}}(1-s)+s|y'|A$$ is a
   positive coefficient expressing how quickly $$\alpha\to\alpha^\star$$,
@@ -630,7 +632,7 @@ simplifies to
 
 $$\displaystyle
 s^\star \approx r^\star \frac{\alpha_{const} + f^\star}{
-    \alpha_{const} + r^\star f^\star + (1-r)\jmath^\star}
+    \alpha_{const} + r^\star f^\star + (1-r^\star)\jmath^\star}
 $$
 
 We will explore the *stability* of this fixed point below, and based on
@@ -662,8 +664,8 @@ subscripts denoting partials)
 
 $$\displaystyle
 (\alpha^\star/f^\star)\ +\ r\ +\ (\jmath^\star/f^\star)\ \ >\ \
-\log{r}_{\log x}^\star\left[
-(\alpha^\star/f^\star)\ +\ (1/r^\star-1/x^\star)
+\log{r}_{\log s}^\star\left[
+(\alpha^\star/f^\star)\ +\ (1/r^\star-1/s^\star)
 (\alpha/f)_r^\star\right]
 $$
 
@@ -671,17 +673,17 @@ If we assume that sensitivities are dominated by their respective
 intensives, this reduces to a simple
 $$\alpha^\star+r^\star f^\star \gtrsim -\jmath^\star$$.
 
-Weak Deflation.  If $$\alpha_{const}\in(-rf-\jmath,0]$$ then an
+Weak Deflation.  If $$-(rf+(1-r)\jmath)^\star<\alpha_{const}\leq0$$ then an
 interior market equilibrium $$s^\star$$ requires high slashing, as we
 argued before based on Churn.  All other things being equal, it is
 also less stable.  Assuming low slashing continues, as validators must
 pay the cost themselves so are incentivized to minimize it, then
-$x^\star>1$ and runaway staking is inevitable if the fixed point is
+$s^\star>1$ and runaway staking is inevitable if the fixed point is
 stable: the numerator is larger than the denominator.  If unstable,
 $s$ is pushed toward zero, and in practice becomes unpredictable by
 our model: externalities intervene to do... something.
 
-Strong deflation.  Consider now $$\alpha<-rf-\jmath$$.  This could
+Strong deflation.  Consider now $$\alpha<-(rf+(1-r)\jmath)^\star$$.  This could
 happen for instance if the issuance curve were reduced particularly
 bluntly, or changes in fundamentals drove either MEV or the base fee
 (and thus $$f$$) to a persistently higher amount, such that $$ys\ll
@@ -690,9 +692,10 @@ don't need differential equations to see that $$\alpha<0$$ shrinks
 $$A$$, which eventually raises $$y(sA)$$.  But as a temporary
 intervention to tame runaway staking fraction how would this work?
 Our fixed point is negative and the simplistic "ignore the constants"
-stability criteria is no longer met.  So again, 100\% staking becomes
+stability criteria is no longer met.  So again, 100% staking becomes
 inevitable (the source $s^\star<0$ pushes $s$ instead of pulling it),
-or the behavior becomes unpredictable as externalities intervene.
+or (more likely) the behavior simply becomes unpredictable as
+externalities intervene.
 
 There's a lot of potential complexity here, but none of it is
 desirable!  If you don't like inflation, wait until you try deflation!
@@ -710,15 +713,15 @@ Well, that was deflating!  Let's cheer ourselves up by considering the
 behaviors under $$\alpha_{const}>0$$.  A positive role for inflation can
 be seen in the contours of the market equilibrium staking fraction
 $$s^\star$$ corresponding to $$\dot{s}=0$$, shown here with
-$$\alpha^\star=\alpha_{const}$$.
+$$\alpha^\star=\alpha_{const}$$ and no slashing.
 
 ![alpha vs. s Figure](
     ../assetsPosts/2025-01-17-issuance-dynamics/staking-fixpoint.png).
 
 To find the equilibrium values $$(\alpha^\star/f^\star,\,r^\star)$$
-necessary to achieve a desired staking fraction $$x^\star$$, simply
+necessary to achieve a desired staking fraction $$s^\star$$, simply
 pick a colored contour in the figure: these are the values of constant
-$$x^\star$$.  For every point on this curve, the equilibrium
+$$s^\star$$.  For every point on this curve, the equilibrium
 inflation:fee ratio $$\alpha^\star/f^\star$$ is the x-coordinate, and
 the equilibrium reinvestment ratio $$r^\star$$ is the y-value.
 
@@ -734,8 +737,8 @@ f^\star\sim\alpha^\star$, $r^\star < s^\star$ still but the gap is
 bigger.
 
 For a numerical comparison, eyeballing charts (so *extremely* rough
-approximations here, possibly off by an order of magnitude) $$rf
-\approx .004\sim.005\approx\alpha$$ so to within 15-20\% error above,
+approximations here, possibly off by an order of magnitude, maybe more) $$rf
+\approx .004\sim.005\approx\alpha$$ so to within 15-20% error above,
 $$s^\star\approx r^\star$$ over the range of $$r\in(.5,.75)$$ inferred
 from the Lido yield rate.  Clearly we are not yet at equilibrium, or
 $r$ is much lower than our extremely rough estimates.
@@ -747,7 +750,7 @@ some considerations:
 * If indeed churn dies down and slashing stays relatively rare, then
   $$r$$ increases to reflect the growing share of businesses that
   reinvest the most; $$r^\star\approx r_{max}$$, where $$r_{max}$$ is
-  assessed over all staking pools with at least 10\% of $$S$$.
+  assessed over all staking pools with at least 10% of $$S$$.
 
 * We are holding $$\alpha_{const}=\alpha^\star$$, so
   $$\alpha_{now}\approx\alpha^\star$$ but a more sophisticated approximation
@@ -805,7 +808,10 @@ roughly $\alpha^{-1}\log\epsilon^{-1}$ Ethereum could in principle
 experience simultaneously lowered security, and consistent inflation.
 For small $\epsilon$ and $\alpha\sim.1$ that's more than a decade in
 principle.  Whether this has any bearing on reality, we don't know,
-but its worth being aware of.
+but its worth being aware of.  In the
+[guide](https://github.com/20squares/ethode/blob/master/guide/guide.md)
+we will be adding upper limits on the time-duration of inflation as
+time-permits.
 
 
 # Concluding Discussion
@@ -830,7 +836,7 @@ inflation, etc.?  Briefly the reasons are:
 Novel investment in staking $$Q_+$$ is driven largely by speculation,
 and new users encountering Ethereum.  $$Q_+$$ acts to increase staking
 fraction, as seen above, and indeed the glut in $$Q_+$$ since the Merge
-may have been the source for all of the alarm that prompted this
+may have been the source for much of the alarm that prompted this
 study. Novel speculative investment must eventually dry up, and be
 replaced by long-term investment $$R$$, because
 
@@ -838,7 +844,7 @@ replaced by long-term investment $$R$$, because
 counted in $$R$$ not $$Q_+$$
 2. any business that wants to stay in
 business cannot consistently reinvest more than its revenue $$R\leq
-I+P$$.
+I+P$$ (issuance plus priority fees).
 
 Of the long term signal $$R$$, only the issuance portion of
 reinvestment, that is the part that contributes to inflation, can
@@ -847,7 +853,7 @@ moderate $$s$$, which brings us to the quotient rule.
 ## The Quotient Rule
 
 $$\displaystyle
-\dot{s}\ =\ \frac{\dot{S}}{A}\ -\ s\frac{\dot{A}}{A}\ =\ \frac{\dot{S}}{S}\ -\ s\alpha
+\dot{s}\ \ =\ \ \frac{\dot{S}}{A}\ -\ \frac{S\dot{A}}{A^2}\ \ =\ \ \frac{\dot{S}}{A}\ -\ s\alpha
 $$
 
 What increases $$s$$ is any increase in staked Ether $$S$$, but also any
@@ -881,7 +887,7 @@ capable of such behavior under different parameters or when coupled to
 price.  Why such negligence?  If cycles *do* arise, we expect market
 participants, anticipating such cycles, would act to profit off of
 these cycles in a way that should reduce them.  Buy late in the
-inflation cycle, sell, late in the deflation cycle, etc.  This would show
+inflation cycle, sell late in the deflation cycle, etc.  This would show
 up in our model via the partial derivatives including externalities.
 
 Notably though, we only expect this to happen because
@@ -913,15 +919,15 @@ EIP 7514, adopted during the Deneb upgrade.  This already directly
 limits $$R+Q_+$$, but was very nicely designed to not interfere with
 existing staking flows.  It would be particularly interesting to see
 if $R$ can be safely decoupled from limits on $Q_+$, to avoid the
-danger of low-$r$ scenarios.  EIP 7514 does not solve, and does not
+potential danger of low-$r$ scenarios.  EIP 7514 does not solve, and does not
 claim to solve, the long term problems, but we have been forced to
 conclude that reducing issuance doesn't solve them either!
 
 ### Long answer
 
-Ask the users, especially the validators, especially the LSTs.  Model
+Ask the users, especially the validators, especially the LSPs.  Model
 user preferences so that the demand curve becomes semi-empirical
-instead of theorized.  Near-100\% staking seems to be baked-in
+instead of theorized.  Near-100% staking seems to be baked-in
 eventually, as persistent inflation cannot sustain under an issuance yield
 curve designed to avoid discouragement.
 
@@ -930,20 +936,21 @@ meantime?"  We recommend of course that you use these tools to run
 simulations.  But that is only half the answer... this is really a
 question about user preferences.  Austrian School devotees may be so
 inflation-averse that they are already staking all their
-previously-liquid ETH at $$\alpha\approx0.5$$\%/yr.  In contrast users
+previously-liquid ETH at $$\alpha\approx0.5$$%/yr.  In contrast users
 who were content to grow up with fiat currencies during periods of
-$$\approx3$$\% inflation or even worse might not care, or would just
+$$\approx3$$% inflation or even worse might not care, or would just
 stake in Compound or buy stETH.
 
 For users seeking to passively preserve wealth, staking in Compound
 (or Aave, or whatever) is ideal for generating raw Ether demand, of
-course.  Staking in LSTs, though concerning from a governance angle,
-may present less of an issue than some have feared.  LSTs must share
-some yield with users in order to have users, but if they want to stay
-in business they must maintain $$r_{LST}<1$$, and both profit-taking
-and covering fiat-denominated costs go into unstaked Ether $U$.
+course.  Staking in LSTs, such as stETH, though concerning from a
+governance angle, may present less of an issue than some have feared.
+LSPs must share some yield with users in order to have users, but if
+they want to stay in business they must maintain $$r_{LST}<1$$, and
+both profit-taking and covering fiat-denominated costs go into
+unstaked Ether $U$.
 
-So how high can $$r_{LST}$$ go before LSTs find the loss of gross
+So how high can $$r_{LST}$$ go before LSPs find the loss of gross
 profits unacceptable?  Great question.  We will see next time that as
 many have recognized, the entity/group $i$ that can maintain the highest
 $$r_i$$ wins the race eventually.  It's worth noting however that if you
